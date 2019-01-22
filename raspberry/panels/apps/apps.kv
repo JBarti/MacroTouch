@@ -1,0 +1,77 @@
+#:kivy 1.10.1
+
+<AppsOption>:
+    rows:6
+    DisplayText:
+        text: 
+            """
+            [color=#0094c6][size=50][font=./fonts/Cairo/Cairo-Black]Apps[/font][/size][/color][size=18]  panel displays the list of apps the device currently supports
+            [/size]
+            """
+    Seperator:
+    CurrentApp:
+    Seperator:
+    ScrollView:
+        GridLayout:
+            row_default_height: 70
+            cols: 2
+            size_hint_y: None
+            size_hint_x: 1
+            height: self.minimum_height
+            SupportedApp:
+            SupportedApp:
+            SupportedApp:
+            SupportedApp:
+            SupportedApp:
+            SupportedApp:
+            SupportedApp:
+            SupportedApp:
+            SupportedApp:
+            SupportedApp:
+            SupportedApp:
+            SupportedApp:
+    
+<SupportedApp@BoxLayout>:
+    orientation: 'horizontal'
+    size_hint_y: None
+    height: 60
+    canvas.before:
+        Color:
+            rgba: 100, 100, 100, 0.15
+        Rectangle:
+            size: self.size[0]-50, self.size[1]
+            pos: self.pos
+    Image:
+        id: img
+        allow_stretch: True
+        keep_ratio: True
+        size_hint_y: None
+        size_hint_x: None
+        width: 60
+        height: 60
+        source: './icons/word.png'
+    DisplayText:
+        size_hint_y: 1.1
+        text: "Microsoft Office Word"
+
+<CurrentApp>:
+    supported: True
+    orientation: 'horizontal'
+    size_hint_y: None
+    Image:
+        size_hint_x: None
+        center: self.parent.center
+        source: './icons/Adobe-Photoshop.png'       
+    StackLayout:
+        padding: 5,0
+        DisplayText:
+            height: 60
+            text: """[size=28][color=#9b59b6]Adobe Photoshop[/color][/size]"""
+        DisplayText:
+            height: 0
+            text:"""[size=20][color={}]Supported[/color][/size]""".format(root.get_color())
+    Button:
+        text: "View"
+        size_hint_x: None
+        width: self.height
+        on_press: root.get_current_app()

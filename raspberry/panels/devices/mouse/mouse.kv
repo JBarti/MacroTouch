@@ -1,0 +1,20 @@
+#:kivy 1.10.1
+
+<MouseButton@Button>:
+    size_hint_x: 0.5
+    size_hint_y: None
+    height: 40
+
+<Mouse>:
+    canvas:
+        Color:
+            rgb: 0x26 / 255.0, 0x32 / 255.0, 0x38 / 255.0
+        Rectangle:
+            id: touchpad
+            pos: self.pos
+            size: self.size
+    orientation: "horizontal"
+    MouseButton:
+        id: left_click
+    MouseButton:
+        id: right_click

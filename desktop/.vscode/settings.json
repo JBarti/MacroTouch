@@ -1,0 +1,6 @@
+{
+  "python.formatting.provider": "autopep8",
+  "python.venvPath": "/home/josip/.local/share/virtualenvs/",
+  "python.pythonPath": "/home/josip/.local/share/virtualenvs/desktop-VbBf9N_l/bin/python",
+  "python.linting.pylintEnabled": true
+}

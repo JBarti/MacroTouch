@@ -1,0 +1,60 @@
+#:kivy 1.10.1
+
+<WidgetsOption>:
+    rows: 3
+    orientation: 'vertical'
+    DisplayText:
+        height: 130
+        text: 
+            """
+            [color=#0094c6][size=50][font=./fonts/Cairo/Cairo-Black]Widgets[/font][/size][/color][size=18]  allow you graphically represent data comming from your PC
+            [/size]
+            """
+    Seperator:
+    ScrollView:
+        GridLayout:
+            padding: [15, 10, 0, 0]
+            row_default_height: 70
+            cols: 2
+            size_hint_y: None
+            size_hint_x: 1
+            height: self.minimum_height
+            SupportedWidget:
+            SupportedWidget:
+            SupportedWidget:
+            SupportedWidget:
+            SupportedWidget:
+            SupportedWidget:
+            SupportedWidget:
+            SupportedWidget:
+            SupportedWidget:
+            SupportedWidget:
+            SupportedWidget:
+            SupportedWidget:
+            SupportedWidget:
+            SupportedWidget:
+
+
+
+<SupportedWidget@BoxLayout>:
+    orientation: 'horizontal'
+    size_hint_y: None
+    height: 60
+    canvas.after:
+        Color:
+            rgba: 100, 100, 100, 0.25
+        RoundedRectangle:
+            size: self.size[0]-50, self.size[1]
+            pos: self.pos
+            radius: [28,]
+    Image:
+        allow_stretch: True
+        keep_ratio: True
+        size_hint_y: 1
+        size_hint_x: None
+        width: 60
+        source: './icons/system-monitor.png'
+    DisplayText:
+        size_hint_y: 1
+        padding_x: 20
+        text: "[size=18]System Monitor[/size]"

@@ -1,0 +1,22 @@
+#:kivy 1.10.1
+
+<DisplayText@Label>:
+    size_hint_y: None
+    text_size: self.width, None
+    padding_x: 10
+    markup: True
+    font_name: "./fonts/Cairo/Cairo-Bold.ttf"
+    text: self.text
+
+<Seperator@Widget>:
+    id: separator
+    size_hint_y: 0
+    height: 0.4
+    thickness: 0.75
+    canvas:
+        Color:
+            rgb: 100, 100, 100
+        Rectangle:
+            #pos: 0, separator.center_y
+            pos: self.pos[0], separator.center_y
+            size: separator.width, self.thickness

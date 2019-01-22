@@ -1,0 +1,36 @@
+#:kivy 1.10.1
+
+<DevicesOption>:
+    rows: 3
+    DisplayText:
+        text:
+            """
+            [color=#0094c6][size=50][font=./fonts/Cairo/Cairo-Black]Devices[/font][/size][/color][size=18]  emulate common pc input devices
+            [/size]
+            """
+    Seperator:
+    StackLayout:
+        orientation: "lr-tb"
+        padding: [10,10,10,10]
+        spacing: [5,5]
+        DeviceButton:
+            source: './icons/mouse.png'
+            on_press: root.root.switch(root.mouse)
+        DeviceButton:
+            source: './icons/keyboard.png'
+            on_press: root.root.switch(root.keyboard)
+        DeviceButton:
+            source: './icons/mouse.png'
+
+            
+<DeviceButton@Button>:
+    source: self.source
+    width: 100
+    height: 100
+    size_hint_x: None
+    size_hint_y: None
+    Image:
+        width: 75
+        height: 75
+        center: self.parent.center
+        source: root.source

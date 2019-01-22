@@ -1,0 +1,46 @@
+#:kivy 1.10.1
+
+MainScreen:
+
+<MainScreen>:
+
+
+<BluetoothPending>:
+    orientation: 'vertical'
+    Button:
+        text:"TEKST"
+
+<MainLayout>:
+    orientation: 'horizontal'
+    BoxLayout:
+        size_hint:(.2,1)
+        orientation: 'vertical'
+        padding: [0,0,0,0]
+        ToggleButton:
+            text: "Apps"
+            group: "option"
+            size_hint_y: 0.1
+            on_press: content.switch("apps")
+        ToggleButton:
+            text: "Widgets"
+            group: "option"
+            size_hint_y: 0.1
+            on_press: content.switch("widgets")
+        ToggleButton:
+            text: "Devices"
+            group: "option"
+            size_hint_y: 0.1
+            on_press: content.switch("devices")
+        ToggleButton:
+            text: "Macros"
+            group: "option"
+            size_hint_y: 0.1
+            on_press: content.switch("macros")
+        AnchorLayout:
+            anchor_y: 'bottom'
+            ToggleButton:
+                text: "CONFIG"
+                group: "option"
+                size_hint_y: 0.1
+    Content:
+        id: content
