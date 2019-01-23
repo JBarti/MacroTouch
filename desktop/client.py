@@ -1,7 +1,6 @@
 from bluetooth import *
 from pynput.mouse import Controller
 from threading import Thread
-from pynput.mouse import Controller
 import pyautogui
 
 server_mac_adress = "B8:27:EB:F8:29:80"
@@ -25,4 +24,5 @@ socket = BluetoothSocket(L2CAP)
 socket.connect((server_mac_adress, port))
 while 1:
     data = socket.recv(1024)
-    Thread(target=change_mouse_pos, args=(data, )).start()
+    print(data)
+    #Thread(target=change_mouse_pos, args=(data, )).start()
