@@ -23,6 +23,8 @@ class CurrentApp(BoxLayout):
 
     def get_current_app(self):
         output, error = Popen(
-            "xdotool getactivewindow getwindowname".split(), stdout=PIPE
+            "node ./panels/apps/getWindowTitle.js".split(), stdout=PIPE
         ).communicate()
-        print(output)
+        title = output.decode("ASCII")
+        title = title[1:-2] if title[-1:] == "\n" else title[1:-1]
+        print(title)
