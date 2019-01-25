@@ -1,8 +1,6 @@
 import socket
 import json
 
-#make parent class
-
 class MacroController:
 
     def __init__(self, ip_address="192.168.0.17", port=5200):

@@ -23,3 +23,4 @@ class MouseController:
 
         click = bytes(click_type, "UTF-8")
         self.sock.sendto(click, self.address)
+
