@@ -21,7 +21,7 @@ class CurrentApp(BoxLayout):
             return "#2ecc71"
         return "#e74c3c"
 
-    def get_current_app(self):
+    def get_active_window(self):
         output, error = Popen(
             "node ./panels/apps/getWindowTitle.js".split(), stdout=PIPE
         ).communicate()

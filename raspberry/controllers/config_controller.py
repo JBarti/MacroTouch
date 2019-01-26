@@ -1,5 +1,6 @@
 import socket
 import threading
+import json
 
 class Client(threading.Thread):
 
@@ -12,13 +13,19 @@ class Client(threading.Thread):
         while True:
             self.data = self.data + self.conn.recv(2048)
             if self.data != "":
-                f = open("./data/configurations.json", "w")
-                f.write(self.data)
-                f.close()
+                macro_json = json.loads(self.data.decode("ASCII"))
+                self.update_json(macro_json)
                 self.data=""
 
-    def check_data(self):
-        pass
+    def update_json(self, macro_data):
+        with open("../../data.json", "r") as jsonFile:
+            data = json.load(jsonFile)
+
+        data["macros"].append(macro_data["payload"])
+
+        with open("../../data.json", "w") as jsonFile:
+            json.dump(data, jsonFile)
+
 #{type:MACRO_POST, payload:{name:"", keys:"""}}
 
     def close_connection(self):
@@ -45,6 +52,3 @@ class ConfigController(threading.Thread):
     def close_connections(self):
         for client in self.clients:
             client.close_connection()
-        
-
-
