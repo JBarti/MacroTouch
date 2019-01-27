@@ -18,10 +18,10 @@ class MacroController:
             socket.sendto(KEY ,self.address)
 
 
-    def send_key_combo(self, key_macros): #type(key_combo) --> string
+    def send_key_combo(self, list_of_macros): #type(key_combo) --> string
         with self.spawn_socket(socket.AF_INET, socket.SOCK_DGRAM) as socket:
-            list_of_macros = key_macros.split(",")
-            list_of_macros = [macro.strip().split("+") for macro in list_of_macros]
+#            list_of_macros = key_macros.split(",")
+#            list_of_macros = [macro.strip().split("+") for macro in list_of_macros]
 
             str_of_macros = json.dumps(list_of_macros)
 
