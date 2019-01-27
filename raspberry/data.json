@@ -1,0 +1,30 @@
+{
+  "macro_pages": [
+    {
+      "name": "Page1",
+      "macros": [
+        {
+          "position": [2, 1],
+          "text": "A",
+          "macro": "A+b"
+        },
+        {
+          "position": [1, 2],
+          "text": "A",
+          "macro": "A+b"
+        },
+        {
+          "position": [4, 3],
+          "text": "A",
+          "macro": "A+b"
+        },
+        {
+          "position": [2, 4],
+          "text": "A",
+          "macro": "A+b"
+        }
+      ]
+    },
+    { "name": "Page2", "macros": [] }
+  ]
+}
