@@ -3,74 +3,8 @@ import threading
 import json
 from pykeyboard import PyKeyboard
 
-class Client(threading.Thread):
+k = PyKeyboard()
 
-    def __init__(self, conn):
-        super(Client, self).__init__()
-        self.conn = conn
-        self.daemon = True
-        self.data =""
-
-    def run(self):
-        while True:
-            self.data = self.data + self.conn.recv(1024)
-            if self.data != "":
-                macro_json = json.loads(self.data.decode("ASCII"))
-                if "system" in macro_json.keys():
-                    pass
-                self.update_json(macro_json)
-                self.data=""
-
-    def update_json(self, macro_data):
-        with open("../../data.json", "r") as jsonFile:
-            data = json.load(jsonFile)
-
-        parsed_data = self.parse_payload(macro_data[payload])
-
-        if not parsed_data:
-            return
-
-        data["macros"].append(macro_data["payload"])
-
-        with open("../../data.json", "w") as jsonFile:
-            json.dump(data, jsonFile)
-        
-
-    def parse_payload(self, payload):
-        macro = payload["macro"]
-        macro = macro.strip().split("+")
-
-        try:
-            macro = [SPECIAL_KEYS_DICT[key] for key in macro]
-        except KeyError:
-            return False
-
-        payload["macro"] = macro
-
-        return payload
-#{type:MACRO_POST, payload:{name:"", keys:""}}
-    
-    def get_system_data(self)
-        
-
-    def close_connection(self):
-        self.conn.close()
-
-## server = ConfigController(family-socketa, socket-type, ip_address=, port=)  --> (ip_address, port su kwargs)
-
-class ConfigController:
-    
-    def __init__(self, family, sock_type, ip_address="192.168.0.17", port=5300):
-        self.sock = socket.socket(family, sock_type)
-        self.sock.bind((ip_address, port))
-
-    def run(self):
-        conn, address = self.sock.accept()
-        client = Client(conn)
-        client.start()
-
-
-        
 SPECIAL_KEYS_DICT = {
     "CTRL": k.control_key,
     "ALT": k.alt_key,
@@ -98,3 +32,65 @@ SPECIAL_KEYS_DICT = {
     "BACKSPACE": k.backspace_key,
     "SUPER": k.super_l_key,
 }
+
+
+class Client(threading.Thread):
+    def __init__(self, family, sock_type, ip_address="0.0.0.0", port=5300):
+        super(Client, self).__init__()
+        self.address = (ip_address, port)
+        self.sock = socket.socket(family, sock_type)
+        self.sock.bind(self.address)
+        self.data = {"system_data": ""}
+        self.request_type = {
+            "SET_SYSTEM_DATA": self.set_system_data,
+            "POST_MACRO_DATA": self.post_macro,
+        }
+
+    def run(self):
+        while True:
+            data = self.conn.recv(1024)
+            if data != "":
+                json_data = json.loads(data.decode("ASCII"))
+
+                request_type = json_data["type"]
+                request_data = json_data["payload"]
+
+                self.request_type[json_data["type"]](json_data["payload"])
+
+    def post_macro(self, macro_data):
+        with open("../../data.json", "r") as jsonFile:
+            data = json.load(jsonFile)
+
+        parsed_data = self.parse_macro(macro_data[payload])
+
+        if not parsed_data:
+            return
+
+        data["macros"].append(macro_data["payload"])
+
+        with open("../../data.json", "w") as jsonFile:
+            json.dump(data, jsonFile)
+
+    def parse_macro(self, payload):
+        macro = payload["macro"]
+        macro = macro.strip().split("+")
+
+        try:
+            macro = [SPECIAL_KEYS_DICT[key] for key in macro]
+        except KeyError:
+            return False
+
+        payload["macro"] = macro
+
+        return payload
+
+    def set_system_data(self, payload):
+        self.data["system_data"] = payload
+
+    def get_system_data(self):
+        request = {type: "GET_SYSTEM_DATA"}
+        bytes_data = bytes(json.dumps(request), "UTF-8")
+        self.sock.sendto(bytes_data, self.address)
+
+    def close_connection(self):
+        self.conn.close()
