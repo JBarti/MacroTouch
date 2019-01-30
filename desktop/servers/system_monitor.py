@@ -2,14 +2,12 @@ import threading
 import socket
 import json
 
-
 class MonitorServer(threading.Thread):
     def __init__(self, family, sock_type, ip_address="0.0.0.0", port=5300):
-        super(MouseServer, self).__init__()
+        super(MonitorServer, self).__init__()
         self.address = (ip_address, port)
         self.sock = socket.socket(family, sock_type)
         self.sock.bind(self.address)
-        self.mouse = PyMouse()
         self.request_type = {"GET_SYSTEM_DATA": self.get_system_data}
 
     def run(self):
