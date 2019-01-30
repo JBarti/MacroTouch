@@ -1,7 +1,7 @@
 import socket
 import json
 
-STRUCTURE = {"position": [], "text": "str", "macro": "str"}
+STRUCTURE = {"position": [int,  int], "text": str, "macro":  str}
 
 
 class ConfigCreator:
