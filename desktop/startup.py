@@ -8,13 +8,9 @@ name = platform.node()
 system = platform.system()
 release = platform.release()
 
-data = {
-    "name":name,
-    "system":system,
-    "release":release
-}
+data = {"name": name, "system": system, "release": release}
 
 
 bytes_data = bytes(json.dumps(data), "UTF-8")
 
-sock.sendto(bytes_data,("192.168.0.17", 5300))
+sock.sendto(bytes_data, ("192.168.0.17", 5300))

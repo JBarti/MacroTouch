@@ -3,8 +3,8 @@ import threading
 import json
 from pykeyboard import PyKeyboard
 
-class MacroServer(threading.Thread):
 
+class MacroServer(threading.Thread):
     def __init__(self, family, sock_type, ip_address="0.0.0.0", port=5200):
         super(MacroServer, self).__init__()
         self.daemon = True

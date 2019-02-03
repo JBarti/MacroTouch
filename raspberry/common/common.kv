@@ -20,3 +20,23 @@
             #pos: 0, separator.center_y
             pos: self.pos[0], separator.center_y
             size: separator.width, self.thickness
+
+<Kan>
+
+<CToggleButton@ToggleButton>:
+    FloatLayout:
+        size: root.size
+        pos: root.pos
+        canvas.before: 
+            Color:
+                rgb: .129,.129,.129
+            Rectangle:
+                size: self.size
+                pos: self.pos
+    Label:
+        text:"DENIS"
+        pos_hint_x: .2
+        pos_hint_y: .2
+
+
+

@@ -11,7 +11,7 @@ import json
 
 Builder.load_file(os.path.join(os.path.dirname(__file__), "macros.kv"))
 
-Config.set('graphics', 'resizable', '0')
+Config.set("graphics", "resizable", "0")
 
 
 class MacrosOption(BoxLayout):
@@ -33,18 +33,16 @@ class ButtonGrid(GridLayout):
         self.add_macro_page()
 
     def add_macro_page(self):
-        with open('./data.json') as data:
+        with open("./data.json") as data:
             macros = json.load(data)["macro_pages"][0]["macros"]
             macros.sort(key=lambda macro: macro["position"][0])
 
             for rows in range(self.rows):
                 macro_row = list(
-                    filter(
-                        lambda macro: macro["position"][1] == rows,
-                        macros))
+                    filter(lambda macro: macro["position"][1] == rows, macros)
+                )
                 for cols in range(self.cols):
-                    visible = (len(macro_row) and
-                               macro_row[0]["position"][0] == cols)
+                    visible = len(macro_row) and macro_row[0]["position"][0] == cols
                     self.add_widget(Macro(button=visible))
                     if visible:
                         macro_row.pop(0)

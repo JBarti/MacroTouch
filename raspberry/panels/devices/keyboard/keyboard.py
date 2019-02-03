@@ -64,4 +64,3 @@ class Keyboard(BoxLayout):
     def keyboard_lowercase(self):
         for button in self.key_buttons:
             button.text = button.text.lower()
-
