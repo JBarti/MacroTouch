@@ -11,16 +11,17 @@ class MacroController:
 
     def send_key_press(self, key):
         with self.spawn_socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
-            key = bytes(key, "UTF-8")
+            dict_data = {"type":"RUN_MACRO", "payload":key}
 
-            sock.sendto(key, self.address)
+            data = bytes(json.dumps(dict_data), "UTF-8")
+
+            sock.sendto(data, self.address)
 
     def send_key_combo(self, list_of_macros):  # type(key_combo) --> string
         with self.spawn_socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
-            str_of_macros = json.dumps(list_of_macros)
 
-            sock.sendto(bytes(str_of_macros, "UTF-8"), self.address)
+            dict_data = {"type":"RUN_MACRO", "payload":list_of_macros}
 
+            data = bytes(json.dumps(dict_data), "UTF-8")
 
-# {type:"RUN_MACRO", payload:[]}
-# {type:"TAP_KEY", payload:""}
+            sock.sendto(data, self.address)

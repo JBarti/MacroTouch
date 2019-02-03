@@ -25,7 +25,7 @@ class MacroServer(threading.Thread):
                 request_type = json_data["type"]
                 request_data = json_data["payload"]
 
-                self.request_type[json_data["type"]](json_data["payload"])
+                self.request_type[request_type](request_data)
 
     def handle_macro(self, data):
         json_macro = json.loads(data)
