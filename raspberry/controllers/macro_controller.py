@@ -7,22 +7,16 @@ class MacroController:
         self.address = (ip_address, port)
 
     def spawn_socket(self, family, sock_type):
-        return socket(family, sock_type)
+        return socket.socket(family, sock_type)
 
     def send_key_press(self, key):
-        with self.spawn_socket(socket.AF_INET, socket.SOCK_DGRAM) as socket:
-            KEY = bytes(key, "UTF-8")
-
-            socket.sendto(KEY, self.address)
+        with self.spawn_socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+            dict_data = {"type": "RUN_MACRO", "payload": key}
+            data = bytes(json.dumps(dict_data), "UTF-8")
+            sock.sendto(data, self.address)
 
     def send_key_combo(self, list_of_macros):  # type(key_combo) --> string
-        with self.spawn_socket(socket.AF_INET, socket.SOCK_DGRAM) as socket:
-            #            list_of_macros = key_macros.split(",")
-            #            list_of_macros = [macro.strip().split("+") for macro in list_of_macros]
-            str_of_macros = json.dumps(list_of_macros)
-
-            socket.sendto(str_of_macros, self.address)
-
-
-# {type:"RUN_MACRO", payload:[]}
-
+        with self.spawn_socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+            dict_data = {"type": "RUN_MACRO", "payload": list_of_macros}
+            data = bytes(json.dumps(dict_data), "UTF-8")
+            sock.sendto(data, self.address)

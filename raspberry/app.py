@@ -9,7 +9,6 @@ from panels.apps import AppsOption
 from panels.widgets import WidgetsOption
 from panels.devices import DevicesOption
 from panels.macros import MacrosOption
-from server import Server
 from common import *
 
 

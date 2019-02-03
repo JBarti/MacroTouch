@@ -11,15 +11,21 @@ class MacroServer(threading.Thread):
         self.sock = socket.socket(family, sock_type)
         self.sock.bind((ip_address, port))
         self.keyboard = PyKeyboard()
+        self.request_type = {
+            "RUN_MACRO": self.handle_macro,
+            "TAP_KEY": self.keyboard.tap_key,
+        }
 
     def run(self):
         while True:
-            bytes_data = self.sock.recv(1024)
-            str_data = bytes_data.decode("ASCII")
-            if len(str_data) == 1:
-                self.keyboard.tap_key(str_data)
-                continue
-            self.handle_macro(str_data)
+            data = self.sock.recv(1024)
+            if data != "":
+                json_data = json.loads(data.decode("ASCII"))
+
+                request_type = json_data["type"]
+                request_data = json_data["payload"]
+
+                self.request_type[request_type](request_data)
 
     def handle_macro(self, data):
         json_macro = json.loads(data)

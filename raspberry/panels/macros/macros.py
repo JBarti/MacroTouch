@@ -46,3 +46,4 @@ class ButtonGrid(GridLayout):
                     self.add_widget(Macro(button=visible))
                     if visible:
                         macro_row.pop(0)
+
