@@ -1,17 +1,14 @@
 from kivy.lang import Builder
 import os
 
-from kivy.config import Config
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.stacklayout import StackLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.button import Button
-
+from common import MacroButton
 import json
 
 Builder.load_file(os.path.join(os.path.dirname(__file__), "macros.kv"))
-
-Config.set("graphics", "resizable", "0")
 
 
 class MacrosOption(BoxLayout):
@@ -22,7 +19,7 @@ class Macro(BoxLayout):
     def __init__(self, button=False, **kwargs):
         super(Macro, self).__init__(**kwargs)
         if button:
-            self.add_widget(Button(size_hint=[None, None], text="A"))
+            self.add_widget(MacroButton(size_hint=[None, None]))
 
 
 class ButtonGrid(GridLayout):
@@ -46,4 +43,3 @@ class ButtonGrid(GridLayout):
                     self.add_widget(Macro(button=visible))
                     if visible:
                         macro_row.pop(0)
-

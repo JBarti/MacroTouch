@@ -17,30 +17,38 @@ MainScreen:
         orientation: 'vertical'
         padding: [0,0,0,0]
         CToggleButton:
+            toggled: True
             text: "Apps"
             group: "option"
             size_hint_y: 0.1
-            on_press: content.switch("apps")
-        ToggleButton:
+            down: content.switch("apps")
+            on_press: 
+        CToggleButton:
             text: "Widgets"
             group: "option"
             size_hint_y: 0.1
-            on_press: content.switch("widgets")
-        ToggleButton:
+            down: content.switch("widgets")
+            on_press: 
+        CToggleButton:
             text: "Devices"
             group: "option"
             size_hint_y: 0.1
-            on_press: content.switch("devices")
-        ToggleButton:
+            down: content.switch("devices")
+            on_press: 
+        CToggleButton:
             text: "Macros"
             group: "option"
             size_hint_y: 0.1
-            on_press: content.switch("macros")
+            down: content.switch("macros")
+            on_press: 
         AnchorLayout:
             anchor_y: 'bottom'
             ToggleButton:
                 text: "CONFIG"
                 group: "option"
                 size_hint_y: 0.1
+    Seperator:
+        size_hint_y: 1
+        size_hint_x: 0
     Content:
         id: content

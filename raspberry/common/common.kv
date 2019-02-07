@@ -1,6 +1,7 @@
+#:import hex_to_color kivy.utils.get_color_from_hex
 #:kivy 1.10.1
 
-<DisplayText@Label>:
+<DisplayText>:
     size_hint_y: None
     text_size: self.width, None
     padding_x: 10
@@ -8,7 +9,7 @@
     font_name: "./fonts/Cairo/Cairo-Bold.ttf"
     text: self.text
 
-<Seperator@Widget>:
+<Seperator>:
     id: separator
     size_hint_y: 0
     height: 0.4
@@ -21,22 +22,74 @@
             pos: self.pos[0], separator.center_y
             size: separator.width, self.thickness
 
-<Kan>
 
-<CToggleButton@ToggleButton>:
+<ToggleButtonBackground@Widget>:
+    toggled: self.toggled
+    gray: '#212121'
+    purple: '#7f58c5'
+    canvas: 
+        Color:
+            rgb: hex_to_color(self.gray)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+        Color:
+            rgb: hex_to_color(self.purple if self.toggled else self.gray)
+        Rectangle:
+            size: self.size[0]/40, self.size[1]
+            pos: self.pos[0]+self.size[0]-5, self.pos[1]
+
+
+<CToggleButton>:
+    toggled: self.toggled
+    FloatLayout:
+        toggled: root.toggled
+        size: root.size
+        pos: root.pos
+        ToggleButtonBackground:
+            id: background
+            size: root.size
+            pos: root.pos
+            toggled: root.toggled
+        Label:
+            text: root.text
+            size_hint: 1,1
+            pos_hint: {"x":-.1, "y":.0}
+
+
+<MacroButtonBackground@Widget>:
+    pressed: self.pressed
+    gray: '#212121'
+    purple: '#7f58c5'
+    canvas:
+        Color:
+            rgb: hex_to_color(self.gray if self.pressed else self.purple)
+        Rectangle:
+            size: root.size
+            pos: root.pos
+        Color:
+            rgb: hex_to_color(self.gray)
+        Rectangle:
+            size: root.size[0]-4, root.size[1]-4
+            pos: root.pos[0]+2, root.pos[1]+2
+
+
+
+<MacroButton>:
+    text: "A"
     FloatLayout:
         size: root.size
         pos: root.pos
-        canvas.before: 
-            Color:
-                rgb: .129,.129,.129
-            Rectangle:
-                size: self.size
-                pos: self.pos
-    Label:
-        text:"DENIS"
-        pos_hint_x: .2
-        pos_hint_y: .2
+        MacroButtonBackground:
+            pressed: False
+            id: background
+            size: root.size
+            pos: root.pos
+        DisplayText:
+            text: "[size=12]"+root.text+"[/size]"
+            size_hint: 1,1
+            pos_hint: {"x":.36, "y":0}
 
+    
 
 

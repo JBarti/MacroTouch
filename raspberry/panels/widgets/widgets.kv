@@ -1,16 +1,35 @@
 #:kivy 1.10.1
+#:import hex_to_color kivy.utils.get_color_from_hex
 
 <WidgetsOption>:
     rows: 3
     orientation: 'vertical'
-    DisplayText:
-        height: 130
-        text: 
-            """
-            [color=#0094c6][size=50][font=./fonts/Cairo/Cairo-Black]Widgets[/font][/size][/color][size=18]  allow you graphically represent data comming from your PC
-            [/size]
-            """
-    Seperator:
+    BoxLayout:
+        orientation: 'vertical'
+        gray: '#212121'
+        size_hint_y: 0.3
+        canvas:
+            Color:
+                rgb: hex_to_color(self.gray)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        DisplayText:
+            padding: 30,0
+            height: 50
+            text: 
+                """
+                [color=#7f58c5][size=50][font=./fonts/Cairo/Cairo-Black]Widgets[/font][/size][/color][size=18]
+                [/size]
+                """
+        DisplayText:
+            padding: 30,0
+            height: 50
+            text:
+                """
+                allow you graphically represent data comming from your PC
+                """
+            
     ScrollView:
         GridLayout:
             padding: [15, 10, 0, 0]
