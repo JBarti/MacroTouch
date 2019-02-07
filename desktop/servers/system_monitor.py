@@ -1,6 +1,7 @@
 import threading
 import socket
 import json
+from utilities import SystemMonitor
 
 
 class MonitorServer(threading.Thread):
@@ -24,8 +25,8 @@ class MonitorServer(threading.Thread):
                     self.send_system_data(data)
 
     def get_system_data(self):
-        # HERE COMES THE CLASS FOR GETTING SYSTEM MONITOR DATA
-        data = {"penis": "my data"}
+        monitor = SystemMonitor()
+        data = monitor.get_system_data()
         json_data = json.dumps(data)
         return json_data
 
