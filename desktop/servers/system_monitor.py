@@ -2,13 +2,17 @@ import threading
 import socket
 import json
 
+
 class MonitorServer(threading.Thread):
     def __init__(self, family, sock_type, ip_address="0.0.0.0", port=5300):
         super(MonitorServer, self).__init__()
         self.address = (ip_address, port)
         self.sock = socket.socket(family, sock_type)
         self.sock.bind(self.address)
-        self.request_type = {"GET_SYSTEM_DATA": self.get_system_data}
+        self.request_type = {
+            "GET_SYSTEM_DATA": self.get_system_data,
+            "GET_DEVICE_NAME": self.get_device_name,
+        }
 
     def run(self):
         while True:
@@ -27,4 +31,7 @@ class MonitorServer(threading.Thread):
     def send_system_data(self, data):
         request = {"type": "SET_SYSTEM_DATA", "payload": data}
         bytes_data = bytes(json.dumps(request), "UTF-8")
-        self.sock.sendto(bytes_data, self.address)
+        self.sock.sendto(bytes_data, ("rpi_Address", 5300))
+
+    def get_device_name(self):
+        pass

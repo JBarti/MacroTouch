@@ -3,9 +3,9 @@ import threading
 import json
 
 
-class Client(threading.Thread):
+class MonitorController(threading.Thread):
     def __init__(self, family, sock_type, ip_address="0.0.0.0", port=5300):
-        super(Client, self).__init__()
+        super(MonitorController, self).__init__()
 
         self.address = (ip_address, port)
         self.sock = socket.socket(family, sock_type)
@@ -29,7 +29,7 @@ class Client(threading.Thread):
     def get_system_data(self):
         request = {type: "GET_SYSTEM_DATA"}
         bytes_data = bytes(json.dumps(request), "UTF-8")
-        self.sock.sendto(bytes_data, self.address)
+        self.sock.sendto(bytes_data, ("172.21.3.114", 5300))
 
     def set_system_data(self, payload):
         self.data["system_data"] = payload

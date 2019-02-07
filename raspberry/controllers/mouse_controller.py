@@ -2,7 +2,7 @@ import socket
 
 
 class MouseController:
-    def __init__(self, family, sock_type, ip_address="192.168.0.17", port=5100):
+    def __init__(self, family, sock_type, ip_address="172.21.3.114", port=5100):
         self.sock = socket.socket(family, sock_type)
         self.address = (ip_address, port)
 

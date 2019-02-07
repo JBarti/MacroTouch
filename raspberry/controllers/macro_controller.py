@@ -3,7 +3,7 @@ import json
 
 
 class MacroController:
-    def __init__(self, ip_address="192.168.0.17", port=5200):
+    def __init__(self, ip_address="172.21.3.114", port=5200):
         self.address = (ip_address, port)
 
     def spawn_socket(self, family, sock_type):
