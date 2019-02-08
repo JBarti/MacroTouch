@@ -57,4 +57,3 @@ class MonitorController(threading.Thread):
             if ip == local_rpi_ip or ip[-3:] == "255" or ip[-1:] == "0":
                 continue
             self.sock.sendto(bytes_data, (ip, 5300))
-
