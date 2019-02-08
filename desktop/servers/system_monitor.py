@@ -20,9 +20,14 @@ class MonitorServer(threading.Thread):
             if data != "":
                 json_data = json.loads(data.decode("ASCII"))
                 req_type = json_data["type"]
-                data = self.request_type[req_type]()
                 if req_type == "GET_SYSTEM_DATA":
+                    data = self.request_type[req_type]()
                     self.send_system_data(data)
+                else:
+                    self.sock.sendto(
+                        bytes(json.dumps({"type": "PC_ADDRESS"}), "UTF-8"),
+                        self.rpi_address,
+                    )
 
     def get_system_data(self):
         monitor = SystemMonitor()

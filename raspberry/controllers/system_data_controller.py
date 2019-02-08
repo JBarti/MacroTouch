@@ -26,21 +26,22 @@ class MonitorController(threading.Thread):
                 json_data = json.loads(data.decode("ASCII"))
 
                 req_type = json_data["type"]
-                req_data = json_data["payload"]
 
-                self.request_type[req_type](req_data)
+                if req_type == "SET_SYSTEM_DATA":
+                    req_data = json_data["payload"]
+                    self.request_type[req_type](req_data)
 
     def get_system_data(self):
         request = {"type": "GET_SYSTEM_DATA"}
         bytes_data = bytes(json.dumps(request), "UTF-8")
-        self.sock.sendto(bytes_data, ("172.21.3.114", 5300))
+        self.sock.sendto(bytes_data, self.pc_address)
 
     def set_system_data(self, payload):
         self.data["system_data"] = payload
 
     def find_pc_address(self):
         bytes_ip = check_output("hostname -I")
-        local_rpi_ip = bytes_ip.decode("ASCII")[:-1]
+        local_rpi_ip = bytes_ip.decode("ASCII")[:-1].strip()
         local_ip = ".".join(local_rpi_ip.split(".")[:-1]) + ".*"
         ip_string = check_output(["nmap", "-sP", local_ip])
         ips = " ".join(ip_string.split("\n")).split(" ")
@@ -51,5 +52,9 @@ class MonitorController(threading.Thread):
         bytes_data = bytes(json.dumps(request), "UTF-8")
 
         for ip in ips:
+            if ip[0] == "(":
+                ip = ip[1:-1]
+            if ip == local_rpi_ip or ip[-3:] == "255" or ip[-1:] == "0":
+                continue
             self.sock.sendto(bytes_data, (ip, 5300))
 
