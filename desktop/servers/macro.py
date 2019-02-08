@@ -7,7 +7,7 @@ from pykeyboard import PyKeyboard
 class MacroServer(threading.Thread):
     """
 
-    Klasa koja nasljeđuje od Thread klase
+    Klasa koja nasljeđuje od Thread klase, zadužna za izvršavanje makro naredbi
     
     """
 
