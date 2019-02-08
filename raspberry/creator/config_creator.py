@@ -104,14 +104,14 @@ class ConfigCreator:
         
         Return:
             [True, False] -- ovisno o točnosti podataka
+            
         """
 
         if isinstance(struct, dict) and isinstance(data, dict):
             if struct.keys() != data.keys():
                 return False
             return all(
-                k in data and self.check_data(data[k], struct[k])
-                for k in struct
+                k in data and self.check_data(data[k], struct[k]) for k in struct
             )
 
         if isinstance(struct, list) and isinstance(data, list):
