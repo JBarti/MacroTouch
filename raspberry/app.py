@@ -18,26 +18,34 @@ from kivy.core.window import Window
 
 Window.size = (1024, 600)
 
-
+# Definiranje veličine aplikacije na veličinu touch displaya
 Config.set("graphics", "width", "1024")
 Config.set("graphics", "height", "600")
 
 
-class BluetoothPending(BoxLayout):
-    pass
-
-
+# Glavni layout u kojem se nalazi ostatak aplikacije
 class MainLayout(BoxLayout):
     pass
 
 
 class MyApp(App):
+    """
+    Root klasa aplikacija
+    """
+
     def build(self):
-        # Server()
+        """
+        Prilikom pokretanja aplikacije na ekran se dodaje objekt klase MainLayout
+        """
         return MainLayout()
 
 
 class Content(BoxLayout):
+    """
+    Dio ekrana gdje se izmjenjuju paneli
+    """
+
+    # Dictionairy sa objektima svih mogućih panela
     screens = {
         "apps": AppsOption(),
         "devices": DevicesOption(),
@@ -54,6 +62,16 @@ class Content(BoxLayout):
         self.switch("apps")
 
     def switch(self, screen):
+        """Funkcije koja mijenja sadržaj content klase
+        
+        Arguments:
+            screen {objekt} -- objekt koji treba prikazati unutar contenta
+        
+        Returns
+            return_function {funkcija} -- potrebno je vratiti funkciju koja 
+                                          se kivy elementu prosljeđuje kao callback
+        """
+
         def return_function():
             try:
                 self.clear_widgets()
@@ -62,8 +80,6 @@ class Content(BoxLayout):
                 else:
                     self.add_widget(screen)
                     self.current_widget = screen
-                # TODO: FIX ANIMATION
-                # self.hide_show_animation.start(self.children[0])
             except Exception as err:
                 print(err)
                 self.add_widget(Label(text="Error"))

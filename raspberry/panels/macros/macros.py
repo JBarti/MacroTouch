@@ -16,20 +16,46 @@ class MacrosOption(BoxLayout):
 
 
 class Macro(BoxLayout):
+    """
+    Widget koji predstavlja jedan element
+    u mreži macroa
+    """
+
     def __init__(self, button=False, **kwargs):
+        """Priliko stvaranja elementa provjerava 
+        treba li sadržavati botun ili biti prazno polje
+        
+        Keyword Arguments:
+            button {bool} -- [određuje je li macro ima botun ili ne] (default: {False})
+        """
+
         super(Macro, self).__init__(**kwargs)
         if button:
             self.add_widget(MacroButton(size_hint=[None, None]))
 
 
 class ButtonGrid(GridLayout):
+    """
+    Mreža koja sadržava sve botuna
+    """
+
     def __init__(self, **kwargs):
+        """Predefinira broj redova i stupaca mreže
+        i generira mrežu
+        """
+
         super(ButtonGrid, self).__init__(**kwargs)
         self.cols = 12
         self.rows = 12
         self.add_macro_page()
 
     def add_macro_page(self):
+        """
+        Dohvaća podatke iz data.json filea
+        izdvaja sve macroe i generira njihov
+        prikaz
+        """
+
         with open("./data.json") as data:
             macros = json.load(data)["macro_pages"][0]["macros"]
             macros.sort(key=lambda macro: macro["position"][0])

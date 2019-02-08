@@ -14,14 +14,29 @@ class AppsOption(GridLayout):
 
 
 class CurrentApp(BoxLayout):
+    """
+    Prikazuje aplikaciju
+    koja se trenutno pokreće na računalu
+    """
+
     supported = BooleanProperty()
 
     def get_color(self):
+        """
+        Određuje naljepnice koja stoji uz 
+        pokrenutu aplikaciju
+        """
+
         if self.supported:
             return "#2ecc71"
         return "#e74c3c"
 
     def get_active_window(self):
+        """
+        Dohvaća ekran koji se trenutno pokreće
+        na računalu
+        """
+
         output, error = Popen(
             "node ./panels/apps/getWindowTitle.js".split(), stdout=PIPE
         ).communicate()
