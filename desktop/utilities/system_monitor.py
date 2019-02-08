@@ -93,6 +93,7 @@ class SystemMonitor:
 
         Return:
             [float] -- količina memorije u gb
+            
         """
 
         return round(byte_memory / math.pow(1024, 3), 1)
