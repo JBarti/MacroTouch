@@ -79,7 +79,13 @@ class MonitorServer(threading.Thread):
         Metoda koja se poziva kad je potrebno slati podatke o sistemu na MacroTouch.
         
         Argumenti:
-            data {dict} -- objekt rječnika koji sadrži sve podatke o sistemu
+            data {dict} -- {
+            "cpus": [int, int, int, int],
+            "temp": int,
+            "memory": {"total": int, "used": int },
+            "disk": {"total": int, "used": int }
+        } 
+        objekt rječnika koji sadrži sve podatke o sistemu
 
         """
 

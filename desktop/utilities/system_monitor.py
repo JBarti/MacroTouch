@@ -34,8 +34,7 @@ class SystemMonitor:
         Metoda koja dobavlja postotke korištenosti pojedine jezgre procesora
         
         Return:
-            [list] -- lista koja sadrži podatke o korištenju jezgara
-        
+            [list] -- [int, int, int, int] postotak korištenja pojedinog cpua
         """
 
         return [cpu * 10 for cpu in psutil.cpu_percent(percpu=True)]
@@ -59,7 +58,7 @@ class SystemMonitor:
         Metoda koja dobavlja trenutno korištenu količinu radne meorije
         
         Return:
-            [dict] -- objekt rječnika koji sadrži podatke o korištenju RAM-a 
+            [dict] -- {"used":int, "total":int} objekt rječnika koji sadrži podatke o korištenju RAM-a 
         
         """
 
@@ -74,7 +73,7 @@ class SystemMonitor:
         Metoda koja dobavlja količinu memorije zauzete na disku
         
         Return:
-            [dict] -- objekt rječnika koji sadrži podatke o korišteju stalne memorije
+            [dict] -- {"used":int, "total":int} objekt rječnika koji sadrži podatke o korišteju stalne memorije
         
         """
 
@@ -93,7 +92,7 @@ class SystemMonitor:
 
         Return:
             [float] -- količina memorije u gb
-            
+
         """
 
         return round(byte_memory / math.pow(1024, 3), 1)

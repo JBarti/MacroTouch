@@ -59,7 +59,7 @@ class MacroController:
 
         
         Argumenti:
-            list_of_macros {list} -- lista listi, gdje svaka podlista djeluje kao makro naredba
+            list_of_macros {list} -- [[str, str, str], [str,str]]
         """
 
         with self.spawn_socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:

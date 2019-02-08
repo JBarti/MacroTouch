@@ -5,7 +5,26 @@ from subprocess import check_output
 
 
 class MonitorController(threading.Thread):
+    """
+    
+    Klasa koja nasljeđuje od Threada. Šalje zahtjeve i dobiva povratni zahtjev s podacima o korištenju 
+    
+    """
+
     def __init__(self, family, sock_type, ip_address="0.0.0.0", port=5300):
+        """
+        
+        Inicijalna metoda klase MonitorController. Stvara svoj socket i binda ga na danu adresu.
+        
+        Argumenti:
+            family {enum AddressFamily} -- tip adrese korišten za sockete
+            sock_type {[type]} -- port na koji će socket biti vezan
+        
+        Keyword Argumenti:
+            ip_address {str} -- ip adresa na koju će socket biti vezan (default: {"0.0.0.0"})
+            port {int} -- tip socketa koji će se koristiti (default: {5300})
+        """
+
         super(MonitorController, self).__init__()
 
         self.address = (ip_address, port)
@@ -17,6 +36,13 @@ class MonitorController(threading.Thread):
         self.request_type = {"SET_SYSTEM_DATA": self.set_system_data}
 
     def run(self):
+        """
+        
+        Metoda run pokreće se pri pokretanju threada.
+        Prima zahtjeve na socket klase te poziva funkciju koja će obraditi dobivene podatke
+
+        """
+
         while True:
             data, addr = self.sock.recvfrom(1024)
 
@@ -32,14 +58,41 @@ class MonitorController(threading.Thread):
                     self.request_type[req_type](req_data)
 
     def get_system_data(self):
+        """
+        
+        Metoda koja šalje zahtjev na računalo kako bi dobila povratni zahtjev s podacima System monitora
+
+        """
+
         request = {"type": "GET_SYSTEM_DATA"}
         bytes_data = bytes(json.dumps(request), "UTF-8")
         self.sock.sendto(bytes_data, self.pc_address)
 
     def set_system_data(self, payload):
+        """
+        
+        Metoda koja postavlja svojstvo klase na danu vrijednost payloada.
+        
+        Argumenti:
+            payload {dict} -- {
+            "cpus": [int, int, int, int],
+            "temp": int,
+            "memory": {"total": int, "used": int },
+            "disk": {"total": int, "used": int }
+        }
+        """
+
         self.data["system_data"] = payload
 
     def find_pc_address(self):
+        """
+        
+        Metoda klase koja pretragom lokalne mreže pronalazi
+        računalo na koje se korisnik može spojiti te izmjenjuje ip adrese s njim
+        kako biomogućili daljnju komunikaciju
+
+        """
+
         bytes_ip = check_output("hostname -I")
         local_rpi_ip = bytes_ip.decode("ASCII")[:-1].strip()
         local_ip = ".".join(local_rpi_ip.split(".")[:-1]) + ".*"

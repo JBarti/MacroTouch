@@ -8,7 +8,9 @@ class MouseController:
 
     """
 
-    def __init__(self, family, sock_type, ip_address="172.21.3.114", port=5100):
+    def __init__(
+        self, family, sock_type, ip_address="172.21.3.114", port=5100
+    ):
         """
         
         Inicijalna metoda klase MouseController. Stvara svoj socket
@@ -31,7 +33,7 @@ class MouseController:
         Metoda klase koja se bavi slanjem lokacije miša na korisničko računalo
         
         Argumenti:
-            location {list} -- list of two positions which represent current mouse position
+            location {list} -- [int, int]
             
         """
 

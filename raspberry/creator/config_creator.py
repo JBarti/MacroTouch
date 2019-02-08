@@ -36,12 +36,25 @@ STRUCTURE = {"position": [int, int], "text": str, "macro": str}
 
 
 class ConfigCreator:
+    """
+    
+    Klasa koja služi stvaranju i formatiranju novih makro naredbi
+    
+    """
+
     def __init__(self):
         pass
 
-    def save_macro(
-        self, macro_data
-    ):  ####  macro_data is dict : { "position":[int, int], "text":str, "macro":str }
+    def save_macro(self, macro_data):
+        """
+        
+        Metoda odgovorna za pohranjivanje makro naredbe u json file
+        
+        Argument:
+            macro_data {dict} -- {"text": str, "position": [int, int], "macro": str}
+
+        """
+
         with open("../../data.json", "r") as jsonFile:
             data = json.load(jsonFile)
 
@@ -56,6 +69,17 @@ class ConfigCreator:
             json.dump(data, jsonFile)
 
     def parse_macro(self, payload):
+        """
+        
+        Metoda koja se bavi parsiranjem macroa u nešto kasnije primjenjivo
+        
+        Argumenti:
+            payload {dict} -- {"text": str, "position": [int, int], "macro": str}
+        
+        Return:
+            [dict, error] -- same structure dict as came in  or erron on exceptions
+            
+        """
 
         if not self.check_data(payload):
             return False
@@ -74,11 +98,20 @@ class ConfigCreator:
 
     def check_data(self, data, struct=STRUCTURE):
 
+        """
+        
+        Metoda koja prije parsiranja provjerava podatke, tj. dali su objekti rječnika strukturno dobri
+        
+        Return:
+            [True, False] -- ovisno o točnosti podataka
+        """
+
         if isinstance(struct, dict) and isinstance(data, dict):
             if struct.keys() != data.keys():
                 return False
             return all(
-                k in data and self.check_data(data[k], struct[k]) for k in struct
+                k in data and self.check_data(data[k], struct[k])
+                for k in struct
             )
 
         if isinstance(struct, list) and isinstance(data, list):
