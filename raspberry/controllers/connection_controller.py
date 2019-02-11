@@ -28,8 +28,9 @@ class ConnectionController:
         sleep(1)
         bytes_ip = check_output(["hostname", "-I"])
         local_rpi_ip = bytes_ip.decode("ASCII")[:-1].strip()
-        local_ip = ".".join(local_rpi_ip.split(".")[:-1]) + ".*"
-        ip_string = check_output(["nmap", "-sP", local_ip]).decode("ASCII")
+        local_ip = ".".join(local_rpi_ip.split(".")[:-1])
+        ip_string = check_output(
+            ["nmap", "-sP", local_ip+".*"]).decode("ASCII")
         ips = " ".join(ip_string.split("\n")).split(" ")
         ips = [word for word in ips if local_ip in word]
 
