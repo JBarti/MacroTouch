@@ -36,33 +36,21 @@ class MacroController:
 
         return socket.socket(family, sock_type)
 
-    def send_key_press(self, key):
-        """
-
-        Metoda koja prima tipku i šale zahtjev za pritiskom te tipke na korisničkom računalu
-
-        Arguments:
-            key {str} -- numerička oznaka tipke ili samo slovo tipke
-
-        """
-
-        with self.spawn_socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
-
-            dict_data = {"type": "RUN_MACRO", "payload": key}
-            data = bytes(json.dumps(dict_data), "UTF-8")
-            sock.sendto(data, self.address)
-
-    def send_key_combo(self, list_of_macros):
+    def send_macro(self, macro):
         """
 
         Metoda koja prima niz tipki i šale zahtjev za pritiskom tih tipki na korisničkom računalu
 
 
         Argumenti:
-            list_of_macros {list} -- [[str, str, str], [str,str]]
+            list_of_macros {list/str} -- [[str, str, str], [str,str]]/str
         """
 
         with self.spawn_socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
-            dict_data = {"type": "RUN_MACRO", "payload": list_of_macros}
+            if isinstance(macro, list):
+                dict_data = {"type": "RUN_MACRO", "payload": macro}
+            else:
+                dict_data = {"type": "TAP_KEY", "payload": macro}
+
             data = bytes(json.dumps(dict_data), "UTF-8")
             sock.sendto(data, self.address)

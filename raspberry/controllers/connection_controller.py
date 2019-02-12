@@ -30,7 +30,7 @@ class ConnectionController:
         local_rpi_ip = bytes_ip.decode("ASCII")[:-1].strip()
         local_ip = ".".join(local_rpi_ip.split(".")[:-1])
         ip_string = check_output(
-            ["nmap", "-sP", local_ip+".*"]).decode("ASCII")
+            ["nmap", "-sL", local_ip+".*"]).decode("ASCII")
         ips = " ".join(ip_string.split("\n")).split(" ")
         ips = [word for word in ips if local_ip in word]
 
@@ -41,6 +41,6 @@ class ConnectionController:
         for ip in ips:
             if ip[0] == "(":
                 ip = ip[1:-1]
-            if ip == local_rpi_ip or ip[-3:] == "255" or ip[-1:] == "0":
+            if ip == local_rpi_ip or ip[-3:] == "255" or ip[-2:] == ".0":
                 continue
             self.sock.sendto(bytes_data, (ip, 5010))

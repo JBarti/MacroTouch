@@ -43,8 +43,8 @@ class MonitorServer(threading.Thread):
         """
 
         while True:
-            data, addr = self.sock.recvfrom(1024)
-            if data != "":
+            data, _ = self.sock.recvfrom(1024)
+            if data != b"":
                 json_data = json.loads(data.decode("ASCII"))
                 req_type = json_data["type"]
                 data = self.request_type[req_type]()
