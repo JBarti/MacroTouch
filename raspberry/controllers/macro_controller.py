@@ -6,30 +6,30 @@ class MacroController:
     """
 
     Klasa zadužena za slanje zahtjeva za pritisak ključeva na korisničko računalo
-    
+
     """
 
-    def __init__(self, ip_address="172.21.3.114", port=5200):
+    def __init__(self, pc_host, port=5200):
         """
-        
+
         Inicijalna metoda klase
-        
+
         Keyword Argumenti:
             ip_address {str} -- ip adresa na koju će socket biti vezan (default: {"172.21.3.114"})
             port {int} -- tip socketa koji će se koristiti (default: {5200})
         """
 
-        self.address = (ip_address, port)
+        self.address = (pc_host, port)
 
     def spawn_socket(self, family, sock_type):
         """
-        
+
         Metoda koja stvara objekt socketa
-        
+
         Argumenti:
             family {enum AddressFamily} -- tip adrese korišten za sockete 
             sock_type {enum SocketType} -- port na koji će socket biti vezan 
-        
+
         Return:
             [socket] -- virtualni socket
         """
@@ -38,9 +38,9 @@ class MacroController:
 
     def send_key_press(self, key):
         """
-        
+
         Metoda koja prima tipku i šale zahtjev za pritiskom te tipke na korisničkom računalu
-        
+
         Arguments:
             key {str} -- numerička oznaka tipke ili samo slovo tipke
 
@@ -57,7 +57,7 @@ class MacroController:
 
         Metoda koja prima niz tipki i šale zahtjev za pritiskom tih tipki na korisničkom računalu
 
-        
+
         Argumenti:
             list_of_macros {list} -- [[str, str, str], [str,str]]
         """
