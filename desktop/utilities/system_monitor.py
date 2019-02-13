@@ -4,9 +4,9 @@ import math
 
 class SystemMonitor:
     """
-    
+
     Klasa koja služi za dobavljanje podataka o sistemu
-    
+
     """
 
     def __init__(self):
@@ -14,9 +14,9 @@ class SystemMonitor:
 
     def get_system_data(self):
         """
-        
+
         Metoda koja okuplja sve privatne metode i izvlači podatke iz njih.
-        
+
         Return:
             [dict] -- objekt rječnika koji sadrži sve podatke o sistemu
         """
@@ -30,9 +30,9 @@ class SystemMonitor:
 
     def __get_cpus(self):
         """
-        
+
         Metoda koja dobavlja postotke korištenosti pojedine jezgre procesora
-        
+
         Return:
             [list] -- [int, int, int, int] postotak korištenja pojedinog cpua
         """
@@ -41,25 +41,28 @@ class SystemMonitor:
 
     def __get_temp(self):
         """
-        
+
         Metoda koja dobavlja temperaturu jezgara
-        
+
         Return:
             [int] -- temperatura korištenih jezgri
-        
-        """
 
-        temps = [temp for temp in psutil.sensors_temperatures()["coretemp"]]
+        """
+        try:
+            temps = [temp for temp in psutil.sensors_temperatures()[
+                "coretemp"]]
+        except:
+            temps = []
         return max([temp.current for temp in temps])
 
     def __get_memory(self):
         """
-        
+
         Metoda koja dobavlja trenutno korištenu količinu radne meorije
-        
+
         Return:
             [dict] -- {"used":int, "total":int} objekt rječnika koji sadrži podatke o korištenju RAM-a 
-        
+
         """
 
         memory = psutil.virtual_memory()
@@ -71,10 +74,10 @@ class SystemMonitor:
         """
 
         Metoda koja dobavlja količinu memorije zauzete na disku
-        
+
         Return:
             [dict] -- {"used":int, "total":int} objekt rječnika koji sadrži podatke o korišteju stalne memorije
-        
+
         """
 
         disk = psutil.disk_usage("/")
@@ -86,7 +89,7 @@ class SystemMonitor:
         """
 
         Metoda koja pretvara byteove u kilobyteove
-        
+
         Argumenti:
             byte_memory {int} -- veličina memorije u byteovima
 

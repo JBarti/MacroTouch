@@ -46,7 +46,7 @@ class MonitorController(threading.Thread):
         while True:
             data, _ = self.sock.recvfrom(1024)
 
-            if data != "":
+            if data != b"":
                 json_data = json.loads(data.decode("ASCII"))
                 req_type = json_data["type"]
                 req_data = json_data["payload"]
