@@ -71,6 +71,9 @@ class MacroButton(Button):
     def click(self):
         pass
 
+    def str(self, text):
+        return str(text)
+
     def update(self, pressed):
         """
         Ažurira sliku botuna
@@ -100,3 +103,4 @@ class Seperator(Widget):
 
 class DisplayText(Label):
     pass
+

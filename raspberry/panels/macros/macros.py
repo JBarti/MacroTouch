@@ -45,7 +45,7 @@ class ButtonGrid(GridLayout):
         """
 
         super(ButtonGrid, self).__init__(**kwargs)
-        self.cols = 12
+        self.cols = 6
         self.rows = 12
         self.add_macro_page()
 

@@ -1,19 +1,22 @@
 #:kivy 1.10.1
-#: import TreeViewLabel kivy.uix.treeview.TreeViewLabel
+#:import TreeViewLabel kivy.uix.treeview.TreeViewLabel
+#:import hex_to_color kivy.utils.get_color_from_hex
 
 <Macro@BoxLayout>:
     orientation: "horizontal"
     size_hint: None, None
     width: self.height
     height: root.height
+    gray: "#1515155"
+    light_gray: "#252525"
     canvas:
         Color:
-            rgb: 0.2, .2, 0.2
+            rgb: hex_to_color(self.gray)
         Rectangle:
             pos: self.pos
             size: self.size
         Color:
-            rgb: 0,0,0
+            rgb: hex_to_color(self.light_gray)
         Rectangle:
             pos: (self.pos[0]+1, self.pos[1]+1)
             size: (self.size[0]-2, self.size[1]-2)

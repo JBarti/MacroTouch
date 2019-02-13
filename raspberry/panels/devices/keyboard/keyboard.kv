@@ -3,21 +3,27 @@
 <Key>:
     size_hint_x: None
     size_hint_y: None
-    width: 60
-    height: 70
+    width: 112-38
+    height: 152-60
+    txt_size: 25
+    txt_pos: {"x": .30, "y":0}
     
 <Spacebar>:
     size_hint_x: None
     width: 450
+    height: 50
+    text: ""
     
 <KeyRow>:
     size_hint_y: None
     size_hint_x: 1
     margin: None
     width: root.width
-    spacing: 2
+    spacing: 10
     height: self.minimum_height + 2
 
 <Keyboard>:
     size_hint_y: None
     size_hint_x: 1
+    spacing: 10
+    padding: [0,0,0,40]
