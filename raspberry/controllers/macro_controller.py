@@ -49,8 +49,6 @@ class MacroController:
         with self.spawn_socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
             if isinstance(data, list):
                 dict_data = {"type": "RUN_data", "payload": data}
-            elif len(data) == 1:
-                dict_data = {"type": "TAP_KEY", "payload": data}
             else:
                 dict_data = {"type": "TYPE_TEXT", "payload": data}
 
