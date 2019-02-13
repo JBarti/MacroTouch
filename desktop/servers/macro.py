@@ -64,7 +64,6 @@ class MacroServer(threading.Thread):
         self.sock.bind((ip_address, port))
         self.request_type = {
             "RUN_MACRO": self.handle_macro,
-            "TAP_KEY": k.tap_key,
             "TYPE_TEXT": self.type_text
         }
 
