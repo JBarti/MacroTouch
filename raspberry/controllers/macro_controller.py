@@ -36,21 +36,23 @@ class MacroController:
 
         return socket.socket(family, sock_type)
 
-    def send_macro(self, macro):
+    def send_data(self, data):
         """
 
         Metoda koja prima niz tipki i šale zahtjev za pritiskom tih tipki na korisničkom računalu
 
 
         Argumenti:
-            list_of_macros {list/str} -- [[str, str, str], [str,str]]/str
+            data {list/str} -- [[str, str, str], [str,str]]/str
         """
 
         with self.spawn_socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
-            if isinstance(macro, list):
-                dict_data = {"type": "RUN_MACRO", "payload": macro}
+            if isinstance(data, list):
+                dict_data = {"type": "RUN_data", "payload": data}
+            elif len(data) == 1:
+                dict_data = {"type": "TAP_KEY", "payload": data}
             else:
-                dict_data = {"type": "TAP_KEY", "payload": macro}
+                dict_data = {"type": "TYPE_TEXT", "payload": data}
 
-            data = bytes(json.dumps(dict_data), "UTF-8")
-            sock.sendto(data, self.address)
+            bytes_data = bytes(json.dumps(dict_data), "UTF-8")
+            sock.sendto(bytes_data, self.address)

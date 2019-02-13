@@ -6,6 +6,8 @@ from pykeyboard import PyKeyboard
 k = PyKeyboard()
 
 SPECIAL_KEYS_DICT = {
+    "SPACEBAR": k.space,
+    "ENTER": k.enter_key,
     "CTRL": k.control_key,
     "ALT": k.alt_key,
     "F1": k.function_keys[1],
@@ -63,6 +65,7 @@ class MacroServer(threading.Thread):
         self.request_type = {
             "RUN_MACRO": self.handle_macro,
             "TAP_KEY": k.tap_key,
+            "TYPE_TEXT": self.type_text
         }
 
     def run(self):
@@ -82,6 +85,10 @@ class MacroServer(threading.Thread):
                 request_data = json_data["payload"]
 
                 self.request_type[request_type](request_data)
+
+    def type_text(self, data):
+        for letter in data:
+            k.tap_key(letter)
 
     def handle_macro(self, data):
         """
