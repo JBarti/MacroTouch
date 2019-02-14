@@ -51,9 +51,9 @@ class SystemMonitor:
         try:
             temps = [temp for temp in psutil.sensors_temperatures()[
                 "coretemp"]]
+            return max([temp.current for temp in temps])
         except:
-            temps = []
-        return max([temp.current for temp in temps])
+            return 0
 
     def __get_memory(self):
         """
