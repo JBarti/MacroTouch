@@ -16,10 +16,10 @@ from kivy.core.window import Window
 
 
 Window.size = (1024, 600)
-
 # Definiranje veličine aplikacije na veličinu touch displaya
 Config.set("graphics", "width", "1024")
 Config.set("graphics", "height", "600")
+Window.fullscreen = True
 
 
 # Glavni layout u kojem se nalazi ostatak aplikacije
