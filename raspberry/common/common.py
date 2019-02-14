@@ -107,4 +107,3 @@ class Seperator(Widget):
 
 class DisplayText(Label):
     pass
-
