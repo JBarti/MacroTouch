@@ -3,28 +3,23 @@
     {
       "name": "Page1",
       "macros": [
-        {
-          "position": [2, 1],
-          "text": "A",
-          "macro": "A+b"
-        },
-        {
-          "position": [1, 2],
-          "text": "A",
-          "macro": "A+b"
-        },
-        {
-          "position": [4, 3],
-          "text": "A",
-          "macro": "A+b"
-        },
-        {
-          "position": [2, 4],
-          "text": "A",
-          "macro": "A+b"
-        }
+        { "position": [2, 1], "text": "A", "macro": "A+b" },
+        { "position": [1, 2], "text": "A", "macro": "A+b" },
+        { "position": [4, 3], "text": "A", "macro": "A+b" },
+        { "position": [2, 4], "text": "A", "macro": "A+b" },
+        { "position": [3, 1], "text": "", "macro": "" },
+        { "position": [0, 3], "text": "", "macro": "" },
+        { "position": [1, 8], "text": "", "macro": "" },
+        { "position": [3, 6], "text": "sflknfkds", "macro": "" },
+        { "position": [4, 7], "text": "Drm", "macro": "" }
       ]
     },
-    { "name": "Page2", "macros": [] }
+    {
+      "name": "Page2",
+      "macros": [
+        { "position": [1, 2], "text": "cssafas", "macro": "" },
+        { "position": [0, 0], "text": "", "macro": "" }
+      ]
+    }
   ]
 }

@@ -11,8 +11,7 @@ from panels.apps import AppsOption
 from panels.widgets import WidgetsOption
 from panels.devices import DevicesOption
 from panels.macros import MacrosOption
-from common import Seperator, DisplayText, CToggleButton
-from common import CToggleButton
+from common import Seperator, DisplayText, CToggleButton, MacroButton
 from kivy.core.window import Window
 
 
@@ -33,6 +32,8 @@ class MyApp(App):
     Root klasa aplikacija
     """
 
+    MACRO_PAGE = None
+
     def build(self):
         """
         Prilikom pokretanja aplikacije na ekran se dodaje objekt klase MainLayout
@@ -45,14 +46,6 @@ class Content(BoxLayout):
     Dio ekrana gdje se izmjenjuju paneli
     """
 
-    # Dictionairy sa objektima svih mogućih panela
-    screens = {
-        "apps": AppsOption(),
-        "devices": DevicesOption(),
-        "widgets": WidgetsOption(),
-        "macros": MacrosOption(),
-    }
-
     hide_show_animation = Animation(opacity=0.2, duration=0) + Animation(
         opacity=1, duration=0.1
     )
@@ -60,6 +53,13 @@ class Content(BoxLayout):
     def __init__(self, **kwargs):
         super(Content, self).__init__(**kwargs)
         self.switch("apps")
+        # Dictionairy sa objektima svih mogućih panela
+        self.screens = {
+            "apps": AppsOption(),
+            "devices": DevicesOption(self.switch),
+            "widgets": WidgetsOption(self.switch),
+            "macros": MacrosOption(),
+        }
 
     def switch(self, screen):
         """Funkcije koja mijenja sadržaj content klase

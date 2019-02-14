@@ -29,30 +29,12 @@
                 """
                 allow you graphically represent data comming from your PC
                 """
-            
     ScrollView:
-        GridLayout:
-            padding: [15, 10, 0, 0]
-            row_default_height: 70
-            cols: 2
-            size_hint_y: None
-            size_hint_x: 1
-            height: self.minimum_height
-            SupportedWidget:
-            SupportedWidget:
-            SupportedWidget:
-            SupportedWidget:
-            SupportedWidget:
-            SupportedWidget:
-            SupportedWidget:
-            SupportedWidget:
-            SupportedWidget:
-            SupportedWidget:
-            SupportedWidget:
-            SupportedWidget:
-            SupportedWidget:
-            SupportedWidget:
-
+        StackLayout:
+            orientation: "lr-tb"
+            padding: [20,20,10,10]
+            spacing: 10
+            id: widgets
 
 
 <SupportedWidget@BoxLayout>:
@@ -77,3 +59,7 @@
         size_hint_y: 1
         padding_x: 20
         text: "[size=18]System Monitor[/size]"
+
+<ButtonImage@Image>
+    size_hint_y: 0.5
+    size_hint_x: None

@@ -1,0 +1,41 @@
+#:import hex_to_color kivy.utils.get_color_from_hex
+#:kivy 1.10.1
+
+<SystemMonitor@BoxLayout>:
+    orientation: "vertical"
+    CPUUsage:
+
+<CPUUsage@StackLayout>
+    orientation: "lr-tb"
+    DisplayText:
+        text: "1"
+        size_hint: None, 0.05
+        width: 50
+    StackLayout:
+        gray: '#151515'
+        size_hint: 0.4, 0.05
+        spacing: 5
+        canvas:
+            Color:
+                rgb: hex_to_color(self.gray)
+            Rectangle: 
+                size: self.size
+                pos: self.pos
+        UsageBlock:
+        UsageBlock:
+        UsageBlock:
+
+
+        
+<UsageBlock@Widget>
+    purple: '#7f58c5'
+    pos: root.pos
+    size_hint: 0.04, 1
+    canvas: 
+        Color: 
+            rgb: hex_to_color(self.purple)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    

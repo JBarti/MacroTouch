@@ -77,10 +77,11 @@
 
 
 <MacroButton>:
-    text: "A"
+    text: ""
     txt_size: 12
-    txt_pos: {"x":.36, "y":0}
+    txt_pos: {"center_x":.5, "center_y":.5}
     FloatLayout:
+        id: container
         size: root.size
         pos: root.pos
         MacroButtonBackground:
@@ -93,6 +94,7 @@
             text: "[size="+root.str(self.txt_size)+"]"+root.text+"[/size]"
             size_hint: 1,1
             pos_hint: root.txt_pos
+            halign: "center"
 
     
 

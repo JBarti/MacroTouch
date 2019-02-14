@@ -2,12 +2,31 @@
 
 <AppsOption>:
     rows:6
-    DisplayText:
-        text: 
-            """
-            [color=#0094c6][size=50][font=./fonts/Cairo/Cairo-Black]Apps[/font][/size][/color][size=18]  panel displays the list of apps the device currently supports
-            [/size]
-            """
+    BoxLayout:
+        orientation: 'vertical'
+        gray: '#1515155'
+        size_hint_y: 0.3
+        canvas:
+            Color:
+                rgb: hex_to_color(self.gray)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        DisplayText:
+            padding: 30,0
+            height: 50
+            text: 
+                """
+                [color=#7f58c5][size=50][font=./fonts/Cairo/Cairo-Black]Apps[/font][/size][/color][size=18]
+                [/size]
+                """
+        DisplayText:
+            padding: 30,0
+            height: 50
+            text:
+                """
+                Panel displays the list of apps the device currently supports
+                """
     Seperator:
     CurrentApp:
     Seperator:

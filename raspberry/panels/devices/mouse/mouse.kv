@@ -1,4 +1,5 @@
 #:kivy 1.10.1
+#:import hex_to_color kivy.utils.get_color_from_hex
 
 <MouseButton@Button>:
     size_hint_x: 0.5
@@ -6,13 +7,20 @@
     height: 40
 
 <Mouse>:
+    light_gray: '#202020'
+    purple: '#7f58c5'
     canvas:
         Color:
-            rgb: 0x26 / 255.0, 0x32 / 255.0, 0x38 / 255.0
+            rgb: hex_to_color(self.purple)
         Rectangle:
             id: touchpad
-            pos: self.pos
-            size: self.size
+            pos: self.pos[0], self.pos[1]+40
+            size: self.size[0], self.size[1]-40
+        Color:
+            rgb: hex_to_color(self.light_gray)
+        Rectangle:
+            pos: self.pos[0]+5, self.pos[1]+45
+            size: self.size[0]-10,self.size[1]-50
     orientation: "horizontal"
     MouseButton:
         id: left_click
