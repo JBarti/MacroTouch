@@ -19,7 +19,7 @@ class MacroController:
             port {int} -- tip socketa koji će se koristiti (default: {5200})
         """
 
-        with open("../data.json", "r") as jsonFile:
+        with open("./../data.json", "r") as jsonFile:
             data = json.load(jsonFile)
         
         self.address = (data["pc_host"], port)

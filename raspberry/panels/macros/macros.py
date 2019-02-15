@@ -56,7 +56,7 @@ class ButtonGrid(GridLayout):
         prikaz
         """
 
-        with open("./data.json") as data:
+        with open("../../../data.json") as data:
             macros = json.load(data)["macro_pages"][0]["macros"]
             macros.sort(key=lambda macro: macro["position"][0])
 

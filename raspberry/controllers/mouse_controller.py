@@ -23,7 +23,7 @@ class MouseController:
         """
 
         self.sock = socket.socket(family, sock_type)
-        with open("../data.json", "r") as jsonFile:
+        with open("./../data.json", "r") as jsonFile:
             data = json.load(jsonFile)
         
         self.address = (data["pc_host"], port)
