@@ -25,7 +25,7 @@ class ConfigCreator:
 
         """
 
-        with open("../../data.json", "r") as jsonFile:
+        with open("../data.json", "r") as jsonFile:
             data = json.load(jsonFile)
 
         valid = self.check_data(macro_data)

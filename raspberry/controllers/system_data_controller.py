@@ -27,7 +27,7 @@ class MonitorController(threading.Thread):
 
         super(MonitorController, self).__init__()
 
-        with open("../../data.json", "r") as jsonFile:
+        with open("../data.json", "r") as jsonFile:
             data = json.load(jsonFile)
         
         self.pc_address = (data["pc_host"], port)
