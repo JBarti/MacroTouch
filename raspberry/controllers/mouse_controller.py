@@ -1,5 +1,5 @@
 import socket
-
+import json
 
 class MouseController:
     """
@@ -23,7 +23,10 @@ class MouseController:
         """
 
         self.sock = socket.socket(family, sock_type)
-        self.address = (pc_host, port)
+        with open("../../data.json", "r") as jsonFile:
+            data = json.load(jsonFile)
+        
+        self.address = (data["pc_host"], port)
 
     def send_location_data(self, location):
         """

@@ -15,7 +15,14 @@ class ConnectionController:
         thread = Thread(target=self.find_pc_address)
         thread.start()
         _, addr = self.sock.recvfrom(1024)
-        return addr[0]
+        with open("../../data.json", "r") as jsonFile:
+            data = json.load(jsonFile)
+        
+        data["pc_host"] = addr
+
+        with open("../../data.json", "w") as jsonFile:
+            json.dump(data,jsonFile)
+
 
     def find_pc_address(self):
         """

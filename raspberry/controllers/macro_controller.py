@@ -9,7 +9,7 @@ class MacroController:
 
     """
 
-    def __init__(self, pc_host, port=5200):
+    def __init__(self, port=5200):
         """
 
         Inicijalna metoda klase
@@ -19,7 +19,10 @@ class MacroController:
             port {int} -- tip socketa koji će se koristiti (default: {5200})
         """
 
-        self.address = (pc_host, port)
+        with open("../../data.json", "r") as jsonFile:
+            data = json.load(jsonFile)
+        
+        self.address = (data["pc_host"], port)
 
     def spawn_socket(self, family, sock_type):
         """
