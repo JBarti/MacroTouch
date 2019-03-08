@@ -1,6 +1,7 @@
 import socket
 import json
 
+
 class MouseController:
     """
 
@@ -8,7 +9,7 @@ class MouseController:
 
     """
 
-    def __init__(self, family, sock_type, pc_host, port=5100):
+    def __init__(self, family, sock_type, port=5005):
         """
 
         Inicijalna metoda klase MouseController. Stvara svoj socket
@@ -23,9 +24,8 @@ class MouseController:
         """
 
         self.sock = socket.socket(family, sock_type)
-        with open("./../data.json", "r") as jsonFile:
+        with open("./data.json", "r") as jsonFile:
             data = json.load(jsonFile)
-        
         self.address = (data["pc_host"], port)
 
     def send_location_data(self, location):
@@ -39,7 +39,7 @@ class MouseController:
         """
 
         position_x = str(location[0])
-        position_y = str(location[1])
+        position_y = str(1 - location[1])
 
         str_mouse_location = position_x + " " + position_y
 

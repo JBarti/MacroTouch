@@ -28,28 +28,47 @@
                 Panel displays the list of apps the device currently supports
                 """
     Seperator:
+    CurrentApp:
     Seperator:
     ScrollView:
         GridLayout:
             row_default_height: 70
             cols: 2
             size_hint_y: None
-            size_hint_x: 0.7
+            size_hint_x: 1
             height: self.minimum_height
-            id: grid
-            padding: [40, 20, 0,0]
-
+            SupportedApp:
+            SupportedApp:
+            SupportedApp:
+            SupportedApp:
+            SupportedApp:
+            SupportedApp:
+            SupportedApp:
+            SupportedApp:
+            SupportedApp:
+            SupportedApp:
+            SupportedApp:
+            SupportedApp:
     
 <SupportedApp@BoxLayout>:
     orientation: 'horizontal'
     size_hint_y: None
-    height: 100
+    height: 60
     canvas.before:
         Color:
             rgba: 100, 100, 100, 0.15
         Rectangle:
             size: self.size[0]-50, self.size[1]
             pos: self.pos
+    Image:
+        id: img
+        allow_stretch: True
+        keep_ratio: True
+        size_hint_y: None
+        size_hint_x: None
+        width: 60
+        height: 60
+        source: './icons/word.png'
     DisplayText:
         size_hint_y: 1.1
         text: "Microsoft Office Word"
@@ -75,8 +94,3 @@
         size_hint_x: None
         width: self.height
         on_press: root.get_current_app()
-
-
-<ButtonImage@Image>
-    size_hint_y: 0.5
-    size_hint_x: None

@@ -11,7 +11,7 @@ class MonitorController(threading.Thread):
 
     """
 
-    def __init__(self, family, sock_type, pc_host, ip_address="0.0.0.0", port=5300):
+    def __init__(self, family, sock_type, ip_address="0.0.0.0", port=5300):
         """
 
         Inicijalna metoda klase MonitorController. Stvara svoj socket i binda ga na danu adresu.
@@ -27,12 +27,11 @@ class MonitorController(threading.Thread):
 
         super(MonitorController, self).__init__()
 
-        with open("./../data.json", "r") as jsonFile:
+        with open("./data.json", "r") as jsonFile:
             data = json.load(jsonFile)
-        
-        self.pc_address = (data["pc_host"], port)
 
         self.address = (ip_address, port)
+        self.pc_address = (data["pc_host"], port)
         self.sock = socket.socket(family, sock_type)
         self.sock.bind(self.address)
 

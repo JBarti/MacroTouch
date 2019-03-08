@@ -5,6 +5,8 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.stacklayout import StackLayout
 from kivy.uix.button import Button
 from common import MacroButton
+from controllers import MacroController
+import socket
 
 Builder.load_file(os.path.join(os.path.dirname(__file__), "keyboard.kv"))
 
@@ -33,7 +35,7 @@ class Keyboard(BoxLayout):
     key_buttons = []
     caps_lock = False
 
-    def __init__(self, **kwargs):
+    def __init__(self, macro_controller, **kwargs):
         """
         Algoritam koji izrađuje mrežu botuna
         """
@@ -44,17 +46,29 @@ class Keyboard(BoxLayout):
             stack = KeyRow(padding=[padding_left - 5, 0, 0, 0])
             list(map(stack.add_widget, map(self.create_keyboard_key, row)))
             self.add_widget(stack)
-
+        self.macro_controller = macro_controller
         controls_row = KeyRow(padding=[75, 0, 0, 0])
         caps_lock_key = Key()
         delete_key = Key()
+        delete_key.on_press = self.send_macro(["BACKSPACE"])
         spacebar_key = Spacebar()
+        spacebar_key.on_press = self.send_macro(["SPACEBAR"])
         controls_row.add_widget(caps_lock_key)
         controls_row.add_widget(spacebar_key)
         controls_row.add_widget(delete_key)
         self.add_widget(controls_row)
 
         caps_lock_key.on_press = self.caps_lock_press
+
+    def send_macro(self, macro):
+        def inner():
+            novi_macro = macro
+            if self.caps_lock and not isinstance(novi_macro, list):
+                novi_macro = macro.upper()
+            print(novi_macro)
+            self.macro_controller.send_data(macro)
+
+        return inner
 
     def caps_lock_press(self):
         """
@@ -79,6 +93,7 @@ class Keyboard(BoxLayout):
         """
 
         key = Key(text=letter)
+        key.on_press = self.send_macro(letter)
         self.key_buttons.append(key)
         return key
 

@@ -8,24 +8,114 @@
     width: self.height
     height: root.height
     gray: "#1515155"
-    light_gray: "#252525"
-    canvas:
-        Color:
-            rgb: hex_to_color(self.gray)
-        Rectangle:
-            pos: self.pos
-            size: self.size
-        Color:
-            rgb: hex_to_color(self.light_gray)
-        Rectangle:
-            pos: (self.pos[0]+1, self.pos[1]+1)
-            size: (self.size[0]-2, self.size[1]-2)
+    light_gray: "#202020"
+    
+
+<EditButton>:
+    size_hint_y: .09
+    size_hint_x: .06
+    img_source: "./icons/edit.png"
+    FloatLayout:
+        pos: root.pos
+        size: root.size
+        light_gray: "#202020"
+        canvas:
+            Color:
+                rgb: hex_to_color(self.light_gray)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        Image:
+            id: image
+            pos: root.pos[0]-24, root.pos[1]+14
+            size_hint_y: 0.5
+            size_hint_x: None
+            source: root.img_source
+
+
+<CreateWidget>:
+    auto_dismiss:False
+    title: "Create new macro"
+    size_hint: .5,.5
+    pos_hint: {"y":.5}
+    FloatLayout:
+        VKeyboard:
+            id: vkeyboard
+            margin: [20,20,20,20]
+        BoxLayout:
+            pos: root.pos
+            orientation: "vertical"
+            size_hint_y: None
+            size: root.size
+            padding: 60,0,0,0
+            BoxLayout:
+                size_hint_y: None
+                size: 20, 70
+                size_hint_x: 1
+                orientation: "vertical"
+                DisplayText:
+                    text: "Name"
+                    size_hint_y: None
+                    size: 20,30
+                    size_hint_x: 1
+                TextInput:
+                    id: name_input
+                    multiline: False
+                    size_hint_y: None
+                    size: 20,30
+                    size_hint_x: 0.8
+            BoxLayout:
+                size_hint_y: None
+                size: 20, 75
+                size_hint_x: 1
+                orientation: "vertical"
+                DisplayText:
+                    text: "Macro"
+                    size_hint_y: None
+                    size: 20,30
+                    size_hint_x: 1
+                TextInput:
+                    id: macro_input
+                    multiline: False
+                    size_hint_y: None
+                    size: 20,30
+                    size_hint_x: 0.8
+            BoxLayout: 
+                size_hint_y: None
+                size: 0, 25
+            Button:
+                id: submit
+                size_hint: None, None
+                size: 100, 35
+                text: "SUBMIT"
+            BoxLayout: 
+                size_hint_y: None
+                size: 0, 25
+
+            
 
 <MacrosOption>:
-    orientation: "horizontal"
-    ScrollView:
-        scroll_type: ['bars']
+    orientation: "vertical"
+    BoxLayout:
+        orientation: "horizontal"
+        padding: [35,0,0,0]
         ButtonGrid:
-            size_hint_x:1
-            size_hint_y:None
+            id: grid
+            padding: [0,20,0,0]
+            size_hint_x: 1
+            size_hint_y: None
             height: self.minimum_height
+        ScrollView:
+            scroll_type: ["bars"]
+            size_hint_y: .97
+            size_hint_x: .3
+            StackLayout:
+                id: pages
+                orientation: "lr-tb"
+                spacing: [5,20]
+                padding: [10,0,0,0]
+                size: root.size
+                
+    EditButton:
+        id: edit
+        pos: 10,10

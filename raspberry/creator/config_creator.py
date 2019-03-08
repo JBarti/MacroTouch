@@ -25,7 +25,7 @@ class ConfigCreator:
 
         """
 
-        with open("./../data.json", "r") as jsonFile:
+        with open("./data.json", "r") as jsonFile:
             data = json.load(jsonFile)
 
         valid = self.check_data(macro_data)
@@ -38,7 +38,7 @@ class ConfigCreator:
 
         data["macros"].append(macro_data)
 
-        with open(".././../data.json", "w") as jsonFile:
+        with open("./data.json", "w") as jsonFile:
             json.dump(data, jsonFile)
 
     def check_data(self, data, struct=STRUCTURE):

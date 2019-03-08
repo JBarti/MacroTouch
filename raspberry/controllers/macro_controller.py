@@ -18,10 +18,8 @@ class MacroController:
             ip_address {str} -- ip adresa na koju će socket biti vezan (default: {"172.21.3.114"})
             port {int} -- tip socketa koji će se koristiti (default: {5200})
         """
-
-        with open("./../data.json", "r") as jsonFile:
+        with open("./data.json", "r") as jsonFile:
             data = json.load(jsonFile)
-        
         self.address = (data["pc_host"], port)
 
     def spawn_socket(self, family, sock_type):
@@ -54,6 +52,6 @@ class MacroController:
                 dict_data = {"type": "RUN_MACRO", "payload": data}
             else:
                 dict_data = {"type": "TYPE_TEXT", "payload": data}
-
+            print(self.address)
             bytes_data = bytes(json.dumps(dict_data), "UTF-8")
             sock.sendto(bytes_data, self.address)

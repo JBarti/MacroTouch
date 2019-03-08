@@ -6,7 +6,6 @@ from time import sleep
 
 
 class ConnectionController:
-
     def __init__(self, family, sock_type, ip_address="0.0.0.0", port=5010):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.sock.bind((ip_address, port))
@@ -15,14 +14,14 @@ class ConnectionController:
         thread = Thread(target=self.find_pc_address)
         thread.start()
         _, addr = self.sock.recvfrom(1024)
-        with open("./../data.json", "r") as jsonFile:
+
+        with open("./data.json", "r") as jsonFile:
             data = json.load(jsonFile)
-        
-        data["pc_host"] = addr
+        print(addr[0])
+        data["pc_host"] = addr[0]
 
-        with open("./../data.json", "w") as jsonFile:
-            json.dump(data,jsonFile)
-
+        with open("./data.json", "w") as jsonFile:
+            json.dump(data, jsonFile)
 
     def find_pc_address(self):
         """
@@ -36,11 +35,9 @@ class ConnectionController:
         bytes_ip = check_output(["hostname", "-I"])
         local_rpi_ip = bytes_ip.decode("ASCII")[:-1].strip()
         local_ip = ".".join(local_rpi_ip.split(".")[:-1])
-        ip_string = check_output(
-            ["nmap", "-sL", local_ip+".*"]).decode("ASCII")
+        ip_string = check_output(["nmap", "-sL", local_ip + ".*"]).decode("ASCII")
         ips = " ".join(ip_string.split("\n")).split(" ")
         ips = [word for word in ips if local_ip in word]
-
         request = {"type": "SET_RPI_ADDRESS", "rpi_address": local_rpi_ip}
 
         bytes_data = bytes(json.dumps(request), "UTF-8")

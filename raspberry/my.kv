@@ -1,4 +1,5 @@
 #:kivy 1.10.1
+#:import hex_to_color kivy.utils.get_color_from_hex
 
 MainScreen:
 
@@ -11,41 +12,60 @@ MainScreen:
         text:"TEKST"
 
 <MainLayout>:
-    orientation: 'horizontal'
+    light_gray: "#202020"
     BoxLayout:
         size_hint:(.2,1)
         orientation: 'vertical'
         padding: [0,0,0,0]
+        gray: "#151515"
+        canvas:
+            Color:
+                rgb: hex_to_color(self.gray)
+            Rectangle:
+                size: self.size
+                pos: self.pos
         CToggleButton:
             toggled: True
             text: "Apps"
             group: "option"
-            size_hint_y: 0.1
+            size_hint_y: 0.15
             down: content.switch("apps")
-            on_press: 
+        Seperator:
+            color: root.light_gray
         CToggleButton:
             text: "Widgets"
             group: "option"
-            size_hint_y: 0.1
+            size_hint_y: 0.15
             down: content.switch("widgets")
-            on_press: 
+        Seperator:
+            color: root.light_gray
         CToggleButton:
             text: "Devices"
             group: "option"
-            size_hint_y: 0.1
+            size_hint_y: 0.15
             down: content.switch("devices")
-            on_press: 
+        Seperator:
+            color: root.light_gray
         CToggleButton:
             text: "Macros"
             group: "option"
-            size_hint_y: 0.1
+            size_hint_y: 0.15
             down: content.switch("macros")
-            on_press: 
+        Seperator:
+            color: root.light_gray
         AnchorLayout:
             anchor_y: 'bottom'
-            ToggleButton:
+            CToggleButton:
                 text: "CONFIG"
                 group: "option"
-                size_hint_y: 0.1
+                size_hint_y: 0.15
     Content:
+        light_gray: "#202020"
+        gray: "#151515"
+        canvas.before:
+            Color: 
+                rgb: hex_to_color(self.light_gray)
+            Rectangle:
+                size: self.size
+                pos: self.pos
         id: content

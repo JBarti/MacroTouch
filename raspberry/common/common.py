@@ -8,6 +8,10 @@ import os
 Builder.load_file(os.path.join(os.path.dirname(__file__), "common.kv"))
 
 
+class MacroButtonBackground(Widget):
+    pass
+
+
 class CToggleButton(ToggleButton):
     """
     Botuni koji se nalaze u glavnom izborniku
@@ -103,4 +107,3 @@ class Seperator(Widget):
 
 class DisplayText(Label):
     pass
-

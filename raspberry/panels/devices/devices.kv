@@ -2,35 +2,37 @@
 
 <DevicesOption>:
     rows: 3
-    DisplayText:
-        text:
-            """
-            [color=#0094c6][size=50][font=./fonts/Cairo/Cairo-Black]Devices[/font][/size][/color][size=18]  emulate common pc input devices
-            [/size]
-            """
-    Seperator:
+    BoxLayout:
+        orientation: 'vertical'
+        gray: '#151515'
+        size_hint_y: 0.3
+        canvas:
+            Color:
+                rgb: hex_to_color(self.gray)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        DisplayText:
+            padding: 30,0
+            height: 50
+            text: 
+                """
+                [color=#7f58c5][size=50][font=./fonts/Cairo/Cairo-Black]Devices[/font][/size][/color][size=18]
+                [/size]
+                """
+        DisplayText:
+            padding: 30,0
+            height: 50
+            text:
+                """
+                Emulate common PC input devices
+                """
     StackLayout:
         orientation: "lr-tb"
-        padding: [10,10,10,10]
-        spacing: [5,5]
-        DeviceButton:
-            source: './icons/mouse.png'
-            on_press: root.root.switch(root.mouse)()
-        DeviceButton:
-            source: './icons/keyboard.png'
-            on_press: root.root.switch(root.keyboard)()
-        DeviceButton:
-            source: './icons/mouse.png'
+        padding: [20,20,10,10]
+        spacing: 10
+        id: devices
 
-            
-<DeviceButton@Button>:
-    source: self.source
-    width: 100
-    height: 100
+<ButtonImage@Image>
+    size_hint_y: 0.5
     size_hint_x: None
-    size_hint_y: None
-    Image:
-        width: 75
-        height: 75
-        center: self.parent.center
-        source: root.source
