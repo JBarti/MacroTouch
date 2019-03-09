@@ -1,4 +1,4 @@
 from .system_data_controller import MonitorController
 from .macro_controller import MacroController
 from .mouse_controller import MouseController
-from .connection_controller import ConnectionController
+from .connector import Connector
