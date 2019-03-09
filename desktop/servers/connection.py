@@ -13,6 +13,6 @@ class ConnectionServer:
     def start(self):
         _, addr = self.sock.recvfrom(1024)
         self.sock.sendto(
-            bytes(json.dumps({"type": "PC_ADDRESS", "name":self.user_name}), "UTF-8"), addr
+            bytes(json.dumps({"type": "ADD_HOST", "payload":{"name":self.user_name}}), "UTF-8"), addr
         )
         return addr[0]

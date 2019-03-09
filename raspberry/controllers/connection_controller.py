@@ -9,6 +9,9 @@ class ConnectionController:
     def __init__(self, family, sock_type, ip_address="0.0.0.0", port=5010):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.sock.bind((ip_address, port))
+        self.request_type = {
+            "ADD_HOST":self.add_host
+        }
 
     def start(self):
 
@@ -18,9 +21,9 @@ class ConnectionController:
         thread.start()
 
         while True:
-            _, addr = self.sock.recvfrom(1024)
+            data, addr = self.sock.recvfrom(1024)
             
-            self.add_host(addr)
+            self.request_type[data["type"]](data["payload"], addr)
 
             if self.thread_is_done(thread):
                 break
@@ -67,11 +70,13 @@ class ConnectionController:
         with open("./data.json", "w") as jsonFile:
             json.dump(data, jsonFile)
 
-    def add_host(self, addr):
+    def add_host(self, pc_data, addr):
         with open("./data.json", "r") as jsonFile:
                 data = json.load(jsonFile)
 
-        data["all_hosts"].append(addr[0])
+        pc_data["address"] = addr
+
+        data["all_hosts"].append({pc_data})
 
         with open("./data.json", "w") as jsonFile:
             json.dump(data, jsonFile)
