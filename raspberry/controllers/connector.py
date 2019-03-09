@@ -25,9 +25,14 @@ class Connector:
         with open("./data.json", "r") as jsonFile:
             data = json.load(jsonFile)
         
+        selected_host = None
+
         for host in data["all_hosts"]:
             if host["name"] == name:
-                selected_host = host        
+                selected_host = host
+        
+        if selected_host is not None:
+            return False
         
         data["pc_host"] = selected_host["address"]
 
