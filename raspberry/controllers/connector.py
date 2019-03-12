@@ -26,7 +26,7 @@ class Connector:
         Metoda koja skenira i nalazi sve wifie u blizini
         
         Returns:
-            list -- lista sa podatcima wifia na u blizini
+            [list] -- lista sa podatcima wifia na u blizini
         """
 
         return self.wifi.find_nearby_wifis()
@@ -38,11 +38,11 @@ class Connector:
         Metoda koja se spaja na wifi koji odgovaa proslijeđenom imenu
         
         Arguments:
-            name -- ime wifia na koji se korisnik želi spojiti
-            password -- šifra wifia ako je potrebna
+            name {str} -- ime wifia na koji se korisnik želi spojiti
+            password {str} -- šifra wifia ako je potrebna
 
         Returns:
-            bool -- vraća true ako je spojeno a false ako je došlo do greške
+            [bool] -- vraća True ako je spojeno a false ako je došlo do greške
         """
 
         return self.wifi.connect_to_wifi(name, password=password)
@@ -54,7 +54,7 @@ class Connector:
         Skenira sva računala koja imaju pokrenut server aplikacije na sebi
         
         Returns:
-            list -- list podataka svih raučunala na kojima je pokrenut server
+            [list] -- lista podataka svih raučunala na kojima je pokrenut server
         """
 
         self.host_finder.start()
@@ -70,7 +70,8 @@ class Connector:
         Metoda koja se spaja na određeno računalo danog imena
         
         Returns:
-            string -- ime računala koje na sebi ima pokrenut serverski dio aplikacije
+            [string] -- ime računala koje na sebi ima pokrenut serverski dio aplikacije
+
         """
 
         with open("./data.json", "r") as jsonFile:

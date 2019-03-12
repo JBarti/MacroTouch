@@ -16,11 +16,11 @@ class MonitorServer(threading.Thread):
 
         Inicijalna metoda za MonitorServer. Stvara socket i veže ga na adresu.
 
-        Argumenti:
+        Arguments:
             family {enum AddressFamily} -- tip adrese korišten za sockete
             sock_type {enum SocketKind} -- tip socketa koji će se koristiti
 
-        Keyword Argumenti:
+        Keyword Arguments:
             ip_address {str} -- ip adresa na koju će socket biti vezan (default: {"0.0.0.0"})
             port {int} -- port na koji će socket biti vezan (default: {5300})
 
@@ -56,7 +56,7 @@ class MonitorServer(threading.Thread):
         Metoda koja se pokreće kad je potrebno dohvaćanje podataka o trenutnom 
         stanju sistema.
 
-        Return:
+        Returns:
             [str] -- json string which holds all system data
 
         """
@@ -71,7 +71,7 @@ class MonitorServer(threading.Thread):
 
         Metoda koja se poziva kad je potrebno slati podatke o sistemu na MacroTouch.
 
-        Argumenti:
+        Arguments:
             data {dict} -- {
             "cpus": [int, int, int, int],
             "temp": int,

@@ -48,11 +48,11 @@ class MacroServer(threading.Thread):
 
         Inicijalna metoda za klasu MacroServer. Stvara socket te ga veže na adresu, i virtualnu tipkovnicu. 
 
-        Argumenti:
+        Arguments:
             family {enum AdressFamily} -- tip adrese korišten za sockete
             sock_type {enum SocketKind} -- tip socketa koji će se koristiti
 
-        Keyword Argumenti:
+        Keyword Arguments:
             ip_address {str} -- ip adresa na koju će socket biti vezan (default: {"0.0.0.0"})
             port {int} -- port na koji će socket biti vezan (default: {5200})
 
@@ -94,7 +94,7 @@ class MacroServer(threading.Thread):
 
         Metoda koja rješava pritisak slijeda od više makro naredbi
 
-        Argumenti:
+        Arguments:
             data {list} -- [str, str, str ,str, ...]
 
         """
@@ -108,10 +108,10 @@ class MacroServer(threading.Thread):
 
         Metoda koja se bavi parsiranjem macroa u nešto kasnije primjenjivo
 
-        Argumenti:
+        Arguments:
             payload {str} -- jedna makro naredba
 
-        Return:
+        Returns:
             [list] -- parsed macro into a list of keys
 
         """

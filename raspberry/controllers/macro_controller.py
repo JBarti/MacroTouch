@@ -14,9 +14,10 @@ class MacroController:
 
         Inicijalna metoda klase
 
-        Keyword Argumenti:
+        Keyword Arguments:
             ip_address {str} -- ip adresa na koju će socket biti vezan (default: {"172.21.3.114"})
             port {int} -- tip socketa koji će se koristiti (default: {5200})
+
         """
         with open("./data.json", "r") as jsonFile:
             data = json.load(jsonFile)
@@ -27,11 +28,11 @@ class MacroController:
 
         Metoda koja stvara objekt socketa
 
-        Argumenti:
+        Arguments:
             family {enum AddressFamily} -- tip adrese korišten za sockete 
             sock_type {enum SocketType} -- port na koji će socket biti vezan 
 
-        Return:
+        Returns:
             [socket] -- virtualni socket
         """
 
@@ -43,7 +44,7 @@ class MacroController:
         Metoda koja prima niz tipki i šale zahtjev za pritiskom tih tipki na korisničkom računalu
 
 
-        Argumenti:
+        Arguments:
             data {list/str} -- [[str, str, str], [str,str]]/str
         """
 

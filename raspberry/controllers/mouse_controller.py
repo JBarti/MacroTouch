@@ -14,11 +14,11 @@ class MouseController:
 
         Inicijalna metoda klase MouseController. Stvara svoj socket
 
-        Argumenti:
+        Arguments:
             family {enum AddressFamily} -- tip adrese korišten za sockete 
             sock_type {enum SocketType} -- port na koji će socket biti vezan
 
-        Keyword Argumenti:
+        Keyword Arguments:
             ip_address {str} -- ip adresa na koju će socket biti vezan (default: {"172.21.3.114"})
             port {int} -- tip socketa koji će se koristiti (default: {5100})
         """
@@ -33,7 +33,7 @@ class MouseController:
 
         Metoda klase koja se bavi slanjem lokacije miša na korisničko računalo
 
-        Argumenti:
+        Arguments:
             location {list} -- [int, int]
 
         """
@@ -52,7 +52,8 @@ class MouseController:
         Ova metoda je u mougćnosti poslati informaciju o kliku mišem na računalo
 
         Arguments:
-            click_type {integer} -- integer which represents if it is an left or right click
+            click_type {int} -- int koji predstavlja da li je poslan lijevi klik ili desni klik
+        
         """
 
         click_type = str(click_type)

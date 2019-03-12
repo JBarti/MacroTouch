@@ -22,7 +22,7 @@ class ConnectionController:
             family {enum AdressFamily} -- tip adrese korišten za sockete
             sock_type {enum SocketKind} -- tip socketa koji će se korist
         
-        Keyword Argumenti:
+        Keyword Arguments:
             ip_address {str} -- ip adresa na koju će socket biti vezan (default: {"0.0.0.0"})
         
             port {int} -- port na koji će socket biti vezan (default: {5200})
@@ -82,7 +82,7 @@ class ConnectionController:
         kao i uređaj.
         
         Returns:
-            list, string -- lista svih adresa na istoj mreži, adresa uređaja   
+            [list], [str] -- lista svih adresa na istoj mreži, adresa uređaja   
         
         """
 
@@ -107,8 +107,8 @@ class ConnectionController:
         u bazu podataka (data.json)
 
         Arguments:
-            pc_data -- podatci o imenu računala
-            addr -- adresa računala koji ima na sebi pokrenut server aplikacije
+            pc_data {dict} -- podatci o imenu računala
+            addr {str} -- adresa računala koji ima na sebi pokrenut server aplikacije
         
         """
 
@@ -145,7 +145,7 @@ class ConnectionController:
         Privatna metoda koja provjerava da li je proslijeđeni Thread gotov
         
         Returns:
-            threading.Thread -- thread koji treba provjeriti da li je gotov
+            [threading.Thread] -- thread koji treba provjeriti da li je gotov
         
         """
 
