@@ -49,8 +49,7 @@ class SystemMonitor:
 
         """
         try:
-            temps = [temp for temp in psutil.sensors_temperatures()[
-                "coretemp"]]
+            temps = [temp for temp in psutil.sensors_temperatures()["coretemp"]]
             return max([temp.current for temp in temps])
         except:
             return 0

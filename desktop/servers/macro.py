@@ -32,7 +32,7 @@ SPECIAL_KEYS_DICT = {
     "PAGE_DOWN": k.page_down_key,
     "HOME": k.home_key,
     "BACKSPACE": k.backspace_key,
-    "SUPER": k.super_l_key
+    "SUPER": k.super_l_key,
 }
 
 
@@ -64,7 +64,7 @@ class MacroServer(threading.Thread):
         self.sock.bind((ip_address, port))
         self.request_type = {
             "RUN_MACRO": self.handle_macro,
-            "TYPE_TEXT": self.type_text
+            "TYPE_TEXT": self.type_text,
         }
 
     def run(self):
