@@ -6,6 +6,7 @@ from .system_monitor import SystemMonitor
 from .calendar import Calendar
 from .calculator import Calculator
 from kivy.lang import Builder
+from kivy.app import App
 import os
 
 Builder.load_file(os.path.join(os.path.dirname(__file__), "widgets.kv"))
@@ -16,9 +17,11 @@ class ButtonImage(Image):
 
 
 class WidgetsOption(BoxLayout):
-    def __init__(self, switch, monitor_controller, **kwargs):
+    def __init__(self, switch, **kwargs):
         super(WidgetsOption, self).__init__(**kwargs)
         self.switch = switch
+        connector = App.get_running_app().connector
+        self.monitor_controller = connector.connector.monitor_controller
         self.generate_button(SystemMonitor(), "./icons/word.png")
         self.generate_button(Calendar(), "./icons/calendar.png")
         self.generate_button(Calculator(), "./icons/calculator.png")

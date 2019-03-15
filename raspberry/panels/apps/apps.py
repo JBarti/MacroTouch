@@ -1,6 +1,7 @@
 from kivy.lang import Builder
 from kivy.uix.gridlayout import GridLayout
 from kivy.properties import BooleanProperty
+from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.image import Image
 from common import MacroButton
@@ -13,23 +14,26 @@ Builder.load_file(os.path.join(os.path.dirname(__file__), "apps.kv"))
 
 
 class AppsOption(GridLayout):
-    def __init__(self, switch, macro_controller, **kwargs):
+    def __init__(self, switch, **kwargs):
         super(AppsOption, self).__init__(**kwargs)
-        self.macro_controller = macro_controller
+        self.macro_controller = App.get_running_app().connector.macro_controller
         self.switch = switch
-        app = SupportedApp()
+        self.layout = SupportedApp()
+        self.generate_button(Word(), "./icons/word.png")
+        self.ids["grid"].add_widget(self.layout)
+
+    def generate_button(self, page, img_source):
         btn = MacroButton(
-            on_press=self.switch_to_device(Word()),
+            on_press=self.switch_to_device(page),
             size_hint=[None, None],
             size=[100, 100],
         )
+
         btn.ids["container"].add_widget(
-            ButtonImage(
-                source="./icons/word.png", pos_hint={"center_x": 0.5, "center_y": 0.5}
-            )
+            ButtonImage(source=img_source, pos_hint={"center_x": 0.5, "center_y": 0.5})
         )
-        app.add_widget(btn)
-        self.ids["grid"].add_widget(app)
+
+        self.layout.add_widget(btn)
 
     def switch_to_device(self, device, *args, **kwargs):
         def inner(*args, **kwargs):

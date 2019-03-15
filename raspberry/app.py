@@ -19,12 +19,7 @@ from panels.macros import MacrosOption
 from panels.wifi_interface import WifiInterfaceOption
 from kivy.core.window import Window
 from common import Seperator, DisplayText, CToggleButton, MacroButton
-from controllers import (
-    MacroController,
-    MouseController,
-    MonitorController,
-    ConnectionController,
-)
+from controllers import MacroController, MouseController, MonitorController, Connector
 import socket
 
 
@@ -44,8 +39,7 @@ class MyApp(App):
     Root klasa aplikacija
     """
 
-    MACRO_PAGE = None
-    macro_controller = MacroController()
+    connector = Connector()
 
     def send_macro(self, macro):
         def inner():
@@ -71,17 +65,12 @@ class Content(BoxLayout):
 
     def __init__(self, **kwargs):
         super(Content, self).__init__(**kwargs)
-        # connection_controller = ConnectionController(socket.AF_INET, socket.SOCK_DGRAM)
-        # connection_controller.start()
-        macro_controller = App.get_running_app().macro_controller
-        mouse_controller = MouseController(socket.AF_INET, socket.SOCK_DGRAM)
-        monitor_controller = MonitorController(socket.AF_INET, socket.SOCK_DGRAM)
-        # Dictionairy sa objektima svih mogućih panela
+
         self.screens = {
-            "apps": AppsOption(self.switch, macro_controller),
-            "devices": DevicesOption(self.switch, mouse_controller, macro_controller),
-            "widgets": WidgetsOption(self.switch, monitor_controller),
-            "macros": MacrosOption(macro_controller),
+            "apps": AppsOption(self.switch),
+            "devices": DevicesOption(self.switch),
+            "widgets": WidgetsOption(self.switch),
+            "macros": MacrosOption(),
             "config": WifiInterfaceOption(),
         }
         self.switch("apps")

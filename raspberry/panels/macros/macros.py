@@ -57,12 +57,12 @@ class CreateWidget(Popup):
 
 
 class MacrosOption(BoxLayout):
-    def __init__(self, macro_controller, **kwargs):
+    def __init__(self, **kwargs):
         super(MacrosOption, self).__init__(**kwargs)
+        self.macro_controller = App.get_running_app().connector.macro_controller
         self.ids["edit"].on_down = self.edit_down
         self.ids["edit"].on_normal = self.edit_normal
         self.generate_page_buttons()
-        self.macro_controller = macro_controller
         self.build_macro_page = self.ids["grid"].build_macro_page
         self.ids["grid"].press_macro = self.send_macro
 

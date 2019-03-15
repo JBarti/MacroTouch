@@ -3,6 +3,7 @@ import os
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.screenmanager import Screen
 from kivy.uix.image import Image
+from kivy.app import App
 from .keyboard import Keyboard
 from .mouse import Mouse
 from common import MacroButton
@@ -16,35 +17,29 @@ class DevicesOption(GridLayout):
     posloženi svi mogući uređaji.
     """
 
-    def __init__(self, switch, mouse_controller, macro_controller, **kwargs):
+    def __init__(self, switch, **kwargs):
         super(DevicesOption, self).__init__(**kwargs)
+        connector = App.get_running_app().connector
+        self.mouse_controller = connector.connector.mouse_controller
+        self.macro_controller = connector.connector.macro_controller
         self.switch = switch
-        self.keyboard = Keyboard(macro_controller)
-        self.mouse = Mouse(mouse_controller)
-        mouse_panel = MacroButton(
-            on_press=self.switch_to_device(self.mouse),
-            size_hint=[None, None],
-            size=[100, 100],
-        )
-        mouse_panel.ids["container"].add_widget(
-            ButtonImage(
-                source="./icons/mouse.png", pos_hint={"center_x": 0.5, "center_y": 0.5}
-            )
-        )
-        self.ids["devices"].add_widget(mouse_panel)
 
-        keyboard_panel = MacroButton(
-            on_press=self.switch_to_device(self.keyboard),
+        keyboard = Keyboard(self.macro_controller)
+        mouse = Mouse(self.mouse_controller)
+
+        self.generate_button(keyboard, "./icons/keyboard.png")
+        self.generate_button(mouse, "./icons/mouse.png")
+
+    def generate_button(self, panel, img_source):
+        btn = MacroButton(
+            on_press=self.switch_to_device(panel),
             size_hint=[None, None],
             size=[100, 100],
         )
-        keyboard_panel.ids["container"].add_widget(
-            ButtonImage(
-                source="./icons/keyboard.png",
-                pos_hint={"center_x": 0.5, "center_y": 0.5},
-            )
+        btn.ids["container"].add_widget(
+            ButtonImage(source=img_source, pos_hint={"center_x": 0.5, "center_y": 0.5})
         )
-        self.ids["devices"].add_widget(keyboard_panel)
+        self.ids["devices"].add_widget(btn)
 
     def switch_to_device(self, device):
         def inner(*args, **kwargs):

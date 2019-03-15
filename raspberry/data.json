@@ -25,7 +25,11 @@
         { "macro": "", "position": [5, 1], "text": "hhhhhhyhhu" },
         { "macro": "", "position": [2, 4], "text": "tttttttttt" },
         { "macro": "", "position": [4, 3], "text": "teg" },
-        { "macro": "", "position": [3, 2], "text": "4gsht" }
+        { "macro": "", "position": [3, 2], "text": "4gsht" },
+        { "position": [2, 3], "text": "", "macro": "" },
+        { "position": [2, 3], "text": "asdasa", "macro": "asdsad" },
+        { "position": [3, 3], "text": "asdasd", "macro": "asdasd" },
+        { "position": [3, 2], "text": "qwewqe", "macro": "wqeqwe" }
       ],
       "name": "Page1"
     },

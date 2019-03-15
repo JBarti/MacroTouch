@@ -11,7 +11,8 @@ Builder.load_file(os.path.join(os.path.dirname(__file__), "wifi_interface.kv"))
 
 
 class WifiInterfaceOption(AnchorLayout):
-    pass
+    def __init__(self, **kwargs):
+        super(WifiInterfaceOption, self).__init__(**kwargs)
 
 
 class ConnectWifi(Popup):
@@ -39,11 +40,11 @@ class WifiButton(Button):
 
     def __init__(self, *args, **kwargs):
         super(WifiButton, self).__init__(**kwargs)
-        self.strength = 3
+        self.power = 3
 
     def on_press(self, *args, **kwargs):
         self.background_color = hex_to_color(self.gray)
-        if self.strength > 0:
+        if self.power > 0:
             ConnectWifi().open()
 
     def on_touch_up(self, *args, **kwargs):

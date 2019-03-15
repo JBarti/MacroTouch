@@ -8,6 +8,7 @@
     background_color: hex_to_color(self.light_gray)
     label_text: ""
     power: 0
+    size_hint_x: 1
     FloatLayout:
         orientation: "horizontal"
         pos: root.pos
@@ -20,6 +21,11 @@
             pos: root.pos[0]-50, root.pos[1]
             size: root.size
             text: root.label_text
+        Seperator:
+            width: root.width-100
+            pos: root.pos[0]+10, root.pos[1]
+            orientation: "vertical"
+    
         
 
 <ConnectWifi@Popup>
@@ -80,25 +86,17 @@
     BoxLayout:
         size_hint_y: None
         orientation: "horizontal"
-        BoxLayout:    
+        BoxLayout:
+            id: wifis
             padding: [5,5,5,5]
             size_hint_y: None
             orientation: "vertical"
             WifiButton:
-                size_hint_x: 1
-                label_text: "Text"
-                power: 3
-            Seperator:
-                orientation: "vertical"
+                label_text: "TESt"
             WifiButton:
-                size_hint_x: 1
-                label_text: "Text"
-                power: 2
+                label_text: "TESt"
         BoxLayout:    
+            id: pcs
             padding: [5,5,5,5]
             size_hint_y: 0
             orientation: "vertical"
-            WifiButton:
-                size_hint_x: 1
-                label_text: "Text"
-                power: 0
