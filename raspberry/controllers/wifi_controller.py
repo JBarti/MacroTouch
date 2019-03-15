@@ -73,7 +73,11 @@ class WifiController:
         stripped_parsed = [wifi.strip() for wifi in roughly_parsed]
         list_parsed = [re.sub("  +", "$", wifi).split("$") for wifi in stripped_parsed]
 
-        parsed = [self.to_data_dict(wifi_data) for wifi_data in list_parsed]
+        parsed = [
+            self.to_data_dict(wifi_data)
+            for wifi_data in list_parsed
+            if len(wifi_data) != 1
+        ]
 
         return parsed
 
