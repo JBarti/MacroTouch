@@ -1,0 +1,104 @@
+#:kivy 1.10.1
+#:import hex_to_color kivy.utils.get_color_from_hex
+
+<WifiButton>:
+    size_hint_y: None
+    height: 60
+    light_gray: "#1515155"
+    background_color: hex_to_color(self.light_gray)
+    label_text: ""
+    power: 0
+    FloatLayout:
+        orientation: "horizontal"
+        pos: root.pos
+        size: root.size
+        Image:
+            pos: root.pos[0]-120 ,root.pos[1]
+            size: root.size
+            source: "./icons/wifi{}.png".format(root.power)
+        Label:
+            pos: root.pos[0]-50, root.pos[1]
+            size: root.size
+            text: root.label_text
+        
+
+<ConnectWifi@Popup>
+    auto_dismiss:False
+    title: "Connect to wifi"
+    size_hint: .5,.35
+    pos_hint: {"y":.5}
+    FloatLayout:
+        VKeyboard:
+            id: vkeyboard
+            margin: [20,20,20,20]
+        BoxLayout:
+            pos: root.pos
+            orientation: "vertical"
+            size_hint_y: None
+            size: root.size
+            padding: 60,0,0,0
+            BoxLayout:
+                size_hint_y: None
+                size: 20, 70
+                size_hint_x: 1
+                orientation: "vertical"
+                DisplayText:
+                    text: "Password"
+                    size_hint_y: None
+                    size: 20,30
+                    size_hint_x: 1
+                TextInput:
+                    id: password_input
+                    multiline: False
+                    size_hint_y: None
+                    size: 20,30
+                    size_hint_x: 0.8
+            Widget: 
+                size_hint_y: None
+                size: 0, 25
+            BoxLayout:
+                size_hint_y: None
+                height: 35
+                spacing: 20
+                Button:
+                    id: submit
+                    size_hint: None, None
+                    size: 100, 35
+                    text: "SUBMIT"
+                Button:
+                    id: cancel
+                    size_hint: None, None
+                    size: 100, 35
+                    text: "CANCEL"
+            BoxLayout: 
+                size_hint_y: None
+                size: 0, 25
+
+
+<WifiInterfaceOption>:
+    anchor_y: "center" 
+    BoxLayout:
+        size_hint_y: None
+        orientation: "horizontal"
+        BoxLayout:    
+            padding: [5,5,5,5]
+            size_hint_y: None
+            orientation: "vertical"
+            WifiButton:
+                size_hint_x: 1
+                label_text: "Text"
+                power: 3
+            Seperator:
+                orientation: "vertical"
+            WifiButton:
+                size_hint_x: 1
+                label_text: "Text"
+                power: 2
+        BoxLayout:    
+            padding: [5,5,5,5]
+            size_hint_y: 0
+            orientation: "vertical"
+            WifiButton:
+                size_hint_x: 1
+                label_text: "Text"
+                power: 0

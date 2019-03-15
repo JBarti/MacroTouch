@@ -36,12 +36,11 @@
 <CreateWidget>:
     auto_dismiss:False
     title: "Create new macro"
-    size_hint: .5,.5
-    pos_hint: {"y":.5}
+    size_hint: .5,.48
+    pos_hint: {"y":.4}
     FloatLayout:
         VKeyboard:
             id: vkeyboard
-            margin: [20,20,20,20]
         BoxLayout:
             pos: root.pos
             orientation: "vertical"
@@ -50,7 +49,6 @@
             padding: 60,0,0,0
             BoxLayout:
                 size_hint_y: None
-                size: 20, 70
                 size_hint_x: 1
                 orientation: "vertical"
                 DisplayText:
@@ -72,7 +70,7 @@
                 DisplayText:
                     text: "Macro"
                     size_hint_y: None
-                    size: 20,30
+                    size: 25,30
                     size_hint_x: 1
                 TextInput:
                     id: macro_input
@@ -80,14 +78,23 @@
                     size_hint_y: None
                     size: 20,30
                     size_hint_x: 0.8
-            BoxLayout: 
+            Widget: 
                 size_hint_y: None
                 size: 0, 25
-            Button:
-                id: submit
-                size_hint: None, None
-                size: 100, 35
-                text: "SUBMIT"
+            BoxLayout:
+                size_hint_y: None
+                height: 35
+                spacing: 20
+                Button:
+                    id: submit
+                    size_hint: None, None
+                    size: 100, 35
+                    text: "SUBMIT"
+                Button:
+                    id: cancel
+                    size_hint: None, None
+                    size: 100, 35
+                    text: "CANCEL"
             BoxLayout: 
                 size_hint_y: None
                 size: 0, 25

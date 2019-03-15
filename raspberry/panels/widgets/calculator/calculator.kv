@@ -1,0 +1,40 @@
+#:kivy 1.10.1
+#:import hex_to_color kivy.utils.get_color_from_hex
+
+<Buttons>:
+    rows: 7
+    cols: 4
+    size_hint: None, 1
+    width: 500
+    spacing: 20
+
+<Display@TextInput>:
+    multiline: False
+    size_hint: 1,1
+    light_gray: "#202020"
+    padding: [10,18,10,0]
+    font_size: "70dp"
+    background_color: hex_to_color(self.light_gray)
+    foreground_color: hex_to_color("#ffffff")
+    
+
+<Calculator>:
+    orientation: "vertical"
+    display: display
+    AnchorLayout:
+        size_hint_y: .35
+        anchor_y: "center"
+        anchor_x: "center"
+        purple: "#7f58c5"
+        padding: 20,20,20,20
+        canvas.before:
+            Color:
+                rgb: hex_to_color(self.purple)
+            Rectangle:
+                size: self.size[0]-30, self.size[1]-30
+                pos: self.pos[0]+15, self.pos[1]+15
+        Display:
+            id: display
+    AnchorLayout:
+        anchor_x: "center"
+        Buttons:

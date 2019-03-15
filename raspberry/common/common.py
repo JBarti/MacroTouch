@@ -82,8 +82,10 @@ class MacroButton(Button):
         """
         Ažurira sliku botuna
         """
-
-        self.ids["background"].pressed = pressed
+        try:
+            self.background.pressed = pressed
+        except:
+            pass
 
     def on_press(self):
         """

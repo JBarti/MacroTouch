@@ -1,9 +1,11 @@
-from kivy.lang import Builder
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.image import Image
 from common import MacroButton
 from .system_monitor import SystemMonitor
+from .calendar import Calendar
+from .calculator import Calculator
+from kivy.lang import Builder
 import os
 
 Builder.load_file(os.path.join(os.path.dirname(__file__), "widgets.kv"))
@@ -18,6 +20,8 @@ class WidgetsOption(BoxLayout):
         super(WidgetsOption, self).__init__(**kwargs)
         self.switch = switch
         self.generate_button(SystemMonitor(), "./icons/word.png")
+        self.generate_button(Calendar(), "./icons/calendar.png")
+        self.generate_button(Calculator(), "./icons/calculator.png")
 
     def switch_to_device(self, device):
         def inner(*args, **kwargs):

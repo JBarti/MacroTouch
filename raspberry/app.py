@@ -16,6 +16,8 @@ from panels.apps import AppsOption
 from panels.widgets import WidgetsOption
 from panels.devices import DevicesOption
 from panels.macros import MacrosOption
+from panels.wifi_interface import WifiInterfaceOption
+from kivy.core.window import Window
 from common import Seperator, DisplayText, CToggleButton, MacroButton
 from controllers import (
     MacroController,
@@ -26,10 +28,11 @@ from controllers import (
 import socket
 
 
+Window.size = (1024, 600)
+
 # Definiranje veličine aplikacije na veličinu touch displaya
 Config.set("graphics", "width", "1024")
 Config.set("graphics", "height", "600")
-
 
 # Glavni layout u kojem se nalazi ostatak aplikacije
 class MainLayout(BoxLayout):
@@ -73,14 +76,15 @@ class Content(BoxLayout):
         macro_controller = App.get_running_app().macro_controller
         mouse_controller = MouseController(socket.AF_INET, socket.SOCK_DGRAM)
         monitor_controller = MonitorController(socket.AF_INET, socket.SOCK_DGRAM)
-        self.switch("apps")
         # Dictionairy sa objektima svih mogućih panela
         self.screens = {
             "apps": AppsOption(self.switch, macro_controller),
             "devices": DevicesOption(self.switch, mouse_controller, macro_controller),
             "widgets": WidgetsOption(self.switch, monitor_controller),
             "macros": MacrosOption(macro_controller),
+            "config": WifiInterfaceOption(),
         }
+        self.switch("apps")
 
     def switch(self, screen):
         """Funkcije koja mijenja sadržaj content klase

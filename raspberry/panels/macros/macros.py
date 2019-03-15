@@ -21,6 +21,7 @@ class CreateWidget(Popup):
     def __init__(self, submit, y_pos, x_pos, **kwargs):
         super(CreateWidget, self).__init__(**kwargs)
         self.ids["submit"].on_press = self.press_submit
+        self.ids["cancel"].on_press = self.dismiss
         self.submit = submit
         self.y_pos = y_pos
         self.x_pos = x_pos
@@ -43,7 +44,6 @@ class CreateWidget(Popup):
         if value:
             self.focused.text += value
             if self.focused == self.name_input:
-                print("DA")
                 self.focused.text = self.focused.text[:10]
             return
         if key == "backspace" and len(self.focused.text):
@@ -162,7 +162,6 @@ class Macro(BoxLayout):
             x_pos = int(x_pos)
             y_pos = int(y_pos)
             json_data = json.load(data)
-            macros = json_data["macro_pages"]
             macros = json_data["macro_pages"][0]["macros"]
             if page:
                 macros = list(filter(lambda x: x["name"] == page, macros))[0]["macros"]

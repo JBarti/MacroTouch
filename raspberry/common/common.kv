@@ -11,17 +11,18 @@
 
 <Seperator>:
     id: separator
-    size_hint_y: 0
+    size_hint_y: None
     height: 0.4
     thickness: 0.75
-    color: "#ffffff"
+    color: "666666"
+    orientation: ""
     canvas:
         Color:
             rgb: hex_to_color(self.color)
         Rectangle:
             #pos: 0, separator.center_y
             pos: self.pos[0], separator.center_y
-            size: separator.width, self.thickness
+            size: (separator.width, self.thickness) if self.orientation == "vertical" else (self.thickness, separator.width, )
 
 
 <ToggleButtonBackground@Widget>:
@@ -62,15 +63,18 @@
     pressed: self.pressed
     gray: '#1515155'
     purple: '#7f58c5'
+    purpleSquare: 
     canvas:
         Color:
             rgb: hex_to_color(self.gray if self.pressed else self.purple)
         Rectangle:
+            id: purpleSquare
             size: root.size
             pos: root.pos
         Color:
             rgb: hex_to_color(self.gray)
         Rectangle:
+            id: graySquare
             size: root.size[0]-4, root.size[1]-4
             pos: root.pos[0]+2, root.pos[1]+2
 
@@ -80,13 +84,14 @@
     text: ""
     txt_size: 12
     txt_pos: {"center_x":.5, "center_y":.5}
+    background: background
     FloatLayout:
         id: container
         size: root.size
         pos: root.pos
         MacroButtonBackground:
-            pressed: False
             id: background
+            pressed: False
             size: root.size
             pos: root.pos
         DisplayText:
