@@ -16,11 +16,11 @@ class MonitorController(threading.Thread):
 
         Inicijalna metoda klase MonitorController. Stvara svoj socket i binda ga na danu adresu.
 
-        Argumenti:
+        Arguments:
             family {enum AddressFamily} -- tip adrese korišten za sockete
             sock_type {[type]} -- port na koji će socket biti vezan
 
-        Keyword Argumenti:
+        Keyword Arguments:
             ip_address {str} -- ip adresa na koju će socket biti vezan (default: {"0.0.0.0"})
             port {int} -- tip socketa koji će se koristiti (default: {5300})
         """
@@ -71,7 +71,7 @@ class MonitorController(threading.Thread):
 
         Metoda koja postavlja svojstvo klase na danu vrijednost payloada.
 
-        Argumenti:
+        Arguments:
             payload {dict} -- {
             "cpus": [int, int, int, int],
             "temp": int,

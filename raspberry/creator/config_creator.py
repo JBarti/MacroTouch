@@ -46,7 +46,7 @@ class ConfigCreator:
 
         Metoda koja prije parsiranja provjerava podatke, tj. dali su objekti rječnika strukturno dobri
 
-        Return:
+        Returns:
             [True, False] -- ovisno o točnosti podataka
 
         """

@@ -32,7 +32,7 @@ SPECIAL_KEYS_DICT = {
     "PAGE_DOWN": k.page_down_key,
     "HOME": k.home_key,
     "BACKSPACE": k.backspace_key,
-    "SUPER": k.super_l_key
+    "SUPER": k.super_l_key,
 }
 
 
@@ -48,11 +48,11 @@ class MacroServer(threading.Thread):
 
         Inicijalna metoda za klasu MacroServer. Stvara socket te ga veže na adresu, i virtualnu tipkovnicu. 
 
-        Argumenti:
+        Arguments:
             family {enum AdressFamily} -- tip adrese korišten za sockete
             sock_type {enum SocketKind} -- tip socketa koji će se koristiti
 
-        Keyword Argumenti:
+        Keyword Arguments:
             ip_address {str} -- ip adresa na koju će socket biti vezan (default: {"0.0.0.0"})
             port {int} -- port na koji će socket biti vezan (default: {5200})
 
@@ -64,7 +64,7 @@ class MacroServer(threading.Thread):
         self.sock.bind((ip_address, port))
         self.request_type = {
             "RUN_MACRO": self.handle_macro,
-            "TYPE_TEXT": self.type_text
+            "TYPE_TEXT": self.type_text,
         }
 
     def run(self):
@@ -94,7 +94,7 @@ class MacroServer(threading.Thread):
 
         Metoda koja rješava pritisak slijeda od više makro naredbi
 
-        Argumenti:
+        Arguments:
             data {list} -- [str, str, str ,str, ...]
 
         """
@@ -108,10 +108,10 @@ class MacroServer(threading.Thread):
 
         Metoda koja se bavi parsiranjem macroa u nešto kasnije primjenjivo
 
-        Argumenti:
+        Arguments:
             payload {str} -- jedna makro naredba
 
-        Return:
+        Returns:
             [list] -- parsed macro into a list of keys
 
         """

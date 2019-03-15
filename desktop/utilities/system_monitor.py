@@ -17,7 +17,7 @@ class SystemMonitor:
 
         Metoda koja okuplja sve privatne metode i izvlači podatke iz njih.
 
-        Return:
+        Returns:
             [dict] -- objekt rječnika koji sadrži sve podatke o sistemu
         """
 
@@ -33,7 +33,7 @@ class SystemMonitor:
 
         Metoda koja dobavlja postotke korištenosti pojedine jezgre procesora
 
-        Return:
+        Returns:
             [list] -- [int, int, int, int] postotak korištenja pojedinog cpua
         """
 
@@ -44,13 +44,12 @@ class SystemMonitor:
 
         Metoda koja dobavlja temperaturu jezgara
 
-        Return:
+        Returns:
             [int] -- temperatura korištenih jezgri
 
         """
         try:
-            temps = [temp for temp in psutil.sensors_temperatures()[
-                "coretemp"]]
+            temps = [temp for temp in psutil.sensors_temperatures()["coretemp"]]
             return max([temp.current for temp in temps])
         except:
             return 0
@@ -60,7 +59,7 @@ class SystemMonitor:
 
         Metoda koja dobavlja trenutno korištenu količinu radne meorije
 
-        Return:
+        Returns:
             [dict] -- {"used":int, "total":int} objekt rječnika koji sadrži podatke o korištenju RAM-a 
 
         """
@@ -75,7 +74,7 @@ class SystemMonitor:
 
         Metoda koja dobavlja količinu memorije zauzete na disku
 
-        Return:
+        Returns:
             [dict] -- {"used":int, "total":int} objekt rječnika koji sadrži podatke o korišteju stalne memorije
 
         """
@@ -90,10 +89,10 @@ class SystemMonitor:
 
         Metoda koja pretvara byteove u kilobyteove
 
-        Argumenti:
+        Arguments:
             byte_memory {int} -- veličina memorije u byteovima
 
-        Return:
+        Returns:
             [float] -- količina memorije u gb
 
         """
