@@ -66,5 +66,4 @@ class ConnectionServer:
             self._set_host(addr)
 
     def _set_host(self, addr):
-        print(threading.activeCount())
         self.monitor_server.rpi_address = (addr[0], self.monitor_server.port)
