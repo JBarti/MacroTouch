@@ -31,6 +31,7 @@ class ConnectionController:
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.sock.bind((ip_address, port))
         self.request_type = {"ADD_HOST": self._add_host}
+        self.pause_thread = Thread(target=self._wait)
 
     def start(self):
         """
@@ -43,16 +44,19 @@ class ConnectionController:
 
         self._clear_all_hosts()
 
-        thread = Thread(target=self._find_pc_address)
-        thread.start()
+        if self.pause_thread.isAlive():
+            self.pause_thread.start()
 
+        address_thread = Thread(target=self._find_pc_address)
+        address_thread.start()
+
+    def _wait(self):
         while True:
             data, addr = self.sock.recvfrom(1024)
 
-            self.request_type[data["type"]](data["payload"], addr)
+            data = json.loads(bytes.decode(data))
 
-            if self._thread_is_done(thread):
-                break
+            self.request_type[data["type"]](data["payload"], addr)
 
     def _find_pc_address(self):
         """
