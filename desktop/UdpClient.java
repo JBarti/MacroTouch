@@ -24,8 +24,6 @@ public class UdpClient {
         double screen_width = screenSize.getWidth();
         double screen_height = screenSize.getHeight();
 
-        System.out.println(screen_width);
-            
         while (true) {
             DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
             serverSocket.receive(receivePacket);
