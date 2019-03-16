@@ -11,7 +11,7 @@ class MonitorServer(threading.Thread):
 
     """
 
-    def __init__(self, family, sock_type, rpi_host, ip_address="0.0.0.0", port=5300):
+    def __init__(self, family, sock_type, ip_address="0.0.0.0", port=5300):
         """
 
         Inicijalna metoda za MonitorServer. Stvara socket i veže ga na adresu.
@@ -27,8 +27,9 @@ class MonitorServer(threading.Thread):
         """
 
         super(MonitorServer, self).__init__()
-        self.address = (ip_address, port)
-        self.rpi_address = (rpi_host, port)
+        self.port = port
+        self.address = (ip_address, self.port)
+        self.rpi_address = (ip_address, self.port)
         self.sock = socket.socket(family, sock_type)
         self.sock.bind(self.address)
         self.request_type = {"GET_SYSTEM_DATA": self.get_system_data}
