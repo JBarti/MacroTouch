@@ -38,7 +38,6 @@ class MacroController:
         return socket.socket(family, sock_type)
 
     def send_data(self, data):
-        print(data)
         """
 
         Metoda koja prima niz tipki i šale zahtjev za pritiskom tih tipki na korisničkom računalu

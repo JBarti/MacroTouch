@@ -65,10 +65,6 @@ class Connector:
         """
 
         self.host_finder.start()
-        with open("./data.json", "r") as jsonFile:
-            data = json.load(jsonFile)
-
-        return data["all_hosts"]
 
     def connect_to_host(self, name):
 
@@ -81,12 +77,9 @@ class Connector:
 
         """
 
-        with open("./data.json", "r") as jsonFile:
-            data = json.load(jsonFile)
-
         selected_host = None
 
-        for host in data["all_hosts"]:
+        for host in self.host_finder.hosts:
             if host["name"] == name:
                 selected_host = host
 
@@ -95,10 +88,10 @@ class Connector:
 
         self.connected_ip = selected_host["address"]
 
-        self.setIP()
+        self._set_ip()
 
         return name
 
-    def setIP(self):
+    def _set_ip(self):
         self.macro_controller.host = self.connected_ip
         self.mouse_controller.host = self.connected_ip

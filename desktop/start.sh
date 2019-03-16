@@ -1,4 +1,6 @@
 #!/bin/bash
 python3 ./app.py &
+PYPID=$!
+echo $PYPID
 java UdpClient 
-pkill python3
+kill 9 $PYPID
