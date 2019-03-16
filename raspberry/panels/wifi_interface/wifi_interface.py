@@ -11,8 +11,7 @@ Builder.load_file(os.path.join(os.path.dirname(__file__), "wifi_interface.kv"))
 
 
 class WifiInterfaceOption(AnchorLayout):
-    def __init__(self, **kwargs):
-        super(WifiInterfaceOption, self).__init__(**kwargs)
+    pass
 
 
 class ConnectWifi(Popup):
@@ -24,7 +23,6 @@ class ConnectWifi(Popup):
         self.ids["cancel"].on_press = self.dismiss
 
     def key_press(self, key, value, currently_pressed):
-        print("DRKICA")
         if value:
             self.input.text += value
             return
@@ -40,7 +38,6 @@ class WifiButton(Button):
 
     def __init__(self, *args, **kwargs):
         super(WifiButton, self).__init__(**kwargs)
-        self.power = 3
 
     def on_press(self, *args, **kwargs):
         self.background_color = hex_to_color(self.gray)

@@ -20,8 +20,8 @@ class DevicesOption(GridLayout):
     def __init__(self, switch, **kwargs):
         super(DevicesOption, self).__init__(**kwargs)
         connector = App.get_running_app().connector
-        self.mouse_controller = connector.connector.mouse_controller
-        self.macro_controller = connector.connector.macro_controller
+        self.mouse_controller = connector.mouse_controller
+        self.macro_controller = connector.macro_controller
         self.switch = switch
 
         keyboard = Keyboard(self.macro_controller)

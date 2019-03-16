@@ -21,9 +21,9 @@ class Connector:
 
         self.wifi = WifiController()
         self.host_finder = ConnectionController(socket.AF_INET, socket.SOCK_DGRAM)
-        self.macro = MacroController(socket.AF_INET, socket.SOCK_DGRAM)
-        self.mouse = MouseController(socket.AF_INET, socket.SOCK_DGRAM)
-        self.monitor = MonitorController(socket.AF_INET, socket.SOCK_DGRAM)
+        self.macro_controller = MacroController(socket.AF_INET, socket.SOCK_DGRAM)
+        self.mouse_controller = MouseController(socket.AF_INET, socket.SOCK_DGRAM)
+        self.monitor_controller = MonitorController(socket.AF_INET, socket.SOCK_DGRAM)
         self.connectedIP = ""
 
     def scan_wifis(self):
