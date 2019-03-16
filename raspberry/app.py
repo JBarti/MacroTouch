@@ -40,6 +40,7 @@ class MyApp(App):
     """
 
     connector = Connector()
+    MACRO_PAGE = None
 
     def build(self):
         """

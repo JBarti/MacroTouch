@@ -14,6 +14,7 @@
     light_gray: "#202020"
     padding: [10,18,10,0]
     font_size: "70dp"
+    cursor_color: hex_to_color(self.light_gray)
     background_color: hex_to_color(self.light_gray)
     foreground_color: hex_to_color("#ffffff")
     
@@ -38,3 +39,4 @@
     AnchorLayout:
         anchor_x: "center"
         Buttons:
+            display: root.display

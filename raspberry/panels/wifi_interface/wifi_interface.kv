@@ -18,9 +18,9 @@
             size: root.size
             source: "./icons/wifi{}.png".format(root.power)
         Label:
-            pos: root.pos[0]-50, root.pos[1]
-            size: root.size
-            text: root.label_text
+            id: label
+            pos: root.pos[0]-20, root.pos[1]
+            width: 50
         Seperator:
             width: root.width-100
             pos: root.pos[0]+10, root.pos[1]
@@ -82,23 +82,17 @@
 
 
 <WifiInterfaceOption>:
-    anchor_y: "center" 
+    anchor_y: "top"
     BoxLayout:
-        size_hint_y: None
+        size_hint_y: 1
         orientation: "horizontal"
         BoxLayout:
             id: wifis
             padding: [5,5,5,5]
-            size_hint_y: None
             orientation: "vertical"
-            WifiButton:
-                label_text: "TESt"
-                power: 2
-            WifiButton:
-                label_text: "TESt"
-                power: 3
+            size_hint_y: 1
         BoxLayout:    
             id: pcs
             padding: [5,5,5,5]
-            size_hint_y: 0
+            size_hint_y: 1
             orientation: "vertical"

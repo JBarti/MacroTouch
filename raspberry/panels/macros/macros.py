@@ -23,8 +23,6 @@ class CreateWidget(Popup):
         self.ids["submit"].on_press = self.press_submit
         self.ids["cancel"].on_press = self.dismiss
         self.submit = submit
-        self.y_pos = y_pos
-        self.x_pos = x_pos
         name_input = self.name_input = self.ids["name_input"]
         macro_input = self.ids["macro_input"]
         self.focused = name_input

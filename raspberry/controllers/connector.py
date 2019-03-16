@@ -95,10 +95,10 @@ class Connector:
 
         self.connected_ip = selected_host["address"]
 
-        self.setIP()
+        self.set_ip()
 
         return name
 
-    def setIP(self):
+    def set_ip(self):
         self.macro_controller.host = self.connected_ip
         self.mouse_controller.host = self.connected_ip

@@ -48,7 +48,6 @@ class ConnectionController:
 
         while True:
             data, addr = self.sock.recvfrom(1024)
-
             self.request_type[data["type"]](data["payload"], addr)
 
             if self._thread_is_done(thread):
@@ -69,6 +68,7 @@ class ConnectionController:
         bytes_data = bytes(json.dumps(request), "UTF-8")
 
         for ip in ips:
+            print(ip)
             if ip[0] == "(":
                 ip = ip[1:-1]
             if ip == local_rpi_ip or ip[-3:] == "255" or ip[-2:] == ".0":
