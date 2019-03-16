@@ -189,11 +189,17 @@ class ButtonGrid(GridLayout):
         """Predefinira broj redova i stupaca mreže
         i generira mrežu
         """
-
         super(ButtonGrid, self).__init__(**kwargs)
         self.cols = 6
         self.rows = 5
         self.build_macro_page()
+        self.send_macro = App.get_running_app().connector.macro_controller.send_data
+
+    def press_macro(self, macro):
+        def inner():
+            self.send_macro(macro)
+
+        return inner
 
     def build_macro_page(self, editable=False, page=None):
         """
@@ -219,7 +225,6 @@ class ButtonGrid(GridLayout):
                 for cols in range(self.cols):
                     visible = len(macro_row) and macro_row[0]["position"][0] == cols
                     if visible:
-                        press = App.get_running_app().send_macro
                         new_macro = macro_row.pop(0)
                         new_widg = Macro(
                             button=visible,
@@ -228,7 +233,7 @@ class ButtonGrid(GridLayout):
                             x_pos=cols,
                             rebuild=self.build_macro_page,
                             text=new_macro["text"],
-                            press=press(new_macro["macro"].split(",")),
+                            press=self.press_macro(new_macro["macro"].split(",")),
                         )
                         self.add_widget(new_widg)
                     else:

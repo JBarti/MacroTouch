@@ -41,12 +41,6 @@ class MyApp(App):
 
     connector = Connector()
 
-    def send_macro(self, macro):
-        def inner():
-            self.macro_controller.send_data(macro)
-
-        return inner
-
     def build(self):
         """
         Prilikom pokretanja aplikacije na ekran se dodaje objekt klase MainLayout

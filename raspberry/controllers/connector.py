@@ -21,7 +21,7 @@ class Connector:
 
         self.wifi = WifiController()
         self.host_finder = ConnectionController(socket.AF_INET, socket.SOCK_DGRAM)
-        self.macro_controller = MacroController(socket.AF_INET, socket.SOCK_DGRAM)
+        self.macro_controller = MacroController()
         self.mouse_controller = MouseController(socket.AF_INET, socket.SOCK_DGRAM)
         self.monitor_controller = MonitorController(socket.AF_INET, socket.SOCK_DGRAM)
         self.connectedIP = ""
@@ -100,5 +100,5 @@ class Connector:
         return name
 
     def setIP(self):
-        self.macro.host = self.connectedIP
-        self.mouse.host = self.connectedIP
+        self.macro_controller.host = self.connectedIP
+        self.mouse_controller.host = self.connectedIP
