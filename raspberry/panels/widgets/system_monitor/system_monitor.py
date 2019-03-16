@@ -3,7 +3,6 @@ from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.widget import Widget
 from kivy.clock import Clock
-from controllers import MonitorController
 import random
 import socket
 

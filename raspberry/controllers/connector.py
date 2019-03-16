@@ -1,5 +1,8 @@
 from .connection_controller import ConnectionController
 from .wifi_controller import WifiController
+from .system_data_controller import MonitorController
+from .macro_controller import MacroController
+from .mouse_controller import MouseController
 import socket
 import json
 
@@ -18,6 +21,10 @@ class Connector:
 
         self.wifi = WifiController()
         self.host_finder = ConnectionController(socket.AF_INET, socket.SOCK_DGRAM)
+        self.macro = MacroController(socket.AF_INET, socket.SOCK_DGRAM)
+        self.mouse = MouseController(socket.AF_INET, socket.SOCK_DGRAM)
+        self.monitor = MonitorController(socket.AF_INET, socket.SOCK_DGRAM)
+        self.connectedIP = ""
 
     def scan_wifis(self):
 
@@ -83,12 +90,15 @@ class Connector:
             if host["name"] == name:
                 selected_host = host
 
-        if selected_host is not None:
-            return False
+        if selected_host is None:
+            raise ConnectionError()
 
-        data["pc_host"] = selected_host["address"]
+        self.connectedIP = selected_host["address"]
 
-        with open("./data.json", "w") as jsonFile:
-            json.dump(data, jsonFile)
+        self.setIP()
 
-        return True
+        return name
+
+    def setIP(self):
+        self.macro.host = self.connectedIP
+        self.mouse.host = self.connectedIP

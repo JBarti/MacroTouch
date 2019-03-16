@@ -40,9 +40,9 @@ class WifiController:
         output = bytes.decode(output)
 
         if output[:5] == "Error":
-            return False
+            raise ConnectionError()
 
-        return True
+        return name
 
     def find_nearby_wifis(self):
 

@@ -2,7 +2,6 @@ import os
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 from kivy.core.window import Window
-from controllers import MouseController
 import socket
 
 Builder.load_file(os.path.join(os.path.dirname(__file__), "mouse.kv"))

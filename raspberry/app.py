@@ -19,7 +19,7 @@ from panels.macros import MacrosOption
 from panels.wifi_interface import WifiInterfaceOption
 from kivy.core.window import Window
 from common import Seperator, DisplayText, CToggleButton, MacroButton
-from controllers import MacroController, MouseController, MonitorController, Connector
+from controllers import Connector
 import socket
 
 

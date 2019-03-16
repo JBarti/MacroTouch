@@ -1,7 +1,7 @@
 import threading
 import socket
 import json
-from utilities import SystemMonitor
+from .monitor_utilities import SystemMonitor
 
 
 class MonitorServer(threading.Thread):
@@ -85,3 +85,4 @@ class MonitorServer(threading.Thread):
         request = {"type": "SET_SYSTEM_DATA", "payload": data}
         bytes_data = bytes(json.dumps(request), "UTF-8")
         self.sock.sendto(bytes_data, self.rpi_address)
+

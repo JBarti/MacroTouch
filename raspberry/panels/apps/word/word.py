@@ -5,7 +5,6 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.stacklayout import StackLayout
 from kivy.uix.button import Button
 from common import MacroButton
-from controllers import MacroController
 import socket
 
 Builder.load_file(os.path.join(os.path.dirname(__file__), "word.kv"))
