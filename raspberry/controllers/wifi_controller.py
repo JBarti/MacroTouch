@@ -17,7 +17,7 @@ class WifiController:
 
         """
 
-        self.wifis = self.find_nearby_wifis()
+        pass
 
     def connect_to_wifi(self, name, password=None):
 

@@ -24,7 +24,7 @@ class Connector:
         self.macro_controller = MacroController()
         self.mouse_controller = MouseController(socket.AF_INET, socket.SOCK_DGRAM)
         self.monitor_controller = MonitorController(socket.AF_INET, socket.SOCK_DGRAM)
-        self.connectedIP = ""
+        self.connected_ip = ""
 
     def scan_wifis(self):
 
@@ -93,12 +93,12 @@ class Connector:
         if selected_host is None:
             raise ConnectionError()
 
-        self.connectedIP = selected_host["address"]
+        self.connected_ip = selected_host["address"]
 
         self.setIP()
 
         return name
 
     def setIP(self):
-        self.macro_controller.host = self.connectedIP
-        self.mouse_controller.host = self.connectedIP
+        self.macro_controller.host = self.connected_ip
+        self.mouse_controller.host = self.connected_ip
