@@ -62,19 +62,21 @@ class ConnectWifi(Popup):
     def check_for_hosts(self):
         last_length = 0
 
-        def get_hosts():
+        def get_hosts(*args, **kwargs):
             hosts = self.connector.hosts
             if len(hosts) != last_length:
+                print("HOSTTT")
                 print(hosts)
+                last_length = len(hosts)
 
-        return get_hosts()
+        return get_hosts
 
     def connect_wifi(self):
         password = self.ids["password_input"].text
         try:
             self.connector.connect_to_wifi(self.ssid, password=password)
             self.connector.scan_hosts()
-            Clock.schedule_interval(self.check_for_hosts(), 1)
+            Clock.schedule_interval(self.check_for_hosts(), 5)
         except ConnectionError:
             print("FAILED TO CONNECT")
         self.dismiss()
