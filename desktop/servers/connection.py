@@ -76,5 +76,4 @@ class ConnectionServer:
         Postavlja host uređaja na servere koji šalju podatke na njega
 
         """
-
         self.monitor_server.rpi_address = (addr[0], self.monitor_server.port)
