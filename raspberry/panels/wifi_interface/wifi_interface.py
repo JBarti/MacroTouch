@@ -4,6 +4,7 @@ from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
 from kivy.uix.popup import Popup
+from kivy.clock import Clock
 from kivy.app import App
 from common import MacroButton, MacroButtonBackground
 from kivy.utils import get_color_from_hex as hex_to_color
@@ -56,11 +57,26 @@ class ConnectWifi(Popup):
             self.input.text = "".join(text)
 
     def on_dismiss(self):
-        self.connector.scan_hosts()
+        pass
+
+    def check_for_hosts(self):
+        last_length = 0
+
+        def get_hosts():
+            hosts = self.connector.hosts
+            if len(hosts) != last_length:
+                print(hosts)
+
+        return get_hosts()
 
     def connect_wifi(self):
         password = self.ids["password_input"].text
-        self.connector.connect_to_wifi(self.ssid, password=password)
+        try:
+            self.connector.connect_to_wifi(self.ssid, password=password)
+            self.connector.scan_hosts()
+            Clock.schedule_interval(self.check_for_hosts(), 1)
+        except ConnectionError:
+            print("FAILED TO CONNECT")
         self.dismiss()
 
 
