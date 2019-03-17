@@ -2,7 +2,7 @@
 
 python3 ./app.py &
 PYPID=$!
-java UdpClient &
+java UdpClient 
 JPID=$!
 echo "$PYPID  $JPID" >> temp.txt
 

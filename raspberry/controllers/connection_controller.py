@@ -45,7 +45,7 @@ class ConnectionController:
 
         self._clear_all_hosts()
 
-        if self.pause_thread.isAlive():
+        if not self.pause_thread.isAlive():
             self.pause_thread.start()
 
         address_thread = Thread(target=self._find_pc_address)
@@ -72,13 +72,14 @@ class ConnectionController:
 
         """
         ips, local_rpi_ip = self._find_addresses()
+        if not ips:
+            raise ConnectionError()
 
         request = {"type": "SET_RPI_ADDRESS", "rpi_address": local_rpi_ip}
 
         bytes_data = bytes(json.dumps(request), "UTF-8")
 
         for ip in ips:
-            print(ip)
             if ip[0] == "(":
                 ip = ip[1:-1]
             if ip == local_rpi_ip or ip[-3:] == "255" or ip[-2:] == ".0":
@@ -101,6 +102,9 @@ class ConnectionController:
         bytes_ip = check_output(["hostname", "-I"])
         local_rpi_ip = bytes_ip.decode("ASCII")[:-1].strip()
         local_ip = ".".join(local_rpi_ip.split(".")[:-1])
+
+        if local_ip == "":
+            return False, False
 
         ip_string = check_output(["nmap", "-sL", local_ip + ".*"]).decode("ASCII")
 
@@ -151,3 +155,7 @@ class ConnectionController:
             sleep(2)
             return True
         return False
+
+
+c = ConnectionController(socket.AF_INET, socket.SOCK_DGRAM)
+c.start()

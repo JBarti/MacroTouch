@@ -25,7 +25,6 @@ class Connector:
         self.mouse_controller = MouseController(socket.AF_INET, socket.SOCK_DGRAM)
         self.monitor_controller = MonitorController(socket.AF_INET, socket.SOCK_DGRAM)
         self.connected_ip = ""
-        self.hosts = []
 
     def scan_wifis(self):
 
@@ -66,7 +65,6 @@ class Connector:
         """
 
         self.host_finder.start()
-        self.hosts = self.host_finder.hosts
 
     def connect_to_host(self, name):
 
