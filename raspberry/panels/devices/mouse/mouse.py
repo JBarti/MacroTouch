@@ -26,6 +26,14 @@ class Mouse(BoxLayout):
         self.mouse_controller = mouse_controller
 
     def on_touch_move(self, touch):
+        """
+        Provjerava nalazi li korsnikov prst unutar 
+        dimenzija miša
+        
+        Arguments:
+            touch {[tuple]} -- [tuple sa x i y pozicijama korisnikova prsta]
+        """
+
         x_pos = touch.pos[0]
         y_pos = touch.pos[1]
         print(x_pos, " ", y_pos)
@@ -41,14 +49,12 @@ class Mouse(BoxLayout):
                 self.mouse_controller.send_location_data([x_percent, y_percent])
 
     def mouse_move(self, _, mouse_pos, **kwargs):
-        """Provjerava nalazi li korsnikov prst unutar 
-        dimenzija miša
-        
-        Arguments:
-            mouse_pos {[tuple]} -- [tuple sa x i y pozicijama korisnikova prsta]
         """
-
+        Funkcija za testiranje miša bez 
+        macro touch uređaja
+        """
         click_size = self.ids.left_click.height
         if self.parent and self.parent.current_widget is self:
             if mouse_pos[0] > self.pos[0] and mouse_pos[1] > click_size:
                 print(mouse_pos)
+                # self.mouse_controller.send_location_data(mouse_pos)

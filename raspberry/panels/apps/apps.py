@@ -14,6 +14,11 @@ Builder.load_file(os.path.join(os.path.dirname(__file__), "apps.kv"))
 
 
 class AppsOption(GridLayout):
+    """
+    Definira grid layout u kojem se nalaze botuni
+    za ulazak u panel sa shortcutima aplikacije
+    """
+
     def __init__(self, switch, **kwargs):
         super(AppsOption, self).__init__(**kwargs)
         self.macro_controller = App.get_running_app().connector.macro_controller
@@ -23,6 +28,14 @@ class AppsOption(GridLayout):
         self.ids["grid"].add_widget(self.layout)
 
     def generate_button(self, page, img_source):
+        """
+        Genira botun za prebacivanje na panel sa shortcutima
+        aplikacije
+        
+        Arguments:
+            page {opbject} -- panel sa shortcutima aplikacije
+            img_source {string} -- ikona botuna
+        """
         btn = MacroButton(
             on_press=self.switch_to_device(page),
             size_hint=[None, None],
@@ -35,10 +48,20 @@ class AppsOption(GridLayout):
 
         self.layout.add_widget(btn)
 
-    def switch_to_device(self, device, *args, **kwargs):
+    def switch_to_device(self, app, *args, **kwargs):
+        """
+        Vrača funkciju koja prebacuje na novi page
+
+        Arguments:
+            app {object} -- app panel
+        
+        Returns:
+            [function] -- funkcija koja prebacuje na app panel
+        """
+
         def inner(*args, **kwargs):
             print("Test")
-            self.switch(device)()
+            self.switch(app)()
 
         return inner
 

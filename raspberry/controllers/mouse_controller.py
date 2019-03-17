@@ -43,7 +43,10 @@ class MouseController:
         str_mouse_location = position_x + " " + position_y
 
         location = bytes(str_mouse_location, "UTF_8")
-        self.sock.sendto(location, (self.host, self.port))
+        print(self.host)
+        print(location)
+        print("JEBI MATER")
+        self.sock.sendto(location, (self.host[0], 5005))
 
     def send_click_data(self, click_type):
         """

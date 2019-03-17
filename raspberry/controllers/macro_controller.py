@@ -56,4 +56,4 @@ class MacroController:
             bytes_data = bytes(json.dumps(dict_data), "UTF-8")
             print(bytes_data)
             print(self.host, self.port)
-            sock.sendto(bytes_data, (self.host, self.port))
+            sock.sendto(bytes_data, (self.host[0], 5200))

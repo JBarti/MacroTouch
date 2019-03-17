@@ -60,11 +60,20 @@ class Keyboard(BoxLayout):
         caps_lock_key.on_press = self.caps_lock_press
 
     def send_macro(self, macro):
+        """
+        Stvara funkciju za slanje macroa
+        
+        Arguments:
+            macro {string} -- macro koji se šalje korisniku na računalo
+        
+        Returns:
+            [function] -- funkcija za slanje macroa, dodjeljuje se MacroButtonu
+        """
+
         def inner():
             novi_macro = macro
             if self.caps_lock and not isinstance(novi_macro, list):
                 novi_macro = macro.upper()
-            print(novi_macro)
             self.macro_controller.send_data(macro)
 
         return inner

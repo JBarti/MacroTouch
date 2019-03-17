@@ -74,7 +74,8 @@ class ConnectionController:
         """
         ips, local_rpi_ip = self._find_addresses()
         if not ips:
-            raise ConnectionError()
+            self._clear_all_hosts()
+            return []
 
         request = {"type": "SET_RPI_ADDRESS", "rpi_address": local_rpi_ip}
 
@@ -156,7 +157,3 @@ class ConnectionController:
             sleep(2)
             return True
         return False
-
-
-c = ConnectionController(socket.AF_INET, socket.SOCK_DGRAM)
-c.start()

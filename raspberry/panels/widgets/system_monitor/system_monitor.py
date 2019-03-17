@@ -10,12 +10,21 @@ Builder.load_file(os.path.join(os.path.dirname(__file__), "system_monitor.kv"))
 
 
 class SystemMonitor(BoxLayout):
+    """
+    Definira BoxLayout u kojem se nalaze elementi system monitora
+
+    """
+
     def __init__(self, **kwargs):
         super(SystemMonitor, self).__init__(**kwargs)
         self.use_system_data()
         Clock.schedule_interval(self.use_system_data, 2)
 
     def use_system_data(self, *args, **kwargs):
+        """
+        Dohvaća podatke sa korisnikova računala
+        i mjenja trenutno stanje prikazanog system monitora
+        """
         stack1 = self.ids["s1"].ids["stack"]
         stack2 = self.ids["s2"].ids["stack"]
         stack3 = self.ids["s3"].ids["stack"]

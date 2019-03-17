@@ -19,14 +19,31 @@ class WifiInterfaceOption(AnchorLayout):
         super(WifiInterfaceOption, self).__init__(**kwargs)
         self.connector = App.get_running_app().connector
         self.refresh_wifi()
+        self.connector.scan_hosts()
+        Clock.schedule_interval(self.check_for_hosts(), 5)
 
     def refresh_wifi(self):
+        """
+        Refresha prikazane wifieve
+        
+        Returns:
+            [list] -- wifi botuni
+        """
         wifis = self.connector.scan_wifis()
         wifis.sort(key=lambda wifi: int(wifi["signal"]))
         list(map(self.map_wifis(), wifis))
         return wifis
 
     def map_wifis(self):
+        """
+        Vraća funkciju za mapiranje dictionarya
+        sa podatcima wifia u WifiButton i njihovo
+        dodavanje na ekran
+        
+        Returns:
+            [function] -- funkcija za mapiranje
+        """
+
         def inner(wifi):
             name = wifi["name"]
             power = ceil(3 * (int(wifi["signal"]) / 100))
@@ -35,8 +52,64 @@ class WifiInterfaceOption(AnchorLayout):
 
         return inner
 
+    def refresh_hosts(self, hosts):
+        """
+        Refresha prikazane hostove
+        
+        Returns:
+            [list] -- host botuni
+        """
+        list(map(self.map_hosts(), hosts))
+
+    def map_hosts(self):
+        """
+        Vraća funkciju za mapiranje dictionarya
+        sa podatcima hosta u WifiButton i njihovo
+        dodavanje na ekran
+        
+        Returns:
+            [function] -- funkcija za mapiranje
+        """
+
+        def inner(host):
+            name = host["name"]
+            btn = WifiButton(text=name, power=0)
+            self.ids["pcs"].add_widget(btn)
+
+        return inner
+
+    def check_for_hosts(self):
+        """
+        Vrača funkciju koja provjerava postoji li 
+        novi host na mreži
+        Sprema prethodni broj hostova
+        
+        Returns:
+            [function] -- ako je došlo do promjene u broju spojenih 
+                            hostova pokreče funkciju refresh_hosts
+        """
+        last_length = 0
+
+        def get_hosts(*args, **kwargs):
+            hosts = self.connector.host_finder.hosts
+            nonlocal last_length
+            if len(hosts) != last_length:
+                print(hosts)
+                self.refresh_hosts(hosts)
+                last_length = len(hosts)
+
+        return get_hosts
+
 
 class ConnectWifi(Popup):
+    """
+    Popup za spajanje na wifi mrežu
+    Prikazuje se klikom na WifiButton
+    
+    Arguments:
+        ssid {string} -- ssid wifia ili ime hosta
+    """
+
     def __init__(self, ssid, *args, **kwargs):
         super(ConnectWifi, self).__init__(**kwargs)
         self.keyboard = self.ids["vkeyboard"]
@@ -47,7 +120,16 @@ class ConnectWifi(Popup):
         self.ssid = ssid
         self.connector = App.get_running_app().connector
 
-    def key_press(self, key, value, currently_pressed):
+    def key_press(self, key, value, _):
+        """
+        Pokreće se kada korisnik pritisne tipku
+        na on-screen tipokovnici, šalje pritisnuti znak
+        u zadnje odabran text input
+        
+        Arguments:
+            key {string} -- pritisnuta funkcijska tipka
+            value {string} -- pritisnuti znak
+        """
         if value:
             self.input.text += value
             return
@@ -56,33 +138,30 @@ class ConnectWifi(Popup):
             text.pop()
             self.input.text = "".join(text)
 
-    def on_dismiss(self):
-        pass
-
-    def check_for_hosts(self):
-        last_length = 0
-
-        def get_hosts(*args, **kwargs):
-            hosts = self.connector.hosts
-            if len(hosts) != last_length:
-                print("HOSTTT")
-                print(hosts)
-                last_length = len(hosts)
-
-        return get_hosts
-
     def connect_wifi(self):
+        """
+        Pokreće se klikom na submit botun
+        Korisnika spaja na odabranu wifi mrežu
+        """
         password = self.ids["password_input"].text
         try:
             self.connector.connect_to_wifi(self.ssid, password=password)
-            self.connector.scan_hosts()
-            Clock.schedule_interval(self.check_for_hosts(), 5)
         except ConnectionError:
             print("FAILED TO CONNECT")
         self.dismiss()
 
 
 class WifiButton(Button):
+    """
+    Botun/trakica koja predstavlja vidljive wifi mreže
+    ili hostove vidljive na mreži
+    
+    Arguments:
+        power {[type]} -- snaga wifia koja određuje ikonu botuna
+                          ako je snaga 0 botun će promijenit funkcionalnosti
+                          za spajanje na host
+    """
+
     light_gray = "#1515155"
     gray = "#00000062"
 
@@ -93,11 +172,19 @@ class WifiButton(Button):
         self.ssid = self.text
         self.text = ""
         self.power = power
+        self.connector = App.get_running_app().connector
 
     def on_press(self, *args, **kwargs):
+        """
+        Ako je snaga veća od 0 spaja se na wifi
+        ako nije spaja se na host
+        """
         self.background_color = hex_to_color(self.gray)
         if self.power > 0:
             ConnectWifi(ssid=self.ssid).open()
+        else:
+            print(self.ssid)
+            self.connector.connect_to_host(self.ssid)
 
     def on_touch_up(self, *args, **kwargs):
         self.background_color = hex_to_color(self.light_gray)
