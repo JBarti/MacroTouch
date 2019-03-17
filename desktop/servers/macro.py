@@ -63,8 +63,8 @@ class MacroServer(threading.Thread):
         self.sock = socket.socket(family, sock_type)
         self.sock.bind((ip_address, port))
         self.request_type = {
-            "RUN_MACRO": self.handle_macro,
-            "TYPE_TEXT": self.type_text,
+            "RUN_MACRO": self._handle_macro,
+            "TYPE_TEXT": self._type_text,
         }
 
     def run(self):
@@ -85,34 +85,43 @@ class MacroServer(threading.Thread):
 
                 self.request_type[request_type](request_data)
 
-    def type_text(self, data):
+    def _type_text(self, data):
+        """
+
+        Metoda zadužena za simuliranje tipkanja nekog teksta    
+
+        Arguments:
+            data {list} -- string u obliku liste koju treba istipkati [str, str, str, str, ...]
+
+        """
+
         for letter in data:
             k.tap_key(letter)
 
-    def handle_macro(self, data):
+    def _handle_macro(self, data):
         """
 
         Metoda koja rješava pritisak slijeda od više makro naredbi
 
         Arguments:
-            data {list} -- [str, str, str ,str, ...]
+            data {list} -- list stringova koji predstavljaju makroe [str, str, str ,str, ...]
 
         """
 
         for str_macro in data:
-            macro = self.parse_macro(str_macro)
+            macro = self._parse_macro(str_macro)
             k.press_keys(macro)
 
-    def parse_macro(self, payload):
+    def _parse_macro(self, payload):
         """
 
-        Metoda koja se bavi parsiranjem macroa u nešto kasnije primjenjivo
+        Metoda koja se bavi parsiranjem macroa u listu stringova koji predstavljaju makro naredbu
 
         Arguments:
-            payload {str} -- jedna makro naredba
+            payload {str} -- jedna makro naredba u obliku stringa
 
         Returns:
-            [list] -- parsed macro into a list of keys
+            [list] -- parsiran makro u obliku liste naredbi
 
         """
 

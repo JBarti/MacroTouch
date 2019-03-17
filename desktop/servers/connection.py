@@ -1,6 +1,10 @@
 import socket
 import json
 from subprocess import check_output
+from threading import Thread
+import threading
+from .macro import MacroServer
+from .system_monitor import MonitorServer
 
 
 class ConnectionServer:
@@ -29,24 +33,48 @@ class ConnectionServer:
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.sock.bind((ip_address, port))
         self.user_name = bytes.decode(check_output("hostname"))[:-1]
+        self.monitor_server = MonitorServer(socket.AF_INET, socket.SOCK_DGRAM)
+        self.macro_server = MacroServer(socket.AF_INET, socket.SOCK_DGRAM)
+        self.macro_server.start()
+        self.monitor_server.start()
 
     def start(self):
 
         """
         
-        Metoda koja čeka na vezu od uređaja 
+        Metoda koja otvara thread sa metodom koja čeka na podatke od uređaja
         
-        Returns:
-            [string] -- string koji predstavlja adresu uređaja
-            
+        """
+        thread = Thread(target=self._wait())
+        thread.start()
+
+    def _wait(self):
+
+        """
+        
+        Metoda koja čeka na podatke od strane uređaja
+
         """
 
-        _, addr = self.sock.recvfrom(1024)
-        self.sock.sendto(
-            bytes(
-                json.dumps({"type": "ADD_HOST", "payload": {"name": self.user_name}}),
-                "UTF-8",
-            ),
-            addr,
-        )
-        return addr[0]
+        while True:
+            _, addr = self.sock.recvfrom(1024)
+            self.sock.sendto(
+                bytes(
+                    json.dumps(
+                        {"type": "ADD_HOST", "payload": {"name": self.user_name}}
+                    ),
+                    "UTF-8",
+                ),
+                addr,
+            )
+            self._set_host(addr)
+
+    def _set_host(self, addr):
+
+        """
+        
+        Postavlja host uređaja na servere koji šalju podatke na njega
+
+        """
+
+        self.monitor_server.rpi_address = (addr[0], self.monitor_server.port)

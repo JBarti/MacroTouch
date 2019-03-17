@@ -49,7 +49,7 @@ class Connector:
             password {str} -- šifra wifia ako je potrebna
 
         Returns:
-            [bool] -- vraća True ako je spojeno a false ako je došlo do greške
+            [str] -- vraća ime računala, u slučaju da nije povezan podiže se ConnectionError
         """
 
         return self.wifi.connect_to_wifi(name, password=password)
@@ -65,10 +65,6 @@ class Connector:
         """
 
         self.host_finder.start()
-        with open("./data.json", "r") as jsonFile:
-            data = json.load(jsonFile)
-
-        return data["all_hosts"]
 
     def connect_to_host(self, name):
 
@@ -77,16 +73,14 @@ class Connector:
         Metoda koja se spaja na određeno računalo danog imena
         
         Returns:
-            [string] -- ime računala koje na sebi ima pokrenut serverski dio aplikacije
+            [string] -- ime računala koje na sebi ima pokrenut serverski dio aplikacije, ili podiže
+                        ConnectionError u slučaju nemogućnosti spajanja
 
         """
 
-        with open("./data.json", "r") as jsonFile:
-            data = json.load(jsonFile)
-
         selected_host = None
 
-        for host in data["all_hosts"]:
+        for host in self.host_finder.hosts:
             if host["name"] == name:
                 selected_host = host
 
@@ -94,11 +88,17 @@ class Connector:
             raise ConnectionError()
 
         self.connected_ip = selected_host["address"]
-
-        self.set_ip()
+        self._set_ip()
 
         return name
 
-    def set_ip(self):
+    def _set_ip(self):
+
+        """
+        
+        Metoda koja na poziv postavlja host od računala 
+
+        """
+
         self.macro_controller.host = self.connected_ip
         self.mouse_controller.host = self.connected_ip

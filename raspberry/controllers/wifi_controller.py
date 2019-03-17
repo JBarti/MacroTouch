@@ -26,7 +26,7 @@ class WifiController:
         Metoda koja povezuje uređaj na wifi
 
         Returns:
-            [bool] -- True ako je uspješno povezan, False ako nije
+            [str] -- ime wifia ako je uspješno vezan u suprotnom podiže ConnectionError
 
         """
 

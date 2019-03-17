@@ -15,7 +15,7 @@ class SystemMonitor:
     def get_system_data(self):
         """
 
-        Metoda koja okuplja sve privatne metode i izvlači podatke iz njih.
+        Metoda koja uzima sve privatne metode i izvlači podatke iz njih.
 
         Returns:
             [dict] -- objekt rječnika koji sadrži sve podatke o sistemu
@@ -31,10 +31,10 @@ class SystemMonitor:
     def __get_cpus(self):
         """
 
-        Metoda koja dobavlja postotke korištenosti pojedine jezgre procesora
+        Metoda koja dohvaća postotke korištenosti pojedine jezgre procesora
 
         Returns:
-            [list] -- [int, int, int, int] postotak korištenja pojedinog cpua
+            [list] -- postotak korištenja pojedinog cpua [int, int, int, int]
         """
 
         return [cpu * 10 for cpu in psutil.cpu_percent(percpu=True)]
@@ -60,13 +60,13 @@ class SystemMonitor:
         Metoda koja dobavlja trenutno korištenu količinu radne meorije
 
         Returns:
-            [dict] -- {"used":int, "total":int} objekt rječnika koji sadrži podatke o korištenju RAM-a 
+            [dict] -- objekt rječnika koji sadrži podatke o korištenju RAM-a {"used":int, "total":int}  
 
         """
 
         memory = psutil.virtual_memory()
-        total = self.__convert_to_gb(memory.total)
-        used = self.__convert_to_gb(memory.used)
+        total = self._convert_to_gb(memory.total)
+        used = self._convert_to_gb(memory.used)
         return {"used": used, "total": total}
 
     def __get_disk_usage(self):
@@ -75,16 +75,16 @@ class SystemMonitor:
         Metoda koja dobavlja količinu memorije zauzete na disku
 
         Returns:
-            [dict] -- {"used":int, "total":int} objekt rječnika koji sadrži podatke o korišteju stalne memorije
+            [dict] -- objekt rječnika koji sadrži podatke o korišteju stalne memorije {"used":int, "total":int}
 
         """
 
         disk = psutil.disk_usage("/")
-        total = self.__convert_to_gb(disk.total)
-        used = self.__convert_to_gb(disk.used)
+        total = self._convert_to_gb(disk.total)
+        used = self._convert_to_gb(disk.used)
         return {"used": used, "total": total}
 
-    def __convert_to_gb(self, byte_memory):
+    def _convert_to_gb(self, byte_memory):
         """
 
         Metoda koja pretvara byteove u kilobyteove

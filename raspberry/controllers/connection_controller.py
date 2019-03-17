@@ -31,6 +31,7 @@ class ConnectionController:
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.sock.bind((ip_address, port))
         self.request_type = {"ADD_HOST": self._add_host}
+        self.hosts = []
         self.pause_thread = Thread(target=self._wait)
 
     def start(self):
@@ -51,9 +52,15 @@ class ConnectionController:
         address_thread.start()
 
     def _wait(self):
+        """
+
+        Metoda koja čeka podatke sa računala
+
+        """
+
         while True:
             data, addr = self.sock.recvfrom(1024)
-            data = json.loads(bytes.decode(data))
+            data = json.loads(data.decode("ASCII"))
             self.request_type[data["type"]](data["payload"], addr)
 
     def _find_pc_address(self):
@@ -115,15 +122,9 @@ class ConnectionController:
         
         """
 
-        with open("./data.json", "r") as jsonFile:
-            data = json.load(jsonFile)
-
         pc_data["address"] = addr
 
-        data["all_hosts"].append({pc_data})
-
-        with open("./data.json", "w") as jsonFile:
-            json.dump(data, jsonFile)
+        self.hosts.append(pc_data)
 
     def _clear_all_hosts(self):
 
@@ -133,13 +134,7 @@ class ConnectionController:
 
         """
 
-        with open("./data.json", "r") as jsonFile:
-            data = json.load(jsonFile)
-
-        data["all_hosts"] = []
-
-        with open("./data.json", "w") as jsonFile:
-            json.dump(data, jsonFile)
+        self.hosts = []
 
     def _thread_is_done(self, thread):
 

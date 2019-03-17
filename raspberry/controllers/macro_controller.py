@@ -38,14 +38,14 @@ class MacroController:
         return socket.socket(family, sock_type)
 
     def send_data(self, data):
-        print(data)
         """
 
         Metoda koja prima niz tipki i šale zahtjev za pritiskom tih tipki na korisničkom računalu
 
 
         Arguments:
-            data {list/str} -- [[str, str, str], [str,str]]/str
+            data {list/str} -- vraća listu koja se sastoji od nizova makro naredbi ili samo jedan makro u obliku stringa
+                               [[str, str, str], [str,str], ...] ili str
         """
 
         with self.spawn_socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
