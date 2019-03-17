@@ -1,8 +1,8 @@
 #!/bin/bash
 
-pids=`cat PID.txt`
+pids=`cat temp.txt`
 
-echo "" > PID.txt
+echo "" > temp.txt
 
 for word in $pids
 do
