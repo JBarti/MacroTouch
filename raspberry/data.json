@@ -32,23 +32,23 @@
             2,
             4
           ],
-          "text": "Change focus"
+          "text": "Change window"
         },
         {
-          "macro": "",
+          "macro": "CTRL+TAB",
           "position": [
             0,
             3
           ],
-          "text": ""
+          "text": "Change tab"
         },
         {
-          "macro": "",
+          "macro": "F5",
           "position": [
             0,
             3
           ],
-          "text": ""
+          "text": "Refresh"
         },
         {
           "macro": "",
@@ -136,7 +136,7 @@
             2,
             2
           ],
-          "text": "8888888888888888888"
+          "text": "888888888"
         },
         {
           "macro": "",
@@ -144,7 +144,7 @@
             2,
             2
           ],
-          "text": "8888888888888888888"
+          "text": "888888888"
         },
         {
           "macro": "",
@@ -152,7 +152,7 @@
             2,
             3
           ],
-          "text": "yygggggggg"
+          "text": "yyggggggg"
         },
         {
           "macro": "",
@@ -160,7 +160,7 @@
             5,
             0
           ],
-          "text": "tttyyyytyy"
+          "text": "tttyyyyty"
         },
         {
           "macro": "",
@@ -168,7 +168,7 @@
             5,
             1
           ],
-          "text": "hhhhhhyhhu"
+          "text": "hhhhhhyhh"
         },
         {
           "macro": "",
@@ -176,7 +176,7 @@
             2,
             4
           ],
-          "text": "tttttttttt"
+          "text": "ttttttttt"
         },
         {
           "macro": "",
