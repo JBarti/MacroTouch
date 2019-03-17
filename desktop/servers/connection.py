@@ -42,16 +42,20 @@ class ConnectionServer:
 
         """
         
-        Metoda koja čeka na vezu od uređaja 
+        Metoda koja otvara thread sa metodom koja čeka na podatke od uređaja
         
-        Returns:
-            [string] -- string koji predstavlja adresu uređaja
-            
         """
         thread = Thread(target=self._wait())
         thread.start()
 
     def _wait(self):
+
+        """
+        
+        Metoda koja čeka na podatke od strane uređaja
+
+        """
+
         while True:
             _, addr = self.sock.recvfrom(1024)
             self.sock.sendto(
@@ -66,4 +70,11 @@ class ConnectionServer:
             self._set_host(addr)
 
     def _set_host(self, addr):
+
+        """
+        
+        Postavlja host uređaja na servere koji šalju podatke na njega
+
+        """
+
         self.monitor_server.rpi_address = (addr[0], self.monitor_server.port)

@@ -52,6 +52,12 @@ class ConnectionController:
         address_thread.start()
 
     def _wait(self):
+        """
+
+        Metoda koja čeka podatke sa računala
+
+        """
+
         while True:
             data, addr = self.sock.recvfrom(1024)
 

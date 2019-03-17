@@ -9,3 +9,4 @@ do
     kill 9 $word
 done
 
+#skripta koja gasi server na računalu

@@ -49,7 +49,7 @@ class Connector:
             password {str} -- šifra wifia ako je potrebna
 
         Returns:
-            [bool] -- vraća True ako je spojeno a false ako je došlo do greške
+            [str] -- vraća ime računala, u slučaju da nije povezan podiže se ConnectionError
         """
 
         return self.wifi.connect_to_wifi(name, password=password)
@@ -73,7 +73,8 @@ class Connector:
         Metoda koja se spaja na određeno računalo danog imena
         
         Returns:
-            [string] -- ime računala koje na sebi ima pokrenut serverski dio aplikacije
+            [string] -- ime računala koje na sebi ima pokrenut serverski dio aplikacije, ili podiže
+                        ConnectionError u slučaju nemogućnosti spajanja
 
         """
 
@@ -93,5 +94,12 @@ class Connector:
         return name
 
     def _set_ip(self):
+
+        """
+        
+        Metoda koja na poziv postavlja host od računala 
+
+        """
+
         self.macro_controller.host = self.connected_ip
         self.mouse_controller.host = self.connected_ip

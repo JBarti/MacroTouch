@@ -33,7 +33,7 @@ class MouseController:
         Metoda klase koja se bavi slanjem lokacije miša na korisničko računalo
 
         Arguments:
-            location {list} -- [int, int]
+            location {list} -- lista koja predstavlja lokaciju kursora [int, int]
 
         """
 

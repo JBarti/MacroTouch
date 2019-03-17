@@ -44,7 +44,8 @@ class MacroController:
 
 
         Arguments:
-            data {list/str} -- [[str, str, str], [str,str]]/str
+            data {list/str} -- vraća listu koja se sastoji od nizova makro naredbi ili samo jedan makro u obliku stringa
+                               [[str, str, str], [str,str], ...] ili str
         """
 
         with self.spawn_socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:

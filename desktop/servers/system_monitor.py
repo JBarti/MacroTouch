@@ -38,8 +38,7 @@ class MonitorServer(threading.Thread):
         """
 
         Metoda run pokreće se pri pokretanju Threada. 
-        Prima zahtjeve sa socketa, ovisno ozahtjevu poziva metode koje ih obrade. 
-        Također šalje podatke
+        Prima zahtjeve za podatcima o korištenju računala te nakon toga šalje te podatke
 
         """
 
@@ -58,7 +57,7 @@ class MonitorServer(threading.Thread):
         stanju sistema.
 
         Returns:
-            [str] -- json string which holds all system data
+            [str] -- string u json formatu koji sadrži sve podatke o korištenju računala
 
         """
 
@@ -73,13 +72,13 @@ class MonitorServer(threading.Thread):
         Metoda koja se poziva kad je potrebno slati podatke o sistemu na MacroTouch.
 
         Arguments:
-            data {dict} -- {
-            "cpus": [int, int, int, int],
-            "temp": int,
-            "memory": {"total": int, "used": int },
-            "disk": {"total": int, "used": int }
-        } 
-        objekt rječnika koji sadrži sve podatke o sistemu
+            data {dict} -- objekt rječnika koji sadrži sve podatke o sistemu
+                {
+                    "cpus": [int, int, int, int],
+                    "temp": int,
+                    "memory": {"total": int, "used": int },
+                    "disk": {"total": int, "used": int }
+                } 
 
         """
 
