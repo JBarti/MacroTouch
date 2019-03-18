@@ -18,6 +18,15 @@ Builder.load_file(os.path.join(os.path.dirname(__file__), "macros.kv"))
 
 
 class CreateWidget(Popup):
+    """
+    Popup za stvaranje novog MacroButtona
+    
+    Arguments:
+        submit {[function]} -- funkcija za submitanje macroa
+        y_pos {[int]} -- y pozicija macro botuna
+        x_pos {[int]} -- x pozicija macro botuna
+    """
+
     def __init__(self, submit, y_pos, x_pos, **kwargs):
         super(CreateWidget, self).__init__(**kwargs)
         self.ids["submit"].on_press = self.press_submit
@@ -33,12 +42,23 @@ class CreateWidget(Popup):
         self.keyboard.on_key_down = self.key_press
 
     def press_submit(self):
+        """
+        Submita unesene podatke o macrou i gasi popup
+        """
         name = self.ids["name_input"].text
         macro = self.ids["macro_input"].text
         self.submit(name, macro, self.y_pos, self.x_pos)
         self.dismiss()
 
-    def key_press(self, key, value, currently_pressed):
+    def key_press(self, key, value):
+        """
+        Kada se pritisne botun na on-screen tipkovnici 
+        znak na tipki se dodaje u trenutno fokusiran TextInput
+        
+        Arguments:
+            key {string} -- pritisnuti function key
+            value {string} -- pritisnuti znak
+        """
         if value:
             self.focused.text += value
             if self.focused == self.name_input:
@@ -50,6 +70,13 @@ class CreateWidget(Popup):
             self.focused.text = "".join(text)
 
     def on_focus(self, text_input, value):
+        """
+        Zapisuje koji je TextInput trenutno fokusiran
+        
+        Arguments:
+            text_input {object} -- TextInput objekt
+            value {bool} -- je li TextInput fokusiran il ne
+        """
         if value:
             self.focused = text_input
 
@@ -65,20 +92,37 @@ class MacrosOption(BoxLayout):
         self.ids["grid"].press_macro = self.send_macro
 
     def send_macro(self, macro):  # macro --> ["CTRL+A", "DELETE"]
+        """
+        Vraća funkciju koja korisniku na računalo šalje macro
+        
+        Returns:
+            [function] -- funkcija za slanje macroa
+        """
+
         def inner():
             self.macro_controller.send_data(macro)
 
         return inner
 
     def edit_down(self):
+        """
+        Ulazi u edit mode
+        """
         page = App.get_running_app().MACRO_PAGE
         self.build_macro_page(editable=True, page=page)
 
     def edit_normal(self):
+        """
+        Izlazi iz edit modea
+        """
         page = App.get_running_app().MACRO_PAGE
         self.build_macro_page(editable=False, page=page)
 
     def generate_page_buttons(self):
+        """
+        Generira botune za prebacivanje na novi page
+        Podatke o pageovima dobiva iz data.json filea
+        """
         pages = self.ids["pages"]
         with open("./data.json", "r+") as data:
             data = json.load(data)
@@ -91,6 +135,17 @@ class MacrosOption(BoxLayout):
                 pages.add_widget(button)
 
     def change_page(self, page):
+        """
+        Vraća funkciju za promjenu trenutnog macro pagea
+        Funkcija se pridjeljuje PageButtonu
+        
+        Arguments:
+            page {object} -- popis svih macroa tog pagea
+        
+        Returns:
+            [function] -- funkcija za prebacivanje na novi page
+        """
+
         def inner(_):
             editable = self.ids["edit"].state == "down"
             App.get_running_app().MACRO_PAGE = page
@@ -100,6 +155,11 @@ class MacrosOption(BoxLayout):
 
 
 class EditButton(ToggleButton):
+    """
+    Botun u donjem lijevom kutu koji prebacuje korisnika
+    u edit mode za dodavanje novih macroa
+    """
+
     def __init__(self, **kwargs):
         super(EditButton, self).__init__(**kwargs)
         self.img_source = "./icons/edit.png"
@@ -111,6 +171,13 @@ class EditButton(ToggleButton):
         pass
 
     def on_state(self, _, state):
+        """
+        Mijenja boju edit ikonice ovisno o tome je li
+        korisnik u edit modeu ili ne
+        
+        Arguments:
+            state {string} -- "normal" ako je botun aktiviran, "down" ako nije
+        """
         if state == "down":
             self.ids["image"].source = "./icons/edit-clicked.png"
             self.on_down()
@@ -155,6 +222,15 @@ class Macro(BoxLayout):
             self.add_widget(button_new)
 
     def submit_macro(self, name, macro, y_pos, x_pos):
+        """
+        Stvara novi macro i zapisuje ga u data.json file
+        
+        Arguments:
+            name {string} -- ime koje se prikazuje na botunu
+            macro {string} -- macro koji pokreće taj botun
+            y_pos {int} -- x pozicija botuna
+            x_pos {int} -- y pozicija botuna
+        """
         page = App.get_running_app().MACRO_PAGE
         with open("./data.json", "r+") as data:
             x_pos = int(x_pos)
@@ -172,6 +248,21 @@ class Macro(BoxLayout):
         self.rebuild(editable=True, page=page)
 
     def create_macro(self, y_pos, x_pos, page=None):
+        """
+        Otvara popup sa formom za stvaranje macroa
+        
+        Arguments:
+            y_pos {int} -- x pozicija macroa u gridu
+            x_pos {int} -- y pozicija macroa u gridu
+        
+        Keyword Arguments:
+            page {[type]} -- [description] (default: {None})
+        
+        Returns:
+            [function] -- funkcija koja otvara popup, dodjeljuje se 
+                          botunu za stvaranje novog MacoButtona
+        """
+
         def inner():
             CreateWidget(self.submit_macro, y_pos, x_pos).open()
 
@@ -184,7 +275,8 @@ class ButtonGrid(GridLayout):
     """
 
     def __init__(self, **kwargs):
-        """Predefinira broj redova i stupaca mreže
+        """
+        Predefinira broj redova i stupaca mreže
         i generira mrežu
         """
         super(ButtonGrid, self).__init__(**kwargs)
@@ -194,6 +286,16 @@ class ButtonGrid(GridLayout):
         self.send_macro = App.get_running_app().connector.macro_controller.send_data
 
     def press_macro(self, macro):
+        """
+        Šalje korisniku macro na računalo
+        
+        Arguments:
+            macro {string} -- string koji predstavlje macro tipke
+        
+        Returns:
+            [function] -- funkcija koja se poziva klikom na MacroButton
+        """
+
         def inner():
             self.send_macro(macro)
 

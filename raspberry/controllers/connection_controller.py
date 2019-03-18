@@ -60,6 +60,7 @@ class ConnectionController:
 
         while True:
             data, addr = self.sock.recvfrom(1024)
+            print(data, addr)
             data = json.loads(data.decode("ASCII"))
             self.request_type[data["type"]](data["payload"], addr)
 
@@ -74,7 +75,7 @@ class ConnectionController:
         ips, local_rpi_ip = self._find_addresses()
         if not ips:
             self._clear_all_hosts()
-            return
+            return []
 
         request = {"type": "SET_RPI_ADDRESS", "rpi_address": local_rpi_ip}
 

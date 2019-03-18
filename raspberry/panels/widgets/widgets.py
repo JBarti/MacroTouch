@@ -33,6 +33,13 @@ class WidgetsOption(BoxLayout):
         return inner
 
     def generate_button(self, page, img_source):
+        """
+        Generira botun za prabacivanje na određeni widget panel
+        
+        Arguments:
+            page {object} -- widget panel
+            img_source {string} -- ikona botuna
+        """
         button = MacroButton(
             on_press=self.switch_to_device(page),
             size_hint=[None, None],

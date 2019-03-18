@@ -99,6 +99,6 @@ class Connector:
         Metoda koja na poziv postavlja host od računala 
 
         """
-
+        print(self.connected_ip)
         self.macro_controller.host = self.connected_ip
         self.mouse_controller.host = self.connected_ip

@@ -13,6 +13,10 @@ class Calculator(BoxLayout):
 
 
 class Buttons(GridLayout):
+    """
+    Definira grid layout u kojem se nalaze tipke kalkulatora
+    """
+
     keys = [
         ["7", "8", "9", "/"],
         ["6", "5", "4", "*"],
@@ -33,6 +37,16 @@ class Buttons(GridLayout):
                 self.add_widget(key)
 
     def press_key(self, text):
+        """
+        Vraća funkciju koja dodaje string na display kalkulatora
+        
+        Arguments:
+            text {string} -- text tipke
+        
+        Returns:
+            [function] -- funkcija koja se dodjeljuje botunu kalkulatora
+        """
+
         def text_key(*args, **kwargs):
             self.display.text += text
 

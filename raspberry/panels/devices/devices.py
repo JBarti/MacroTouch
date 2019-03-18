@@ -31,6 +31,13 @@ class DevicesOption(GridLayout):
         self.generate_button(mouse, "./icons/mouse.png")
 
     def generate_button(self, panel, img_source):
+        """
+        Genira botun za prebacivanje na panel devicea
+        
+        Arguments:
+            panel {object} -- device panel
+            img_source {[type]} -- ikona botuna
+        """
         btn = MacroButton(
             on_press=self.switch_to_device(panel),
             size_hint=[None, None],
@@ -42,6 +49,16 @@ class DevicesOption(GridLayout):
         self.ids["devices"].add_widget(btn)
 
     def switch_to_device(self, device):
+        """
+        Vrača funkciju koja prebacuje na novi page
+
+        Arguments:
+            device {object} -- device panel
+        
+        Returns:
+            [function] -- funkcija koja prebacuje na device panel
+        """
+
         def inner(*args, **kwargs):
             self.switch(device)()
 
