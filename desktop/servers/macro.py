@@ -2,6 +2,8 @@ import socket
 import threading
 import json
 from pykeyboard import PyKeyboard
+import re
+from time import sleep
 
 k = PyKeyboard()
 
@@ -62,10 +64,7 @@ class MacroServer(threading.Thread):
         self.daemon = True
         self.sock = socket.socket(family, sock_type)
         self.sock.bind((ip_address, port))
-        self.request_type = {
-            "RUN_MACRO": self._handle_macro,
-            "TYPE_TEXT": self._type_text,
-        }
+        self.request_type = {"RUN_MACRO": self._handle_macro}
 
     def run(self):
         """
@@ -85,32 +84,28 @@ class MacroServer(threading.Thread):
 
                 self.request_type[request_type](request_data)
 
-    def _type_text(self, data):
-        """
-
-        Metoda zadužena za simuliranje tipkanja nekog teksta    
-
-        Arguments:
-            data {list} -- string u obliku liste koju treba istipkati [str, str, str, str, ...]
-
-        """
-
-        for letter in data:
-            k.tap_key(letter)
-
     def _handle_macro(self, data):
         """
 
         Metoda koja rješava pritisak slijeda od više makro naredbi
 
         Arguments:
-            data {list} -- list stringova koji predstavljaju makroe [str, str, str ,str, ...]
+            data {str} -- list stringova koji predstavljaju makroe
 
         """
-
-        for str_macro in data:
-            macro = self._parse_macro(str_macro)
-            k.press_keys(macro)
+        i = 0
+        while i < len(data):
+            if data[i] == "<":
+                try:
+                    res = re.search("<(.+?)>", data[i:])
+                    k.press_keys(self._parse_macro(res[1]))
+                    i = i + len(res[0])
+                    sleep(0.5)
+                    continue
+                except AttributeError:
+                    break
+            k.tap_key(data[i])
+            i += 1
 
     def _parse_macro(self, payload):
         """
@@ -125,7 +120,7 @@ class MacroServer(threading.Thread):
 
         """
 
-        macro = payload.strip().split("+")
+        macro = payload.split("+")
 
         try:
             for i in range(len(macro)):
