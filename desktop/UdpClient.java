@@ -50,7 +50,6 @@ public class UdpClient {
 
             int x_pos = (int) Math.round(x);
             int y_pos = (int) Math.round(y);
-
             rob.mouseMove(x_pos, y_pos);
 
         }
