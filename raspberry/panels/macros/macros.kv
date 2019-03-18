@@ -2,15 +2,6 @@
 #:import TreeViewLabel kivy.uix.treeview.TreeViewLabel
 #:import hex_to_color kivy.utils.get_color_from_hex
 
-<Macro@BoxLayout>:
-    orientation: "horizontal"
-    size_hint: None, None
-    width: self.height
-    height: root.height
-    gray: "#1515155"
-    light_gray: "#202020"
-    
-
 <EditButton>:
     size_hint_y: .09
     size_hint_x: .06
@@ -99,29 +90,40 @@
                 size_hint_y: None
                 size: 0, 25
 
-            
+<MacroPage@Screen>:
+    size_hint: 1,1
+    edit_mode: root.edit_mode
+    GridLayout:
+        size_hint: 1,1
+        id: grid
+        cols: 6
+        rows: 5
+
+
+<Placeholder@Widget>:
+    canvas:
+        Color:
+            rgb: hex_to_color("#3d3d3d")
+        Line:
+            width: 1
+            rectangle: self.x, self.y, self.width, self.height
+
+<SelectPageButton@MacroButton>:
+    size_hint: 1, None
+    height: 50
+
 
 <MacrosOption>:
     orientation: "vertical"
     BoxLayout:
         orientation: "horizontal"
-        padding: [35,0,0,0]
-        ButtonGrid:
-            id: grid
-            padding: [0,20,0,0]
-            size_hint_x: 1
-            size_hint_y: None
-            height: self.minimum_height
-        ScrollView:
-            scroll_type: ["bars"]
-            size_hint_y: .97
-            size_hint_x: .3
-            StackLayout:
-                id: pages
-                orientation: "lr-tb"
-                spacing: [5,20]
-                padding: [10,0,0,0]
-                size: root.size
+        ScreenManager:
+            id: sm
+        StackLayout:
+            id: pages
+            orientation: "lr-tb"
+            size_hint_x: .2
+            padding: 10, 15, 10, 15
+            spacing: 0, 20        
     EditButton:
-        id: edit
-        pos: 10,10
+        id: edit_button

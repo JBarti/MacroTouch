@@ -1,149 +1,134 @@
 {
-  "macro_pages": [
-    {
-      "macros": [
+    "macro_pages": [
         {
-          "macro": "CTRL+ALT+t",
-          "position": [1, 1],
-          "text": "Terminal"
+            "macros": [
+                {
+                    "macro": "",
+                    "position": [
+                        0,
+                        3
+                    ],
+                    "text": ""
+                },
+                {
+                    "macro": "asd",
+                    "text": "asd",
+                    "position": [
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "macro": "asd",
+                    "text": "asd",
+                    "position": [
+                        2,
+                        1
+                    ]
+                },
+                {
+                    "macro": "asd",
+                    "text": "asd",
+                    "position": [
+                        3,
+                        1
+                    ]
+                },
+                {
+                    "macro": "",
+                    "text": "",
+                    "position": [
+                        3,
+                        2
+                    ]
+                },
+                {
+                    "macro": "",
+                    "text": "",
+                    "position": [
+                        2,
+                        4
+                    ]
+                },
+                {
+                    "macro": "",
+                    "text": "",
+                    "position": [
+                        1,
+                        5
+                    ]
+                },
+                {
+                    "macro": "",
+                    "text": "",
+                    "position": [
+                        2,
+                        5
+                    ]
+                },
+                {
+                    "macro": "<ALT+TAB>",
+                    "text": "CMOK",
+                    "position": [
+                        3,
+                        3
+                    ]
+                }
+            ],
+            "name": "Page1"
         },
         {
-          "macro": "CTRL+t",
-          "position": [1, 2],
-          "text": "New tab"
-        },
-        {
-          "macro": "CTRL+q",
-          "position": [4, 3],
-          "text": "Close"
-        },
-        {
-          "macro": "ALT+TAB",
-          "position": [2, 4],
-          "text": "Change window"
-        },
-        {
-          "macro": "CTRL+TAB",
-          "position": [0, 3],
-          "text": "Change tab"
-        },
-        {
-          "macro": "F5",
-          "position": [0, 3],
-          "text": "Refresh"
-        },
-        {
-          "macro": "",
-          "position": [0, 4],
-          "text": ""
-        },
-        {
-          "macro": "",
-          "position": [0, 4],
-          "text": ""
-        },
-        {
-          "macro": "",
-          "position": [0, 4],
-          "text": ""
-        },
-        {
-          "macro": "",
-          "position": [4, 2],
-          "text": ""
-        },
-        {
-          "macro": "",
-          "position": [2, 3],
-          "text": ""
-        },
-        {
-          "macro": "",
-          "position": [2, 3],
-          "text": ""
-        },
-        {
-          "macro": "VHFHHYNG   GGRRRHG",
-          "position": [1, 3],
-          "text": "TJVNH"
-        },
-        {
-          "macro": "",
-          "position": [3, 0],
-          "text": "trhg"
-        },
-        {
-          "macro": "",
-          "position": [3, 0],
-          "text": "trhg"
-        },
-        {
-          "macro": "gyt56tg",
-          "position": [0, 0],
-          "text": "6tgfbf"
-        },
-        {
-          "macro": "",
-          "position": [2, 2],
-          "text": "888888888"
-        },
-        {
-          "macro": "",
-          "position": [2, 2],
-          "text": "888888888"
-        },
-        {
-          "macro": "",
-          "position": [2, 3],
-          "text": "yyggggggg"
-        },
-        {
-          "macro": "",
-          "position": [5, 0],
-          "text": "tttyyyyty"
-        },
-        {
-          "macro": "",
-          "position": [5, 1],
-          "text": "hhhhhhyhh"
-        },
-        {
-          "macro": "",
-          "position": [2, 4],
-          "text": "ttttttttt"
-        },
-        {
-          "macro": "",
-          "position": [4, 3],
-          "text": "teg"
-        },
-        {
-          "macro": "",
-          "position": [3, 2],
-          "text": "4gsht"
+            "macros": [
+                {
+                    "macro": "",
+                    "position": [
+                        1,
+                        2
+                    ],
+                    "text": "cssafas"
+                },
+                {
+                    "macro": "",
+                    "position": [
+                        0,
+                        0
+                    ],
+                    "text": ""
+                },
+                {
+                    "macro": "",
+                    "position": [
+                        4,
+                        2
+                    ],
+                    "text": ""
+                },
+                {
+                    "macro": "",
+                    "text": "",
+                    "position": [
+                        2,
+                        2
+                    ]
+                },
+                {
+                    "macro": "",
+                    "text": "",
+                    "position": [
+                        1,
+                        4
+                    ]
+                },
+                {
+                    "macro": "Paka",
+                    "text": "Drka",
+                    "position": [
+                        1,
+                        5
+                    ]
+                }
+            ],
+            "name": "Page2"
         }
-      ],
-      "name": "Page1"
-    },
-    {
-      "macros": [
-        {
-          "macro": "",
-          "position": [1, 2],
-          "text": "cssafas"
-        },
-        {
-          "macro": "",
-          "position": [0, 0],
-          "text": ""
-        },
-        {
-          "macro": "",
-          "position": [4, 2],
-          "text": ""
-        }
-      ],
-      "name": "Page2"
-    }
-  ]
+    ]
 }

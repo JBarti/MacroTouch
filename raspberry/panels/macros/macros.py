@@ -10,11 +10,153 @@ from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.popup import Popup
 from kivy.uix.textinput import TextInput
 from kivy.uix.vkeyboard import VKeyboard
+from kivy.uix.label import Label
+from kivy.uix.widget import Widget
+from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.core.window import Window
 from common import MacroButton, DisplayText
 import json
+import pprint
 
 Builder.load_file(os.path.join(os.path.dirname(__file__), "macros.kv"))
+
+pp = pprint.PrettyPrinter()
+
+
+class MacrosOption(BoxLayout):
+    def __init__(self, **kwargs):
+        super(MacrosOption, self).__init__(**kwargs)
+        self.screen_manager = self.ids["sm"]
+        self.screens = []
+        self.generate_screens()
+        self.generate_screen_buttons()
+        self.ids["edit_button"].on_press = self.change_edit_mode
+
+    def generate_screens(self):
+        with open("./data.json", "r") as data:
+            data = json.loads(data.read())
+            macro_pages = data["macro_pages"]
+            self.screens = [MacroPage(page["name"]) for page in macro_pages]
+
+    def generate_screen_buttons(self):
+        pages = self.ids["pages"]
+        pages.clear_widgets()
+        page_buttons = [
+            SelectPageButton(
+                page_screen.page_name, self.switch_screen(), text=page_screen.page_name
+            )
+            for page_screen in self.screens
+        ]
+        [pages.add_widget(page_button) for page_button in page_buttons]
+
+    def switch_screen(self):
+        def inner(page_name):
+            pp.pprint(page_name)
+            screen = next(
+                (
+                    macro_screen
+                    for macro_screen in self.screens
+                    if macro_screen.page_name == page_name
+                ),
+                False,
+            )
+            self.screen_manager.switch_to(screen, direction="down")
+
+        return inner
+
+    def change_edit_mode(self):
+        def map_callback(screen):
+            screen.edit_mode = not screen.edit_mode
+            return screen
+
+        [map_callback(screen) for screen in self.screens]
+
+
+class MacroPage(Screen):
+    def __init__(self, page_name, **kwargs):
+        super(MacroPage, self).__init__(**kwargs)
+        self.page_name = page_name
+        self.generate_macro_buttons()
+        self.edit_mode = False
+        self.bind(edit_mode=self.edit_mode_changed)
+
+    def edit_mode_changed(self, *args, **kwargs):
+        self.generate_macro_buttons()
+
+    def get_page_macros(self):
+        with open("./data.json", "r") as data:
+            data = json.loads(data.read())
+            macro_page = [
+                macro_page
+                for macro_page in data["macro_pages"]
+                if macro_page["name"] == self.page_name
+            ].pop()
+            return macro_page["macros"]
+
+    def generate_macro_buttons(self):
+        macros = self.get_page_macros()
+        grid = self.ids["grid"]
+        grid.clear_widgets()
+        for cols in range(5):
+            for rows in range(6):
+                macro = next(
+                    (
+                        macro
+                        for macro in macros
+                        if macro["position"][0] == cols and macro["position"][1] == rows
+                    ),
+                    False,
+                )
+                if macro:
+                    pp.pprint(macro)
+                    grid.add_widget(
+                        SendMacroButton(text=macro["text"], macro=macro["macro"])
+                    )
+                elif self.edit_mode:
+                    grid.add_widget(
+                        CreateMacroButton(
+                            self.generate_macro_buttons, rows, cols, self.page_name
+                        )
+                    )
+                elif not self.edit_mode:
+                    grid.add_widget(Placeholder())
+
+
+class SendMacroButton(MacroButton):
+    def __init__(self, macro, **kwargs):
+        super(SendMacroButton, self).__init__(**kwargs)
+        self.macro_controller = App.get_running_app().connector.macro_controller
+        self.macro = macro
+
+    def on_press(self):
+        self.macro_controller.send_data(self.macro)
+
+
+class SelectPageButton(MacroButton):
+    def __init__(self, page_name, switch_screen, **kwargs):
+        super(SelectPageButton, self).__init__(**kwargs)
+        self.page_name = page_name
+        self.switch_screen = switch_screen
+
+    def on_press(self):
+        self.switch_screen(self.page_name)
+
+
+class Placeholder(Widget):
+    pass
+
+
+class CreateMacroButton(Button):
+    def __init__(self, on_submit, x_pos, y_pos, page_name, **kwargs):
+        super(CreateMacroButton, self).__init__(**kwargs)
+        self.text = "<NEW>"
+        self.x_pos = x_pos
+        self.y_pos = y_pos
+        self.on_submit = on_submit
+        self.page_name = page_name
+
+    def on_press(self):
+        CreateWidget(self.on_submit, self.x_pos, self.y_pos, self.page_name).open()
 
 
 class CreateWidget(Popup):
@@ -27,10 +169,11 @@ class CreateWidget(Popup):
         x_pos {[int]} -- x pozicija macro botuna
     """
 
-    def __init__(self, submit, y_pos, x_pos, **kwargs):
+    def __init__(self, submit, x_pos, y_pos, page_name, **kwargs):
         super(CreateWidget, self).__init__(**kwargs)
         self.ids["submit"].on_press = self.press_submit
         self.ids["cancel"].on_press = self.dismiss
+        self.location = [y_pos, x_pos]
         self.submit = submit
         name_input = self.name_input = self.ids["name_input"]
         macro_input = self.ids["macro_input"]
@@ -40,6 +183,7 @@ class CreateWidget(Popup):
         macro_input.bind(focus=self.on_focus)
         self.keyboard = self.ids["vkeyboard"]
         self.keyboard.on_key_down = self.key_press
+        self.page_name = page_name
 
     def press_submit(self):
         """
@@ -47,7 +191,24 @@ class CreateWidget(Popup):
         """
         name = self.ids["name_input"].text
         macro = self.ids["macro_input"].text
-        self.submit(name, macro, self.y_pos, self.x_pos)
+
+        macro = {"macro": macro, "text": name, "position": self.location}
+
+        with open("./data.json", "r") as data:
+            json_data = json.loads(data.read())
+            page = next(
+                (
+                    page
+                    for page in json_data["macro_pages"]
+                    if page["name"] == self.page_name
+                )
+            )
+            page["macros"].append(macro)
+
+        with open("./data.json", "w") as data:
+            json.dump(json_data, data, indent=4)
+
+        self.submit()
         self.dismiss()
 
     def key_press(self, key, value):
@@ -81,79 +242,6 @@ class CreateWidget(Popup):
             self.focused = text_input
 
 
-class MacrosOption(BoxLayout):
-    def __init__(self, **kwargs):
-        super(MacrosOption, self).__init__(**kwargs)
-        self.macro_controller = App.get_running_app().connector.macro_controller
-        self.ids["edit"].on_down = self.edit_down
-        self.ids["edit"].on_normal = self.edit_normal
-        self.generate_page_buttons()
-        self.build_macro_page = self.ids["grid"].build_macro_page
-        self.ids["grid"].press_macro = self.send_macro
-
-    def send_macro(self, macro):  # macro --> ["CTRL+A", "DELETE"]
-        """
-        Vraća funkciju koja korisniku na računalo šalje macro
-        
-        Returns:
-            [function] -- funkcija za slanje macroa
-        """
-
-        def inner():
-            self.macro_controller.send_data(macro)
-
-        return inner
-
-    def edit_down(self):
-        """
-        Ulazi u edit mode
-        """
-        page = App.get_running_app().MACRO_PAGE
-        self.build_macro_page(editable=True, page=page)
-
-    def edit_normal(self):
-        """
-        Izlazi iz edit modea
-        """
-        page = App.get_running_app().MACRO_PAGE
-        self.build_macro_page(editable=False, page=page)
-
-    def generate_page_buttons(self):
-        """
-        Generira botune za prebacivanje na novi page
-        Podatke o pageovima dobiva iz data.json filea
-        """
-        pages = self.ids["pages"]
-        with open("./data.json", "r+") as data:
-            data = json.load(data)
-            for page in data["macro_pages"]:
-                button = MacroButton(
-                    text=page["name"],
-                    size_hint=[0.9, 0.15],
-                    on_press=self.change_page(page["name"]),
-                )
-                pages.add_widget(button)
-
-    def change_page(self, page):
-        """
-        Vraća funkciju za promjenu trenutnog macro pagea
-        Funkcija se pridjeljuje PageButtonu
-        
-        Arguments:
-            page {object} -- popis svih macroa tog pagea
-        
-        Returns:
-            [function] -- funkcija za prebacivanje na novi page
-        """
-
-        def inner(_):
-            editable = self.ids["edit"].state == "down"
-            App.get_running_app().MACRO_PAGE = page
-            self.build_macro_page(editable=editable, page=page)
-
-        return inner
-
-
 class EditButton(ToggleButton):
     """
     Botun u donjem lijevom kutu koji prebacuje korisnika
@@ -184,165 +272,3 @@ class EditButton(ToggleButton):
         if state == "normal":
             self.ids["image"].source = "./icons/edit.png"
             self.on_normal()
-
-
-class Macro(BoxLayout):
-    """
-    Widget koji predstavlja jedan element
-    u mreži macroa
-    """
-
-    def __init__(
-        self,
-        button=False,
-        editable=False,
-        y_pos=0,
-        x_pos=0,
-        rebuild=None,
-        text="",
-        press=None,
-        **kwargs
-    ):
-        """Prilikom stvaranja elementa provjerava 
-        treba li sadržavati botun ili biti prazno polje
-        
-        Keyword Arguments:
-            button {bool} -- [određuje je li macro ima botun ili ne] (default: {False})
-        """
-
-        super(Macro, self).__init__(**kwargs)
-        self.rebuild = rebuild
-        if button:
-            btn = MacroButton(size_hint=[None, None], text=text)
-            btn.on_press = press
-            self.add_widget(btn)
-        elif editable:
-            button_new = Button(size_hint=[None, None], text="<NEW>")
-            button_new.on_press = self.create_macro(y_pos, x_pos)
-            self.add_widget(button_new)
-
-    def submit_macro(self, name, macro, y_pos, x_pos):
-        """
-        Stvara novi macro i zapisuje ga u data.json file
-        
-        Arguments:
-            name {string} -- ime koje se prikazuje na botunu
-            macro {string} -- macro koji pokreće taj botun
-            y_pos {int} -- x pozicija botuna
-            x_pos {int} -- y pozicija botuna
-        """
-        page = App.get_running_app().MACRO_PAGE
-        with open("./data.json", "r+") as data:
-            x_pos = int(x_pos)
-            y_pos = int(y_pos)
-            json_data = json.load(data)
-            macros = json_data["macro_pages"][0]["macros"]
-            if page:
-                macros = list(filter(lambda x: x["name"] == page, macros))[0]["macros"]
-            new_macro = {"position": [x_pos, y_pos], "text": name, "macro": macro}
-            macros.append(new_macro)
-            data.seek(0)
-            data.truncate()
-            json.dump(json_data, data)
-        page = App.get_running_app().MACRO_PAGE
-        self.rebuild(editable=True, page=page)
-
-    def create_macro(self, y_pos, x_pos, page=None):
-        """
-        Otvara popup sa formom za stvaranje macroa
-        
-        Arguments:
-            y_pos {int} -- x pozicija macroa u gridu
-            x_pos {int} -- y pozicija macroa u gridu
-        
-        Keyword Arguments:
-            page {[type]} -- [description] (default: {None})
-        
-        Returns:
-            [function] -- funkcija koja otvara popup, dodjeljuje se 
-                          botunu za stvaranje novog MacoButtona
-        """
-
-        def inner():
-            CreateWidget(self.submit_macro, y_pos, x_pos).open()
-
-        return inner
-
-
-class ButtonGrid(GridLayout):
-    """
-    Mreža koja sadržava sve botuna
-    """
-
-    def __init__(self, **kwargs):
-        """
-        Predefinira broj redova i stupaca mreže
-        i generira mrežu
-        """
-        super(ButtonGrid, self).__init__(**kwargs)
-        self.cols = 6
-        self.rows = 5
-        self.build_macro_page()
-        self.send_macro = App.get_running_app().connector.macro_controller.send_data
-
-    def press_macro(self, macro):
-        """
-        Šalje korisniku macro na računalo
-        
-        Arguments:
-            macro {string} -- string koji predstavlje macro tipke
-        
-        Returns:
-            [function] -- funkcija koja se poziva klikom na MacroButton
-        """
-
-        def inner():
-            self.send_macro(macro)
-
-        return inner
-
-    def build_macro_page(self, editable=False, page=None):
-        """
-        Dohvaća podatke iz data.json filea
-        izdvaja sve macroe i generira njihov
-        prikaz
-        """
-        self.clear_widgets()
-
-        with open("./data.json") as data:
-            data = json.load(data)
-            macros = data["macro_pages"][0]["macros"]
-            if page:
-                macros = list(filter(lambda x: x["name"] == page, data["macro_pages"]))[
-                    0
-                ]["macros"]
-            macros.sort(key=lambda macro: macro["position"][0])
-
-            for rows in range(self.rows):
-                macro_row = list(
-                    filter(lambda macro: macro["position"][1] == rows, macros)
-                )
-                for cols in range(self.cols):
-                    visible = len(macro_row) and macro_row[0]["position"][0] == cols
-                    if visible:
-                        new_macro = macro_row.pop(0)
-                        new_widg = Macro(
-                            button=visible,
-                            editable=editable,
-                            y_pos=rows,
-                            x_pos=cols,
-                            rebuild=self.build_macro_page,
-                            text=new_macro["text"],
-                            press=self.press_macro(new_macro["macro"].split(",")),
-                        )
-                        self.add_widget(new_widg)
-                    else:
-                        self.add_widget(
-                            Macro(
-                                button=visible,
-                                editable=editable,
-                                y_pos=rows,
-                                x_pos=cols,
-                                rebuild=self.build_macro_page,
-                            )
-                        )
