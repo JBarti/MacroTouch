@@ -73,6 +73,38 @@
                         3,
                         3
                     ]
+                },
+                {
+                    "macro": "<ALT+TAB<DRKAAAM SVAKI DAN",
+                    "text": "CMOK CMOK",
+                    "position": [
+                        3,
+                        4
+                    ]
+                },
+                {
+                    "macro": "<CTRL=3>",
+                    "text": "DFGH",
+                    "position": [
+                        4,
+                        0
+                    ]
+                },
+                {
+                    "macro": "<DSFGSD>",
+                    "text": "SDFG",
+                    "position": [
+                        4,
+                        1
+                    ]
+                },
+                {
+                    "macro": "",
+                    "text": "",
+                    "position": [
+                        4,
+                        2
+                    ]
                 }
             ],
             "name": "Page1"
@@ -125,6 +157,14 @@
                     "position": [
                         1,
                         5
+                    ]
+                },
+                {
+                    "macro": "<ALT+TAB><CTRL+t>youtube.com<ENTER>",
+                    "text": "GetToYT",
+                    "position": [
+                        3,
+                        3
                     ]
                 }
             ],
