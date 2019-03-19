@@ -1,6 +1,21 @@
 #:kivy 1.10.1
-<Word>:
-    size_hint_y: None
+
+
+<Word@GridLayout>:
+    size_hint_y: 1
     size_hint_x: 1
-    spacing: 10
-    padding: [0,0,0,40]
+    padding: 100,160,0,0
+    spacing: 40
+    cols: 5
+    rows: 2
+
+
+<SendWordButton@MacroButton>:
+    size_hint: None,None
+    size: 100,100
+    src: ""
+    Image:
+        size: root.size[0]-30, root.size[1]-30 
+        pos: root.pos[0]+15,root.pos[1]+15
+        source: root.src
+        

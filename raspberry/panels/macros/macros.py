@@ -60,7 +60,10 @@ class MacrosOption(BoxLayout):
                 ),
                 False,
             )
-            self.screen_manager.switch_to(screen, direction="down")
+            try:
+                self.screen_manager.switch_to(screen, direction="down")
+            except:
+                pass
 
         return inner
 
