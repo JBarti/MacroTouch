@@ -102,9 +102,10 @@ class MacroServer(threading.Thread):
                     i = i + len(res[0])
                     sleep(0.5)
                     continue
-                except AttributeError:
+                except TypeError:
                     break
             k.tap_key(data[i])
+            sleep(0.1)
             i += 1
 
     def _parse_macro(self, payload):
