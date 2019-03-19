@@ -102,3 +102,4 @@ class Connector:
         print(self.connected_ip)
         self.macro_controller.host = self.connected_ip
         self.mouse_controller.host = self.connected_ip
+        self.monitor_controller.rpi_host = self.connected_ip[0]

@@ -13,16 +13,16 @@ pp = PrettyPrinter()
 Builder.load_file(os.path.join(os.path.dirname(__file__), "word.kv"))
 
 buttons = [
-    {"icon": "mouse.png", "macro": "<CTRL+b>"},
-    {"icon": "mouse.png", "macro": "<CTRL+i>"},
-    {"icon": "mouse.png", "macro": "<CTRL+u>"},
-    {"icon": "mouse.png", "macro": "<CTRL+z>"},
-    {"icon": "mouse.png", "macro": "<ALT+CTRL+:>"},
-    {"icon": "mouse.png", "macro": "<ALT+CTRL+;>"},
-    {"icon": "mouse.png", "macro": "<CTRL+l>"},
-    {"icon": "mouse.png", "macro": "<CTRL+e>"},
-    {"icon": "mouse.png", "macro": "<CTRL+r>"},
-    {"icon": "mouse.png", "macro": "<CTRL+j>"},
+    {"icon": "bold-text.png", "macro": "<CTRL+b>"},
+    {"icon": "italicize-text.png", "macro": "<CTRL+i>"},
+    {"icon": "underline-text.png", "macro": "<CTRL+u>"},
+    {"icon": "undo-arrow.png", "macro": "<CTRL+z>"},
+    {"icon": "font-symbol-of-letter-a.png", "macro": "<ALT+CTRL+:>"},
+    {"icon": "font-symbol-of-letter-a.png", "macro": "<ALT+CTRL+;>"},
+    {"icon": "left-alignment.png", "macro": "<CTRL+l>"},
+    {"icon": "center-alignment.png", "macro": "<CTRL+e>"},
+    {"icon": "right-alignment.png", "macro": "<CTRL+r>"},
+    {"icon": "justify.png", "macro": "<CTRL+j>"},
 ]
 
 
@@ -42,7 +42,7 @@ class SendWordButton(MacroButton):
         super(SendWordButton, self).__init__(**kwargs)
         self.macro_controller = App.get_running_app().connector.macro_controller
         self.macro = macro
-        self.src = "./icons/" + icon
+        self.src = "./icons/word/" + icon
 
     def on_press(self):
         pp.pprint(self.macro)

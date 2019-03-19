@@ -1,12 +1,18 @@
 import os
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.stacklayout import StackLayout
 from kivy.uix.widget import Widget
+from kivy.app import App
 from kivy.clock import Clock
+from pprint import PrettyPrinter
 import random
 import socket
+import math
 
 Builder.load_file(os.path.join(os.path.dirname(__file__), "system_monitor.kv"))
+
+pp = PrettyPrinter()
 
 
 class SystemMonitor(BoxLayout):
@@ -17,37 +23,59 @@ class SystemMonitor(BoxLayout):
 
     def __init__(self, **kwargs):
         super(SystemMonitor, self).__init__(**kwargs)
+        self.monitor_controller = App.get_running_app().connector.monitor_controller
+        pp.pprint(self.monitor_controller)
+        self.max_usage_blocks = 37
+        self.data_length = 0
+        self.cpus = []
         self.use_system_data()
-        Clock.schedule_interval(self.use_system_data, 2)
+        Clock.schedule_interval(self.use_system_data, 1)
 
     def use_system_data(self, *args, **kwargs):
         """
         Dohvaća podatke sa korisnikova računala
         i mjenja trenutno stanje prikazanog system monitora
         """
-        stack1 = self.ids["s1"].ids["stack"]
-        stack2 = self.ids["s2"].ids["stack"]
-        stack3 = self.ids["s3"].ids["stack"]
-        stack4 = self.ids["s4"].ids["stack"]
+        data = self.monitor_controller.get_system_data()
 
-        start_num = 5
-        more1 = random.randint(1, 4)
-        more2 = random.randint(1, 4)
-        more3 = random.randint(1, 4)
-        more4 = random.randint(1, 4)
-        stack1.clear_widgets()
-        stack2.clear_widgets()
-        stack3.clear_widgets()
-        stack4.clear_widgets()
-        for i in range(start_num + more1):
-            stack1.add_widget(UsageBlock())
-        for i in range(start_num + more2):
-            stack2.add_widget(UsageBlock())
-        for i in range(start_num + more3):
-            stack3.add_widget(UsageBlock())
-        for i in range(start_num + more4):
-            stack4.add_widget(UsageBlock())
+        print("SET_DATA")
+        pp.pprint(data)
+
+        if len(data["cpus"]) != self.data_length:
+            self.cpus = self.init_cpus(data["cpus"])
+
+        self.refresh_cpus(data["cpus"])
+
+    def get_usage_blocks_num(self, cpu):
+        num_blocks = (cpu / 100) * self.max_usage_blocks
+        print("USAGE_BLOCKS")
+        print(num_blocks)
+        return math.trunc(num_blocks)
+
+    def init_cpus(self, cpu_data):
+        print("INIT_CPUS")
+        pp.pprint(cpu_data)
+        cpus = [CPUUsage(id=index, text=index) for index, _ in enumerate(cpu_data)]
+        [self.add_widget(cpu) for cpu in cpus]
+        return cpus
+
+    def refresh_cpus(self, cpu_data):
+        print("REFRESH_CPUS")
+        pp.pprint(cpu_data)
+
+        def map_cpus(cpu):
+            index, cpu_widg = cpu
+            cpu_widg.set_percentage(cpu[index])
+
+        map(map_cpus, enumerate(cpu_data))
 
 
 class UsageBlock(Widget):
     pass
+
+
+class CPUUsage(StackLayout):
+    def set_percentage(self, num_blocks):
+        self.clear_widgets()
+        [self.add_widget(UsageBlock()) for i in num_blocks]
+
