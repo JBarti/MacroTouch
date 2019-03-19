@@ -24,6 +24,7 @@ class Connector:
         self.macro_controller = MacroController()
         self.mouse_controller = MouseController(socket.AF_INET, socket.SOCK_DGRAM)
         self.monitor_controller = MonitorController(socket.AF_INET, socket.SOCK_DGRAM)
+        self.monitor_controller.start()
         self.connected_ip = ""
 
     def scan_wifis(self):
@@ -99,6 +100,6 @@ class Connector:
         Metoda koja na poziv postavlja host od računala 
 
         """
-        print(self.connected_ip)
         self.macro_controller.host = self.connected_ip
         self.mouse_controller.host = self.connected_ip
+        self.monitor_controller.host = self.connected_ip

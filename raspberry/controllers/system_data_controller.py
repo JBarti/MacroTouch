@@ -61,7 +61,9 @@ class MonitorController(threading.Thread):
 
         request = {"type": "GET_SYSTEM_DATA"}
         bytes_data = bytes(json.dumps(request), "UTF-8")
-        self.sock.sendto(bytes_data, (self.host, self.port))
+        if self.host[0] != "0":
+            return
+        self.sock.sendto(bytes_data, (self.host[0], self.port))
 
     def set_system_data(self, payload):
         """
