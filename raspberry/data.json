@@ -1,55 +1,86 @@
 {
-  "macro_pages": [
-    {
-      "name": "Controls",
-      "macros": [
-        { "text": "AltTab", "position": [1, 0], "macro": "<ALT+TAB>" },
+    "macro_pages": [
         {
-          "text": "Open prez.py",
-          "position": [2, 2],
-          "macro": "<CTRL+p>prez.py<ENTER>"
+            "name": "Controls",
+            "macros": [
+                {
+                    "text": "AltTab",
+                    "position": [
+                        1,
+                        0
+                    ],
+                    "macro": "<ALT+TAB>"
+                },
+                {
+                    "text": "Open prez.py",
+                    "position": [
+                        2,
+                        2
+                    ],
+                    "macro": "<CTRL+p>prez.py<ENTER>"
+                },
+                {
+                    "text": "Open prez.kv",
+                    "position": [
+                        2,
+                        3
+                    ],
+                    "macro": "<CTRL+p>prez.kv<ALT+ENTER>"
+                },
+                {
+                    "text": "Panel 1",
+                    "position": [
+                        3,
+                        3
+                    ],
+                    "macro": "<CTRL+1>"
+                },
+                {
+                    "text": "Panel 2",
+                    "position": [
+                        3,
+                        4
+                    ],
+                    "macro": "<CTRL+2>"
+                }
+            ]
         },
         {
-          "text": "Open prez.kv",
-          "position": [2, 3],
-          "macro": "<CTRL+p>prez.kv<ALT+ENTER>"
-        },
-        {
-          "text": "Panel 1",
-          "position": [3, 3],
-          "macro": "<CTRL+1>"
-        },
-        {
-          "text": "Panel 2",
-          "position": [3, 4],
-          "macro": "<CTRL+2>"
+            "macros": [
+                {
+                    "text": "Kivy shebang",
+                    "position": [
+                        1,
+                        1
+                    ],
+                    "macro": "kv_sb<ENTER><ENTER><ENTER>"
+                },
+                {
+                    "text": "MacroButton",
+                    "position": [
+                        1,
+                        2
+                    ],
+                    "macro": "mc_btn<ENTER>200<TAB>200<TAB>ALT_TAB<TAB><ENTER>"
+                },
+                {
+                    "text": "ButtonImage",
+                    "position": [
+                        1,
+                        3
+                    ],
+                    "macro": "mc_img<ENTER>.<SHIFT+7>icons.png<TAB><ENTER><ENTER>"
+                },
+                {
+                    "macro": "",
+                    "text": "Placeholder",
+                    "position": [
+                        0,
+                        0
+                    ]
+                }
+            ],
+            "name": "Snippets"
         }
-      ]
-    },
-    {
-      "macros": [
-        {
-          "text": "Save",
-          "position": [0, 0],
-          "macro": "<CTRL+s>"
-        },
-        {
-          "text": "Kivy shebang",
-          "position": [1, 1],
-          "macro": "kv_sb<ENTER><ENTER><ENTER>"
-        },
-        {
-          "text": "MacroButton",
-          "position": [1, 2],
-          "macro": "mc_btn<ENTER>200<TAB>200<TAB>ALT_TAB<TAB><ENTER>"
-        },
-        {
-          "text": "ButtonImage",
-          "position": [1, 3],
-          "macro": "mc_img<ENTER>.<SHIFT+7>icons.png<TAB><ENTER><ENTER>"
-        }
-      ],
-      "name": "Snippets"
-    }
-  ]
+    ]
 }
