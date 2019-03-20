@@ -11,7 +11,7 @@ class MonitorController(threading.Thread):
 
     """
 
-    def __init__(self, family, sock_type, host="0.0.0.0", port=5300):
+    def _init_(self, family, sock_type, host="0.0.0.0", port=5300):
         """
 
         Inicijalna metoda klase MonitorController. Stvara svoj socket i binda ga na danu adresu.
@@ -29,10 +29,12 @@ class MonitorController(threading.Thread):
 
         self.port = port
         self.host = host
+        self.rpi_host = ""
+        self.my_ip = ("0.0.0.0", 5300)
         self.sock = socket.socket(family, sock_type)
         self.sock.bind((self.host, self.port))
 
-        self.data = {"system_data": ""}
+        self.data = {"cpus": [], "temp": 0, "memory": {"total": 0, "used": 0}}
         self.request_type = {"SET_SYSTEM_DATA": self.set_system_data}
 
     def run(self):
@@ -45,12 +47,11 @@ class MonitorController(threading.Thread):
 
         while True:
             data, _ = self.sock.recvfrom(1024)
-
             if data != b"":
                 json_data = json.loads(data.decode("ASCII"))
                 req_type = json_data["type"]
                 req_data = json_data["payload"]
-                self.request_type[req_type](req_data)
+                self.request_type["SET_SYSTEM_DATA"](req_data)
 
     def get_system_data(self):
         """
@@ -61,9 +62,10 @@ class MonitorController(threading.Thread):
 
         request = {"type": "GET_SYSTEM_DATA"}
         bytes_data = bytes(json.dumps(request), "UTF-8")
-        if self.host[0] != "0":
-            return
+        if self.host[0] == "0":
+            return self.data
         self.sock.sendto(bytes_data, (self.host[0], self.port))
+        return self.data
 
     def set_system_data(self, payload):
         """
@@ -78,5 +80,4 @@ class MonitorController(threading.Thread):
             "disk": {"total": int, "used": int }
         }
         """
-
-        self.data["system_data"] = payload
+        self.data = payload
