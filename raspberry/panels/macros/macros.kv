@@ -2,17 +2,20 @@
 #:import TreeViewLabel kivy.uix.treeview.TreeViewLabel
 #:import hex_to_color kivy.utils.get_color_from_hex
 
-<EditButton>:
-    size_hint_y: .09
-    size_hint_x: .06
-    img_source: "./icons/edit.png"
+<FabButton>:
+    size_hint_y: None
+    size_hint_x: None
+    height: 50
+    width: 50
+    img_src: ""
+    background_col: "#151515"
     FloatLayout:
         pos: root.pos
         size: root.size
         light_gray: "#202020"
         canvas:
             Color:
-                rgb: hex_to_color(self.light_gray)
+                rgb: hex_to_color(root.background_col)
             Rectangle:
                 pos: self.pos
                 size: self.size
@@ -21,8 +24,21 @@
             pos: root.pos[0]-24, root.pos[1]+14
             size_hint_y: 0.5
             size_hint_x: None
-            source: root.img_source
+            source: root.img_src
 
+<RemoveMacro@Popup>:
+    title: "Remove macro"
+    size_hint: .4,.2
+    BoxLayout:
+        spacing: 50
+        padding: [10,10,10,10]
+        orientation: "horizontal"
+        Button:
+            id: delete
+            text: "Delete"
+        Button:
+            id: cancel
+            text: "Cancel"
 
 <CreateWidget>:
     auto_dismiss:False
@@ -116,6 +132,7 @@
 <MacrosOption>:
     orientation: "vertical"
     BoxLayout:
+        size_hint_y: 1
         orientation: "horizontal"
         ScreenManager:
             id: sm
@@ -125,5 +142,20 @@
             size_hint_x: .2
             padding: 10, 15, 10, 15
             spacing: 0, 20        
-    EditButton:
-        id: edit_button
+    BoxLayout:
+        size_hint_y: .1
+        size_hint_x: 1
+        orientation: "horizontal"
+        canvas.before:
+            Color:
+                rgb: hex_to_color("#151515")
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        FabButton:
+            id: edit_button
+            img_src: "./icons/edit.png"
+        FabButton:
+            id: dump_page
+            img_src: "./icons/garbage.png"
+

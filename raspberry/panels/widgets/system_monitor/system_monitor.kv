@@ -3,30 +3,49 @@
 
 <SystemMonitor@BoxLayout>:
     orientation: "vertical"
+    padding: [50,0,0,0]
+    size_hint_y: 1
+    size_hint_x: 1
+    FloatLayout:
+        orientation: "vertical"
+        anchor_y: "center"
+        Label: 
+            text: "CPU:"
+            size_hint_x: None
+            font_size: "20sp"
+            pos: root.pos[0], root.pos[1]+220
+        BoxLayout:
+            id: cpus
+            spacing: 20
+            orientation: "vertical"
+            pos: root.pos[0]+20, root.pos[1]+20
+        Label:
+            id: temp
+            markup: True
+            font_size: "30sp"
+            text: "[color=7f58c5]Temp:  [/color]20°C"
+            pos: root.pos[0]+240, root.pos[1]+200
+        Label:
+            id: ram
+            markup: True
+            font_size: "30sp"
+            text: "[color=7f58c5]Ram:  [/color]0/0"
+            pos: root.pos[0]+261, root.pos[1]+140
+    
 
 <CPUUsage@StackLayout>
     text: ""
     orientation: "lr-tb"
-    padding: [120,0,0,0]
     size_hint_y: None
-    height: 50
-    DisplayText:
-        text: root.text
-        size_hint: None, None
-        width: 50
-        height: root.height/2
-    StackLayout:
-        id: stack
-        gray: '#151515'
-        size_hint: 0.5, None
-        height: root.height/2
-        spacing: 5
-        canvas:
-            Color:
-                rgb: hex_to_color(self.gray)
-            Rectangle: 
-                size: self.size
-                pos: self.pos
+    size_hint_x: .6
+    height: 40
+    spacing: 5
+    canvas:
+        Color:
+            rgba: .5, .5, .5, 1
+        Line:
+            width: .5
+            rectangle: self.x, self.y, self.width, self.height
 
 
         
@@ -34,7 +53,7 @@
     purple: '#7f58c5'
     pos: root.pos
     size_hint: None, 1
-    width: 5
+    width: 10
     canvas: 
         Color: 
             rgb: hex_to_color(self.purple)

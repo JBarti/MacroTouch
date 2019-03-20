@@ -34,7 +34,7 @@ class MonitorController(threading.Thread):
         self.sock = socket.socket(family, sock_type)
         self.sock.bind((self.host, self.port))
 
-        self.data = {"cpus": []}
+        self.data = {"cpus": [], "temp": 0, "memory": {"total": 0, "used": 0}}
         self.request_type = {"SET_SYSTEM_DATA": self.set_system_data}
 
     def run(self):
@@ -47,12 +47,11 @@ class MonitorController(threading.Thread):
 
         while True:
             data, _ = self.sock.recvfrom(1024)
-            print("here")
             if data != b"":
                 json_data = json.loads(data.decode("ASCII"))
                 req_type = json_data["type"]
                 req_data = json_data["payload"]
-                self.request_type[req_type](req_data)
+                self.request_type["SET_SYSTEM_DATA"](req_data)
 
     def get_system_data(self):
         """
@@ -63,8 +62,9 @@ class MonitorController(threading.Thread):
 
         request = {"type": "GET_SYSTEM_DATA"}
         bytes_data = bytes(json.dumps(request), "UTF-8")
-        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
-            sock.sendto(bytes_data, (self.rpi_host, self.port))
+        if self.host[0] == "0":
+            return self.data
+        self.sock.sendto(bytes_data, (self.host[0], self.port))
         return self.data
 
     def set_system_data(self, payload):
@@ -80,6 +80,5 @@ class MonitorController(threading.Thread):
             "disk": {"total": int, "used": int }
         }
         """
-        print("PAYLOAD")
-        print(payload)
         self.data = payload
+

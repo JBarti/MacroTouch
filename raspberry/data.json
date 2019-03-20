@@ -1,198 +1,55 @@
 {
-    "macro_pages": [
+  "macro_pages": [
+    {
+      "name": "Controls",
+      "macros": [
+        { "text": "AltTab", "position": [1, 0], "macro": "<ALT+TAB>" },
         {
-            "macros": [
-                {
-                    "macro": "",
-                    "position": [
-                        0,
-                        3
-                    ],
-                    "text": ""
-                },
-                {
-                    "macro": "asd",
-                    "text": "asd",
-                    "position": [
-                        0,
-                        0
-                    ]
-                },
-                {
-                    "macro": "asd",
-                    "text": "asd",
-                    "position": [
-                        2,
-                        1
-                    ]
-                },
-                {
-                    "macro": "asd",
-                    "text": "asd",
-                    "position": [
-                        3,
-                        1
-                    ]
-                },
-                {
-                    "macro": "",
-                    "text": "",
-                    "position": [
-                        3,
-                        2
-                    ]
-                },
-                {
-                    "macro": "",
-                    "text": "",
-                    "position": [
-                        2,
-                        4
-                    ]
-                },
-                {
-                    "macro": "",
-                    "text": "",
-                    "position": [
-                        1,
-                        5
-                    ]
-                },
-                {
-                    "macro": "",
-                    "text": "",
-                    "position": [
-                        2,
-                        5
-                    ]
-                },
-                {
-                    "macro": "<ALT+TAB>",
-                    "text": "CMOK",
-                    "position": [
-                        3,
-                        3
-                    ]
-                },
-                {
-                    "macro": "<ALT+TAB<DRKAAAM SVAKI DAN",
-                    "text": "CMOK CMOK",
-                    "position": [
-                        3,
-                        4
-                    ]
-                },
-                {
-                    "macro": "<CTRL=3>",
-                    "text": "DFGH",
-                    "position": [
-                        4,
-                        0
-                    ]
-                },
-                {
-                    "macro": "<DSFGSD>",
-                    "text": "SDFG",
-                    "position": [
-                        4,
-                        1
-                    ]
-                },
-                {
-                    "macro": "",
-                    "text": "",
-                    "position": [
-                        4,
-                        2
-                    ]
-                }
-            ],
-            "name": "Page1"
+          "text": "Open prez.py",
+          "position": [2, 2],
+          "macro": "<CTRL+p>prez.py<ENTER>"
         },
         {
-            "macros": [
-                {
-                    "macro": "",
-                    "position": [
-                        1,
-                        2
-                    ],
-                    "text": "cssafas"
-                },
-                {
-                    "macro": "",
-                    "position": [
-                        0,
-                        0
-                    ],
-                    "text": ""
-                },
-                {
-                    "macro": "",
-                    "position": [
-                        4,
-                        2
-                    ],
-                    "text": ""
-                },
-                {
-                    "macro": "",
-                    "text": "",
-                    "position": [
-                        2,
-                        2
-                    ]
-                },
-                {
-                    "macro": "",
-                    "text": "",
-                    "position": [
-                        1,
-                        4
-                    ]
-                },
-                {
-                    "macro": "Paka",
-                    "text": "Drka",
-                    "position": [
-                        1,
-                        5
-                    ]
-                },
-                {
-                    "macro": "<ALT+TAB><CTRL+t>youtube.com<ENTER>",
-                    "text": "GetToYT",
-                    "position": [
-                        3,
-                        3
-                    ]
-                },
-                {
-                    "macro": "<TAB>",
-                    "text": "Tab",
-                    "position": [
-                        4,
-                        0
-                    ]
-                },
-                {
-                    "macro": "<SHIFT+TAB>",
-                    "text": "Shift Tab",
-                    "position": [
-                        4,
-                        1
-                    ]
-                },
-                {
-                    "macro": "<ENTER>",
-                    "text": "Enter",
-                    "position": [
-                        2,
-                        4
-                    ]
-                }
-            ],
-            "name": "Page2"
+          "text": "Open prez.kv",
+          "position": [2, 3],
+          "macro": "<CTRL+p>prez.kv<ALT+ENTER>"
+        },
+        {
+          "text": "Panel 1",
+          "position": [3, 3],
+          "macro": "<CTRL+1>"
+        },
+        {
+          "text": "Panel 2",
+          "position": [3, 4],
+          "macro": "<CTRL+2>"
         }
-    ]
+      ]
+    },
+    {
+      "macros": [
+        {
+          "text": "Save",
+          "position": [0, 0],
+          "macro": "<CTRL+s>"
+        },
+        {
+          "text": "Kivy shebang",
+          "position": [1, 1],
+          "macro": "kv_sb<ENTER><ENTER><ENTER>"
+        },
+        {
+          "text": "MacroButton",
+          "position": [1, 2],
+          "macro": "mc_btn<ENTER>200<TAB>200<TAB>ALT_TAB<TAB><ENTER>"
+        },
+        {
+          "text": "ButtonImage",
+          "position": [1, 3],
+          "macro": "mc_img<ENTER>.<SHIFT+7>icons.png<TAB><ENTER><ENTER>"
+        }
+      ],
+      "name": "Snippets"
+    }
+  ]
 }

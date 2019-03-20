@@ -57,7 +57,6 @@ class MouseController:
         
         """
 
-        click_type = str(click_type)
-
         click = bytes(click_type, "UTF-8")
-        self.sock.sendto(click, (self.host, self.port))
+        print(click)
+        self.sock.sendto(click, (self.host[0], 5005))

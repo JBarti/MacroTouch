@@ -24,6 +24,16 @@ class Mouse(BoxLayout):
         super(Mouse, self).__init__(**kwargs)
         Window.bind(mouse_pos=self.mouse_move)
         self.mouse_controller = mouse_controller
+        l_click = self.ids["left_click"]
+        l_click.bind(on_press=self.left_click)
+        l_click = self.ids["right_click"]
+        l_click.bind(on_press=self.right_click)
+
+    def left_click(self, *args, **kwargs):
+        self.mouse_controller.send_click_data("LCLICK")
+
+    def right_click(self, *args, **kwargs):
+        self.mouse_controller.send_click_data("RCLICK")
 
     def on_touch_move(self, touch):
         """
