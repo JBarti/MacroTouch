@@ -98,7 +98,8 @@ class MacroServer(threading.Thread):
             if data[i] == "<":
                 try:
                     res = re.search("<(.+?)>", data[i:])
-                    k.press_keys(self._parse_macro(res[1]))
+                    macro = self._parse_macro(res[1])
+                    k.press_keys(macro)
                     i = i + len(res[0])
                     sleep(0.5)
                     continue

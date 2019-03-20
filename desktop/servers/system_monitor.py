@@ -41,14 +41,16 @@ class MonitorServer(threading.Thread):
         Prima zahtjeve za podatcima o korištenju računala te nakon toga šalje te podatke
 
         """
-
         while True:
-            data, _ = self.sock.recvfrom(1024)
-            if data != b"":
-                json_data = json.loads(data.decode("ASCII"))
-                req_type = json_data["type"]
-                data = self.request_type[req_type]()
-                self.send_system_data(data)
+            try:
+                data, _ = self.sock.recvfrom(1024)
+                if data != b"":
+                    json_data = json.loads(data.decode("ASCII"))
+                    req_type = json_data["type"]
+                    data = self.request_type[req_type]()
+                    self.send_system_data(data)
+            except KeyError:
+                pass
 
     def get_system_data(self):
         """

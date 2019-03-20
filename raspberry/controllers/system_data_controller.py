@@ -11,7 +11,7 @@ class MonitorController(threading.Thread):
 
     """
 
-    def __init__(self, family, sock_type, host="0.0.0.0", port=5300):
+    def _init_(self, family, sock_type, host="0.0.0.0", port=5300):
         """
 
         Inicijalna metoda klase MonitorController. Stvara svoj socket i binda ga na danu adresu.
@@ -81,4 +81,3 @@ class MonitorController(threading.Thread):
         }
         """
         self.data = payload
-

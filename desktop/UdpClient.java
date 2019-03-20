@@ -3,6 +3,7 @@ import java.awt.Robot;
 import java.util.concurrent.TimeUnit;
 import java.io.*;
 import java.net.*;
+import java.awt.event.*;
 import javax.swing.FocusManager;
 import java.awt.Toolkit;
 import java.awt.Dimension;
@@ -28,6 +29,20 @@ public class UdpClient {
             DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
             serverSocket.receive(receivePacket);
             String sentence = new String(receivePacket.getData());
+
+            System.out.println(sentence.substring(0,6));
+            System.out.println(sentence.getClass());
+            System.out.println(sentence.substring(0,6).equals(new String("LCLICK")));
+            if(sentence.substring(0,6).equals(new String("LCLICK"))){
+                rob.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+                rob.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+                continue;
+            }else if(sentence.substring(0,6).equals("RCLICK")){
+                rob.mousePress(InputEvent.BUTTON3_DOWN_MASK);
+                rob.mouseRelease(InputEvent.BUTTON3_DOWN_MASK);
+                continue;
+            }
+
             String[] parts = sentence.split(" ");
 
             String new_y = "";
