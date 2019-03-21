@@ -184,8 +184,7 @@ class AddPage(Popup):
         self.focused = self.ids["name_input"]
         if value:
             self.focused.text += value
-            if self.focused == self.name_input:
-                self.focused.text = self.focused.text[:10]
+            self.focused.text = self.focused.text[:10]
             return
         if key == "backspace" and len(self.focused.text):
             text = list(self.focused.text)
