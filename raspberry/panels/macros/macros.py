@@ -294,7 +294,7 @@ class CreateWidget(Popup):
         self.submit()
         self.dismiss()
 
-    def key_press(self, key, value):
+    def key_press(self, key, value, *args, **kwargs):
         """
         Kada se pritisne botun na on-screen tipkovnici 
         znak na tipki se dodaje u trenutno fokusiran TextInput
@@ -303,6 +303,8 @@ class CreateWidget(Popup):
             key {string} -- pritisnuti function key
             value {string} -- pritisnuti znak
         """
+        print("TEST")
+        print(key, value)
         if value:
             self.focused.text += value
             if self.focused == self.name_input:
