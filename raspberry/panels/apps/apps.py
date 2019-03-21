@@ -37,7 +37,7 @@ class AppsOption(GridLayout):
             img_source {string} -- ikona botuna
         """
         btn = MacroButton(
-            on_press=self.switch_to_device(page),
+            on_release=self.switch_to_device(page),
             size_hint=[None, None],
             size=[100, 100],
         )
