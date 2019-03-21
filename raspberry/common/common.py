@@ -24,7 +24,7 @@ class CToggleButton(ToggleButton):
         """
 
         super(CToggleButton, self).__init__(**kwargs)
-        self.toggled = False
+        self.toggled = "normal"
 
     def down(self):
         pass
@@ -35,7 +35,7 @@ class CToggleButton(ToggleButton):
         ikona se mijenja
         """
 
-        self.ids["background"].toggled = self.toggled
+        self.ids["background"].toggled = self.toggled == "down"
 
     def on_state(self, _, state):
         """Poziva update funkciju prilikom
@@ -45,17 +45,11 @@ class CToggleButton(ToggleButton):
             state {[str]} -- ["down" ili "normal" ovisno o tome je li botun stisnut]
         """
 
-        self.toggled = self.state == "down"
+        self.toggled = self.state = state
+        print(self.toggled, self.state)
         if self.state:
             self.down()
             self.update()
-
-    def on_press(self):
-        """
-        Mijenja stanje botuna na klik 
-        """
-
-        self.toggled = self.toggled == self.toggled
 
 
 class MacroButton(Button):
