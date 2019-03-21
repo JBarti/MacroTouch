@@ -72,11 +72,51 @@
                     "macro": "mc_img<ENTER>.<SHIFT+7>icons.png<TAB><ENTER><ENTER>"
                 },
                 {
-                    "macro": "",
-                    "text": "Placeholder",
+                    "text": "ImportUix",
+                    "position": [
+                        2,
+                        1
+                    ],
+                    "macro": "imp_uix<CTRL+SPACE><ENTER>button<TAB>Button<ENTER><ENTER>"
+                },
+                {
+                    "text": "Python class",
+                    "position": [
+                        2,
+                        2
+                    ],
+                    "macro": "py_class<CTRL+SPACE><ENTER>MacroButton<TAB>Button<TAB><TAB><ENTER><ENTER><BACKSPACE>"
+                },
+                {
+                    "text": "def on_press",
+                    "position": [
+                        2,
+                        3
+                    ],
+                    "macro": "btn_press<ENTER><ENTER><ENTER>"
+                },
+                {
+                    "macro": "<CTRL+b>",
+                    "text": "ctrlb\t",
+                    "position": [
+                        4,
+                        3
+                    ]
+                },
+                {
+                    "macro": "<CTRL+s>",
+                    "text": "Save file",
                     "position": [
                         0,
                         0
+                    ]
+                },
+                {
+                    "macro": "<CTRL+w>",
+                    "text": "Exit",
+                    "position": [
+                        4,
+                        4
                     ]
                 }
             ],
