@@ -26,7 +26,7 @@ class SystemMonitor(BoxLayout):
     def __init__(self, **kwargs):
         super(SystemMonitor, self).__init__(**kwargs)
         self.monitor_controller = App.get_running_app().connector.monitor_controller
-        self.max_usage_blocks = 30
+        self.max_usage_blocks = 25
         self.data_length = 0
         self.cpus = []
         self.use_system_data()
@@ -54,7 +54,10 @@ class SystemMonitor(BoxLayout):
         self.refresh_ram(**data["memory"])
 
     def get_usage_blocks_num(self, cpu):
-        num_blocks = (cpu / 100) * self.max_usage_blocks
+        num_blocks = (cpu / 800) * self.max_usage_blocks
+        print(cpu)
+        print("BLOKOVIII")
+        print(num_blocks)
         return int(math.trunc(num_blocks))
 
     def init_cpus(self, cpu_data):

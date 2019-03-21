@@ -31,6 +31,8 @@ class MacrosOption(BoxLayout):
         self.generate_screens()
         self.generate_screen_buttons(edit_mode=False)
         self.ids["edit_button"].on_press = self.change_edit_mode
+        self.screen = 0
+        self.ids["dump_page"].on_press = self.remove_page
 
     def generate_screens(self):
         with open("./data.json", "r") as data:
@@ -81,6 +83,7 @@ class MacrosOption(BoxLayout):
             )
             try:
                 self.screen_manager.switch_to(screen, direction="down")
+                self.screen = screen
             except:
                 pass
 
@@ -99,6 +102,29 @@ class MacrosOption(BoxLayout):
             edit_mode = False
         self.generate_screen_buttons(edit_mode=not edit_mode)
         [map_callback(screen) for screen in self.screens]
+
+    def remove_page(self):
+        try:
+            with open("data.json", "r") as data:
+                data_json = json.loads(data.read())
+                data_json["macro_pages"]
+                print("FOUND")
+                pages = [
+                    page
+                    for page in data_json["macro_pages"]
+                    if page["name"] != self.screen.page_name
+                ]
+                data_json["macro_pages"] = pages
+
+            with open("data.json", "w") as data:
+                json.dump(data_json, data, indent=4)
+
+            self.generate_screens()
+            self.generate_screen_buttons(edit_mode=False)
+            self.ids["dump_page"].background_col = "#151515"
+            self.switch_screen()(None)
+        except:
+            pass
 
 
 class MacroPage(Screen):
@@ -373,10 +399,8 @@ class FabButton(ToggleButton):
         print("STEEEEEEEEEEEEEEEEEEJT")
         print(state)
         if state == "down":
-            print("IZBORNIK")
             self.background_col = "#7f58c5"
             self.on_down()
         if state == "normal":
-            print("DENA")
             self.background_col = "#151515"
             self.on_normal()

@@ -22,7 +22,7 @@ class WidgetsOption(BoxLayout):
         self.switch = switch
         connector = App.get_running_app().connector
         self.monitor_controller = connector.monitor_controller
-        self.generate_button(SystemMonitor(), "./icons/word.png")
+        self.generate_button(SystemMonitor(), "./icons/search.png")
         self.generate_button(Calendar(), "./icons/calendar.png")
         self.generate_button(Calculator(), "./icons/calculator.png")
 
