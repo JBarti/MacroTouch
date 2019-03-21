@@ -121,6 +121,32 @@
                 }
             ],
             "name": "Snippets"
+        },
+        {
+            "macros": [
+                {
+                    "macro": "Test",
+                    "text": "Test",
+                    "position": [
+                        1,
+                        1
+                    ]
+                }
+            ],
+            "name": "Test"
+        },
+        {
+            "macros": [
+                {
+                    "macro": "test",
+                    "text": "tes",
+                    "position": [
+                        1,
+                        1
+                    ]
+                }
+            ],
+            "name": "TEST"
         }
     ]
 }

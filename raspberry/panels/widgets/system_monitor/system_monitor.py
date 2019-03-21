@@ -26,7 +26,6 @@ class SystemMonitor(BoxLayout):
     def __init__(self, **kwargs):
         super(SystemMonitor, self).__init__(**kwargs)
         self.monitor_controller = App.get_running_app().connector.monitor_controller
-        pp.pprint(self.monitor_controller)
         self.max_usage_blocks = 30
         self.data_length = 0
         self.cpus = []
@@ -46,7 +45,6 @@ class SystemMonitor(BoxLayout):
             print("iz fine")
 
         print("SET_DATA")
-        pp.pprint(data)
         if len(data["cpus"]) != self.data_length:
             self.cpus = self.init_cpus(data["cpus"])
             self.data_length = len(data["cpus"])
@@ -57,22 +55,15 @@ class SystemMonitor(BoxLayout):
 
     def get_usage_blocks_num(self, cpu):
         num_blocks = (cpu / 100) * self.max_usage_blocks
-        print("USAGE_BLOCKS")
-        print(num_blocks)
         return int(math.trunc(num_blocks))
 
     def init_cpus(self, cpu_data):
-        print("INIT_CPUS")
-        pp.pprint(cpu_data)
         cpus_widg = self.ids["cpus"]
         cpus = [CPUUsage(id=index, text=index) for index, _ in enumerate(cpu_data)]
         [cpus_widg.add_widget(cpu) for cpu in cpus]
         return cpus
 
     def refresh_cpus(self, cpu_data):
-        print("REFRESH_CPUS")
-        pp.pprint(cpu_data)
-
         def map_cpus(cpu):
             print("JESI SE POJRENIA")
             print(cpu)

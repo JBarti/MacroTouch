@@ -94,7 +94,6 @@ class WifiInterfaceOption(AnchorLayout):
             hosts = self.connector.host_finder.hosts
             nonlocal last_length
             if len(hosts) != last_length:
-                print(hosts)
                 self.refresh_hosts(hosts)
                 last_length = len(hosts)
 
@@ -147,7 +146,7 @@ class ConnectWifi(Popup):
         try:
             self.connector.connect_to_wifi(self.ssid, password=password)
         except ConnectionError:
-            print("FAILED TO CONNECT")
+            pass
         self.dismiss()
 
 
@@ -168,7 +167,6 @@ class WifiButton(Button):
     def __init__(self, power, *args, **kwargs):
         super(WifiButton, self).__init__(**kwargs)
         self.ids["label"].text = str(self.text).ljust(15, " ")
-        print(len(self.ids["label"].text))
         self.ssid = self.text
         self.text = ""
         self.power = power
@@ -183,7 +181,6 @@ class WifiButton(Button):
         if self.power > 0:
             ConnectWifi(ssid=self.ssid).open()
         else:
-            print(self.ssid)
             self.connector.connect_to_host(self.ssid)
 
     def on_touch_up(self, *args, **kwargs):

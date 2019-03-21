@@ -90,7 +90,6 @@ class Content(BoxLayout):
                     self.add_widget(screen)
                     self.current_widget = screen
             except Exception as err:
-                print(err)
                 self.add_widget(Label(text="Error"))
 
         return return_function

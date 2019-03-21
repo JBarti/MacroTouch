@@ -39,6 +39,7 @@ class MacrosOption(BoxLayout):
             self.screens = [MacroPage(page["name"]) for page in macro_pages]
 
     def generate_screen_buttons(self, edit_mode=False):
+        print("ENTENRENRNERNERNE")
         pages = self.ids["pages"]
         pages.clear_widgets()
         page_buttons = [
@@ -48,12 +49,28 @@ class MacrosOption(BoxLayout):
             for page_screen in self.screens
         ]
         if edit_mode:
-            page_buttons.append(SelectPageButton(None, None, text="<ADD_NEW>"))
+            edit_button = SelectPageButton("", self.add_page_popup, text="<ADD_NEW>")
+            page_buttons.append(edit_button)
         [pages.add_widget(page_button) for page_button in page_buttons]
+
+    def add_page_popup(self, *args):
+        AddPage(self.add_page).open()
+
+    def add_page(self, page_name):
+        with open("./data.json", "r") as data:
+            json_data = json.loads(data.read())
+            page = {"macros": [], "name": page_name}
+            json_data["macro_pages"].append(page)
+
+        with open("./data.json", "w") as data:
+            json.dump(json_data, data, indent=4)
+
+        self.generate_screens()
+        self.generate_screen_buttons(edit_mode=True)
+        self.change_edit_mode()
 
     def switch_screen(self):
         def inner(page_name):
-            pp.pprint(page_name)
             screen = next(
                 (
                     macro_screen
@@ -120,7 +137,6 @@ class MacroPage(Screen):
                     False,
                 )
                 if macro:
-                    pp.pprint(macro)
                     grid.add_widget(
                         SendMacroButton(
                             text=macro["text"],
@@ -140,6 +156,19 @@ class MacroPage(Screen):
                     )
                 elif not self.edit_mode:
                     grid.add_widget(Placeholder())
+
+
+class AddPage(Popup):
+    def __init__(self, submit_page, **kwargs):
+        super(AddPage, self).__init__(**kwargs)
+        self.ids["cancel"].on_press = self.dismiss
+        self.ids["submit"].on_press = self.add_page
+        self.submit_page = submit_page
+
+    def add_page(self):
+        name = self.ids["name_input"].text
+        self.submit_page(name)
+        self.dismiss()
 
 
 class RemoveMacro(Popup):
@@ -171,7 +200,6 @@ class SendMacroButton(MacroButton):
             json_data = json.loads(data.read())
             pages = json_data["macro_pages"]
             page = next((page for page in pages if page["name"] == self.page_name))
-            pp.pprint(page)
             macro = next(
                 (
                     macro

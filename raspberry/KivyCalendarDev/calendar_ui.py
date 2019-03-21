@@ -170,8 +170,6 @@ class CalendarWidget(RelativeLayout):
     def create_month_scr(self, month, toogle_today=False):
         """ Screen with calendar for one month """
 
-        print("MONTH", month)
-
         scr = Screen()
         m = self.month_names_eng[self.active_date[1] - 1]
         scr.name = "%s-%s" % (m, self.active_date[2])  # like march-2015

@@ -46,7 +46,6 @@ class Mouse(BoxLayout):
 
         x_pos = touch.pos[0]
         y_pos = touch.pos[1]
-        print(x_pos, " ", y_pos)
         x_min = 185
         y_min = 41
         x_max = 1018
@@ -66,5 +65,5 @@ class Mouse(BoxLayout):
         click_size = self.ids.left_click.height
         if self.parent and self.parent.current_widget is self:
             if mouse_pos[0] > self.pos[0] and mouse_pos[1] > click_size:
-                print(mouse_pos)
+                pass
                 # self.mouse_controller.send_location_data(mouse_pos)

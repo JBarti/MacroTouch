@@ -46,7 +46,6 @@ class CToggleButton(ToggleButton):
         """
 
         self.toggled = self.state == "down"
-        print(self.toggled)
         if self.state:
             self.down()
             self.update()

@@ -45,5 +45,4 @@ class SendWordButton(MacroButton):
         self.src = "./icons/word/" + icon
 
     def on_press(self):
-        pp.pprint(self.macro)
         self.macro_controller.send_data(self.macro)

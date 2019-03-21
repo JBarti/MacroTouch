@@ -49,7 +49,7 @@ class MacroController:
         """
 
         with self.spawn_socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
-            print({"host": self.host, "macro": data})
+
             dict_data = {"type": "RUN_MACRO", "payload": data}
             bytes_data = bytes(json.dumps(dict_data), "UTF-8")
             sock.sendto(bytes_data, (self.host[0], 5200))

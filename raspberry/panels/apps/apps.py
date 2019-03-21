@@ -60,7 +60,6 @@ class AppsOption(GridLayout):
         """
 
         def inner(*args, **kwargs):
-            print("Test")
             self.switch(app)()
 
         return inner
@@ -103,4 +102,3 @@ class CurrentApp(BoxLayout):
         ).communicate()
         title = output.decode("ASCII")
         title = title[1:-2] if title[-1:] == "\n" else title[1:-1]
-        print(title)

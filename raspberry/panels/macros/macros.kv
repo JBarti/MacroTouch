@@ -128,6 +128,55 @@
     size_hint: 1, None
     height: 50
 
+<AddPage@Popup>:
+    auto_dismiss:False
+    title: "Create new macro page"
+    size_hint: .5,.35
+    pos_hint: {"y":.4}
+    FloatLayout:
+        VKeyboard:
+            id: vkeyboard
+        BoxLayout:
+            pos: root.pos
+            orientation: "vertical"
+            size_hint_y: None
+            size: root.size
+            padding: 60,0,0,0
+            BoxLayout:
+                size_hint_y: None
+                size_hint_x: 1
+                orientation: "vertical"
+                DisplayText:
+                    text: "Name"
+                    size_hint_y: None
+                    size: 20,30
+                    size_hint_x: 1
+                TextInput:
+                    id: name_input
+                    multiline: False
+                    size_hint_y: None
+                    size: 20,30
+                    size_hint_x: 0.8
+            Widget: 
+                size_hint_y: None
+                size: 0, 25
+            BoxLayout:
+                size_hint_y: None
+                height: 35
+                spacing: 20
+                Button:
+                    id: submit
+                    size_hint: None, None
+                    size: 100, 35
+                    text: "SUBMIT"
+                Button:
+                    id: cancel
+                    size_hint: None, None
+                    size: 100, 35
+                    text: "CANCEL"
+            BoxLayout: 
+                size_hint_y: None
+                size: 0, 25
 
 <MacrosOption>:
     orientation: "vertical"
