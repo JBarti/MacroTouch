@@ -164,11 +164,33 @@ class AddPage(Popup):
         self.ids["cancel"].on_press = self.dismiss
         self.ids["submit"].on_press = self.add_page
         self.submit_page = submit_page
+        self.keyboard = self.ids["vkeyboard"]
+        self.keyboard.on_key_down = self.key_press
 
     def add_page(self):
         name = self.ids["name_input"].text
         self.submit_page(name)
         self.dismiss()
+
+    def key_press(self, key, value, *args, **kwargs):
+        """
+        Kada se pritisne botun na on-screen tipkovnici 
+        znak na tipki se dodaje u trenutno fokusiran TextInput
+        
+        Arguments:
+            key {string} -- pritisnuti function key
+            value {string} -- pritisnuti znak
+        """
+        self.focused = self.ids["name_input"]
+        if value:
+            self.focused.text += value
+            if self.focused == self.name_input:
+                self.focused.text = self.focused.text[:10]
+            return
+        if key == "backspace" and len(self.focused.text):
+            text = list(self.focused.text)
+            text.pop()
+            self.focused.text = "".join(text)
 
 
 class RemoveMacro(Popup):
@@ -256,7 +278,7 @@ class CreateWidget(Popup):
         super(CreateWidget, self).__init__(**kwargs)
         self.ids["submit"].on_press = self.press_submit
         self.ids["cancel"].on_press = self.dismiss
-        self.location = [y_pos, x_pos]
+        self.location = [x_pos, y_pos]
         self.submit = submit
         name_input = self.name_input = self.ids["name_input"]
         macro_input = self.ids["macro_input"]
@@ -303,8 +325,6 @@ class CreateWidget(Popup):
             key {string} -- pritisnuti function key
             value {string} -- pritisnuti znak
         """
-        print("TEST")
-        print(key, value)
         if value:
             self.focused.text += value
             if self.focused == self.name_input:
