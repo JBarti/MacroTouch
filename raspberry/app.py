@@ -23,8 +23,6 @@ from controllers import Connector
 import socket
 
 
-Window.size = (1024, 600)
-
 # Definiranje veličine aplikacije na veličinu touch displaya
 Config.set("graphics", "width", "1024")
 Config.set("graphics", "height", "600")

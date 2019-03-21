@@ -30,7 +30,7 @@ class SystemMonitor(BoxLayout):
         self.data_length = 0
         self.cpus = []
         self.use_system_data()
-        Clock.schedule_interval(self.use_system_data, 1)
+        Clock.schedule_interval(self.use_system_data, 5)
 
     def use_system_data(self, *args, **kwargs):
         """
